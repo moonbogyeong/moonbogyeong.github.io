@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>보경이네 미니게임 천국</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+    :root { color-scheme: dark; --primary: #77f5ff; --accent: #ff77c8; --bg: #090d22; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        background: radial-gradient(ellipse at 50% 0%, #222c60 0%, #101633 40%, #070a18 100%);
+        color: #f7f7ff;
+        font-family: 'Pretendard', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+    }
+    .container {
+        width: 100%;
+        max-width: 900px;
+    }
+    header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 13px;
+        color: var(--primary);
+        margin-bottom: 14px;
+    }
+    h1 {
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 800;
+        letter-spacing: -1px;
+        margin-bottom: 10px;
+    }
+    h1 span {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    p.subtitle {
+        color: #aeb8e6;
+        font-size: 15px;
+    }
+    .game-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+    }
+    .game-card {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 24px;
+        text-decoration: none;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.25s ease;
+        cursor: pointer;
+    }
+    .game-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.07);
+        border-color: var(--primary);
+        box-shadow: 0 15px 35px rgba(119, 245, 255, 0.15);
+    }
+    .game-icon {
+        font-size: 42px;
+        margin-bottom: 16px;
+    }
+    .game-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .game-desc {
+        color: #b3bdde;
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+    .play-btn {
+        align-self: flex-start;
+        background: linear-gradient(100deg, var(--primary), #b9ffdf);
+        color: #071021;
+        font-weight: 800;
+        font-size: 13px;
+        padding: 8px 18px;
+        border-radius: 99px;
+        transition: transform 0.2s ease;
+    }
+    .game-card:hover .play-btn {
+        transform: scale(1.05);
+    }
+    
+    #modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(7, 10, 24, 0.85);
+        backdrop-filter: blur(8px);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+    .modal-content {
+        position: relative;
+        width: 100%;
+        max-width: 860px;
+        max-height: 90vh;
+        background: #111326;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 24px;
+        overflow-y: auto;
+        padding: 30px;
+        box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+    }
+    .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        font-size: 18px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        transition: background 0.2s;
+    }
+    .close-btn:hover {
+        background: rgba(255, 255, 255, 0.25);
+    }
+    .pizza-app { --cream:#fff1ce; --gold:#ffd56b; width:100%; }
+    .pizza-layout { display:grid; grid-template-columns:1.1fr .9fr; gap:14px; }
+    .p-card { background:#ffffff0b; border:1px solid #ffffff20; border-radius:20px; padding:16px; }
+    .pizza-stage { min-height:300px; display:grid; place-items:center; position:relative; overflow:hidden; border-radius:16px; background:radial-gradient(ellipse,#543047,#2a203b 68%,#211b34); }
+    .pizza-stage canvas { width:min(100%,320px); aspect-ratio:1; display:block; touch-action:manipulation; cursor:pointer; }
+    .ingredients-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:10px; }
+    .ing-btn { display:flex; align-items:center; gap:8px; text-align:left; border:1px solid #ffffff20; background:#ffffff0a; color:#fff8e9; padding:8px 10px; border-radius:13px; cursor:pointer; font:inherit; }
+    .ing-btn.active { border-color:var(--gold); background:#ffd56b20; }
+    .order-box { display:flex; align-items:center; justify-content:space-between; background:#ffffff0c; border:1px solid #ffffff14; border-radius:12px; padding:10px 12px; margin-bottom:12px; }
+    .action-row { display:flex; gap:8px; margin-top:12px; }
+    .action-row button { flex:1; border:0; border-radius:999px; padding:10px; font-weight:800; cursor:pointer; }
+    @media(max-width:650px) { .pizza-layout { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="badge">✨ RETRO ARCADE PLATFORM</div>
+            <h1>보경이네 <span>미니게임 천국</span></h1>
+            <p class="subtitle">추억의 주니어 네이버처럼 즐기는 가볍고 재밌는 웹 게임들!</p>
+        </header>
+
+        <div class="game-grid">
+            <div class="game-card" onclick="openGame('pizza')">
+                <div>
+                    <div class="game-icon">🍕</div>
+                    <div class="game-title">피자 공방</div>
+                    <div class="game-desc">주문서에 맞추어 도우, 소스, 치즈와 토핑을 얹어 완벽한 피자를 만들어보세요!</div>
+                </div>
+                <div class="play-btn">게임하기 →</div>
+            </div>
+
+            <div class="game-card" onclick="openGame('star')">
+                <div>
+                    <div class="game-icon">✦</div>
+                    <div class="game-title">별빛 수집가</div>
+                    <div class="game-desc">우주 속에서 반짝이는 별을 모으고 붉은 운석을 피해 최고 기록에 도전하세요!</div>
+                </div>
+                <div class="play-btn">게임하기 →</div>
+            </div>
+
+            <div class="game-card" onclick="openGame('arena')">
+                <div>
+                    <div class="game-icon">⚔️</div>
+                    <div class="game-title">네온 아레나 (전투)</div>
+                    <div class="game-desc">몰려오는 적들을 검으로 물리치며 웨이브를 돌파하는 액션 생존 게임입니다.</div>
+                </div>
+                <div class="play-btn">게임하기 →</div>
+            </div>
+        </div>
+
+        <footer>
+            <p style="margin-top:50px; color:#727fae; font-size:12px; text-align:center;">© 2026 BOKYEONG LAND. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <div id="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeGame()">✕</button>
+            <div id="gameContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('modal');
+        const container = document.getElementById('gameContainer');
+
+        function openGame(type) {
+            modal.style.display = 'flex';
+            if (type === 'pizza') {
+                container.innerHTML = `
+                    <div class="pizza-app">
+                        <h2 style="color:#ffd56b; margin-bottom:12px;">🍕 피자 공방</h2>
+                        <div class="pizza-layout">
+                            <div class="p-card">
+                                <h3>나만의 피자 만들기</h3>
+                                <div class="pizza-stage"><canvas id="pizzaCanvas" width="400" height="400"></canvas></div>
+                                <p style="font-size:11px; color:#d8cde3; margin-top:8px; text-align:center;">재료 선택 후 피자 위를 클릭하세요!</p>
+                            </div>
+                            <div class="p-card">
+                                <div class="order-box">
+                                    <div><small style="color:#c6b9d4">손님 주문</small><br><strong style="color:#a9f4d0">치즈 폭탄 피자</strong></div>
+                                    <span style="font-size:26px">🧀</span>
+                                </div>
+                                <div class="ingredients-grid" id="pIngredients"></div>
+                                <div class="action-row">
+                                    <button style="background:#ffffff15; color:#fff;" id="pClear">다시 만들기</button>
+                                    <button style="background:linear-gradient(100deg,#ffd56b,#ffb16c); color:#2d1723;" id="pServe">서빙하기 ✨</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                initPizzaGame();
+            } else if (type === 'star') {
+                container.innerHTML = `
+                    <div style="text-align:center; padding:10px;">
+                        <h2 style="color:#77f5ff; margin-bottom:10px;">✦ 별빛 수집가</h2>
+                        <iframe src="star.html" style="width:100%; max-width:480px; height:560px; border:none; border-radius:16px;"></iframe>
+                    </div>
+                `;
+            } else if (type === 'arena') {
+                container.innerHTML = `
+                    <div style="text-align:center; padding:10px;">
+                        <h2 style="color:#5cf4ff; margin-bottom:10px;">⚔️ 네온 아레나 전투</h2>
+                        <iframe src="arena.html" style="width:100%; max-width:760px; height:520px; border:none; border-radius:16px;"></iframe>
+                    </div>
+                `;
+            }
+        }
+
+        function closeGame() {
+            modal.style.display = 'none';
+            container.innerHTML = '';
+        }
+
+        function initPizzaGame() {
+            const canvas = document.getElementById('pizzaCanvas'), ctx = canvas.getContext('2d');
+            const ingredients = [
+                {id:'dough',emoji:'🫓',name:'도우',desc:'바닥'},
+                {id:'sauce',emoji:'🍅',name:'토마토소스',desc:'새콤'},
+                {id:'cheese',emoji:'🧀',name:'모차렐라',desc:'치즈'},
+                {id:'pepperoni',emoji:'🍕',name:'페퍼로니',desc:'토핑'}
+            ];
+            let selected='dough', placed=[];
+
+            function draw() {
+                ctx.clearRect(0,0,400,400);
+                ctx.fillStyle='#bd7a40'; ctx.beginPath(); ctx.arc(200,200,165,0,Math.PI*2); ctx.fill();
+                ctx.fillStyle='#f5d18b'; ctx.beginPath(); ctx.arc(200,200,150,0,Math.PI*2); ctx.fill();
+                if(placed.some(p=>p.id==='sauce')){ ctx.fillStyle='#d94839'; ctx.beginPath(); ctx.arc(200,200,135,0,Math.PI*2); ctx.fill(); }
+                if(placed.some(p=>p.id==='cheese')){ ctx.fillStyle='#ffe9a6'; ctx.beginPath(); ctx.arc(200,200,130,0,Math.PI*2); ctx.fill(); }
+                placed.filter(p=>!['dough','sauce','cheese'].includes(p.id)).forEach(p=>{
+                    ctx.fillStyle='#8f252e'; ctx.beginPath(); ctx.arc(p.x,p.y,12,0,Math.PI*2); ctx.fill();
+                });
+                if(!placed.length){ ctx.fillStyle='#8c573b'; ctx.font='bold 16px sans-serif'; ctx.textAlign='center'; ctx.fillText('클릭하여 도우를 만들어보세요!',200,205); }
+            }
+
+            function buildBtns() {
+                const root = document.getElementById('pIngredients');
+                root.innerHTML = '';
+                ingredients.forEach(it=>{
+                    const b = document.createElement('button');
+                    b.className = 'ing-btn' + (selected === it.id ? ' active' : '');
+                    b.innerHTML = `<span style="font-size:22px">${it.emoji}</span><span><b>${it.name}</b></span>`;
+                    b.onclick = () => { selected = it.id; buildBtns(); };
+                    root.appendChild(b);
+                });
+            }
+
+            canvas.onclick = (e) => {
+                if(!selected) return;
+                const rect = canvas.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width * 400;
+                const y = (e.clientY - rect.top) / rect.height * 400;
+                if(Math.hypot(x-200, y-200) > 140) return;
+                if(selected==='dough') { placed.push({id:'dough',x:200,y:200}); selected='sauce'; }
+                else { placed.push({id:selected,x,y}); }
+                buildBtns(); draw();
+            };
+
+            document.getElementById('pClear').onclick = () => { placed=[]; selected='dough'; buildBtns(); draw(); };
+            document.getElementById('pServe').onclick = () => {
+                alert('맛있는 피자가 완성되었습니다! 🍕');
+                placed=[]; selected='dough'; buildBtns(); draw();
+            };
+
+            buildBtns(); draw();
+        }
+    </script>
+</body>
+</html>
