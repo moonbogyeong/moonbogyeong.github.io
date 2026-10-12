@@ -1,243 +1,357 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>포트폴리오 | 문보경</title>
-    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            background-color: #0b0914;
-            color: #ffffff;
-            font-family: 'Pretendard', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px;
-            overflow-x: hidden;
-        }
-        /* 배경 그라데이션 번짐 효과 */
-        .bg-glow {
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, rgba(236, 72, 153, 0.15) 50%, transparent 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: -1;
-            filter: blur(60px);
-        }
-        /* 레이아웃 메인 컨테이너 */
-        .container {
-            max-width: 1100px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 50px;
-        }
-        @media (max-width: 900px) {
-            .container {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-        /* 왼쪽: 설명 및 내용 영역 */
-        .left-content {
-            flex: 1;
-        }
-        .badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            color: #d8b4fe;
-            margin-bottom: 20px;
-        }
-        h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            line-height: 1.3;
-            margin-bottom: 20px;
-            letter-spacing: -0.02em;
-        }
-        h1 span {
-            background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        /* 클릭할 때마다 바뀌는 상세 설명 박스 */
-        .detail-box {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 24px;
-            margin-top: 24px;
-            text-align: left;
-            min-height: 140px;
-            transition: all 0.3s ease;
-        }
-        .detail-box h3 {
-            font-size: 1.2rem;
-            color: #f472b6;
-            margin-bottom: 8px;
-        }
-        .detail-box p {
-            color: #9ca3af;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        /* 오른쪽: 목업 모바일 화면 영역 */
-        .right-device {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-        }
-        .phone-mockup {
-            width: 320px;
-            height: 580px;
-            background: #13111c;
-            border: 4px solid rgba(255, 255, 255, 0.15);
-            border-radius: 40px;
-            padding: 20px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            position: relative;
-        }
-        .phone-header {
-            text-align: center;
-            font-size: 14px;
-            font-weight: 600;
-            color: #8b5cf6;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* 핸드폰 안의 클릭 가능한 버튼/카드들 */
-        .interactive-card {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 18px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .interactive-card:hover {
-            transform: scale(1.03);
-            border-color: #f472b6;
-        }
-        .interactive-card.active {
-            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
-            border-color: transparent;
-            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
-        }
-        .card-title {
-            font-size: 15px;
-            font-weight: 600;
-        }
-        .card-icon {
-            font-size: 18px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>보경이네 미니게임 천국</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+    :root { color-scheme: dark; --primary: #77f5ff; --accent: #ff77c8; --bg: #090d22; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        background: radial-gradient(ellipse at 50% 0%, #222c60 0%, #101633 40%, #070a18 100%);
+        color: #f7f7ff;
+        font-family: 'Pretendard', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+    }
+    .container {
+        width: 100%;
+        max-width: 900px;
+    }
+    header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 13px;
+        color: var(--primary);
+        margin-bottom: 14px;
+    }
+    h1 {
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 800;
+        letter-spacing: -1px;
+        margin-bottom: 10px;
+    }
+    h1 span {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    p.subtitle {
+        color: #aeb8e6;
+        font-size: 15px;
+    }
+    .game-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+    }
+    .game-card {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 24px;
+        text-decoration: none;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.25s ease;
+        cursor: pointer;
+    }
+    .game-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.07);
+        border-color: var(--primary);
+        box-shadow: 0 15px 35px rgba(119, 245, 255, 0.15);
+    }
+    .game-icon {
+        font-size: 42px;
+        margin-bottom: 16px;
+    }
+    .game-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .game-desc {
+        color: #b3bdde;
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+    .play-btn {
+        align-self: flex-start;
+        background: linear-gradient(100deg, var(--primary), #b9ffdf);
+        color: #071021;
+        font-weight: 800;
+        font-size: 13px;
+        padding: 8px 18px;
+        border-radius: 99px;
+        transition: transform 0.2s ease;
+    }
+    .game-card:hover .play-btn {
+        transform: scale(1.05);
+    }
+    
+    /* 게임 플레이 모달 화면 스타일 */
+    #modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(7, 10, 24, 0.85);
+        backdrop-filter: blur(8px);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+    .modal-content {
+        position: relative;
+        width: 100%;
+        max-width: 860px;
+        max-height: 90vh;
+        background: #111326;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 24px;
+        overflow-y: auto;
+        padding: 30px;
+        box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+    }
+    .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        font-size: 18px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        transition: background 0.2s;
+    }
+    .close-btn:hover {
+        background: rgba(255, 255, 255, 0.25);
+    }
+    
+    /* 각 게임 내부 디자인 스타일 적용 */
+    .game-frame-wrap { margin-top: 10px; }
+    
+    /* 피자공방 스타일 */
+    .pizza-app { --cream:#fff1ce; --tomato:#ff755d; --gold:#ffd56b; --mint:#a9f4d0; width:100%; }
+    .pizza-app header-top { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px; }
+    .pizza-app h2 { font-size:24px; margin:0 0 12px; color:var(--gold); }
+    .pizza-layout { display:grid; grid-template-columns:1.1fr .9fr; gap:14px; }
+    .p-card { background:#ffffff0b; border:1px solid #ffffff20; border-radius:20px; padding:16px; }
+    .pizza-stage { min-height:300px; display:grid; place-items:center; position:relative; overflow:hidden; border-radius:16px; background:radial-gradient(ellipse,#543047,#2a203b 68%,#211b34); }
+    .pizza-stage canvas { width:min(100%,320px); aspect-ratio:1; display:block; touch-action:manipulation; cursor:pointer; }
+    .ingredients-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:10px; }
+    .ing-btn { display:flex; align-items:center; gap:8px; text-align:left; border:1px solid #ffffff20; background:#ffffff0a; color:#fff8e9; padding:8px 10px; border-radius:13px; cursor:pointer; font:inherit; }
+    .ing-btn.active { border-color:var(--gold); background:#ffd56b20; }
+    .ing-btn .emoji { font-size:22px; }
+    .order-box { display:flex; align-items:center; justify-content:space-between; background:#ffffff0c; border:1px solid #ffffff14; border-radius:12px; padding:10px 12px; margin-bottom:12px; }
+    .action-row { display:flex; gap:8px; margin-top:12px; }
+    .action-row button { flex:1; border:0; border-radius:999px; padding:10px; font-weight:800; cursor:pointer; }
+    
+    @media(max-width:650px) { .pizza-layout { grid-template-columns:1fr; } }
+</style>
 </head>
 <body>
 
-    <div class="bg-glow"></div>
-
     <div class="container">
-        <!-- 왼쪽 영역: 타이틀 & 선택한 항목 설명 -->
-        <div class="left-content">
-            <div class="badge">💡 화면 속 요소들을 클릭해보세요!</div>
-            <h1>좋아요를 넘어,<br><span>커리어로 나아가다</span></h1>
-            
-            <!-- 클릭 시 반응하는 설명 박스 -->
-            <div class="detail-box" id="detailBox">
-                <h3 id="detailTitle">📌 항목을 선택해주세요</h3>
-                <p id="detailDesc">오른쪽 핸드폰 화면 안의 카드를 클릭하시면 해당 항목에 대한 상세 정보가 이곳에 나타납니다.</p>
+        <header>
+            <div class="badge">✨ RETRO ARCADE PLATFORM</div>
+            <h1>보경이네 <span>미니게임 천국</span></h1>
+            <p class="subtitle">추억의 주니어 네이버처럼 즐기는 가볍고 재밌는 웹 게임들!</p>
+        </header>
+
+        <div class="game-grid">
+            <!-- 게임 1: 피자 공방 -->
+            <div class="game-card" onclick="openGame('pizza')">
+                <div>
+                    <div class="game-icon">🍕</div>
+                    <div class="game-title">피자 공방</div>
+                    <div class="game-desc">주문서에 맞추어 도우, 소스, 치즈와 토핑을 얹어 완벽한 피자를 만들고 팁을 모아보세요!</div>
+                </div>
+                <div class="play-btn">게임하기 →</div>
+            </div>
+
+            <!-- 게임 2: 별빛 수집가 -->
+            <div class="game-card" onclick="openGame('star')">
+                <div>
+                    <div class="game-icon">✦</div>
+                    <div class="game-title">별빛 수집가</div>
+                    <div class="game-desc">우주 속에서 반짝이는 별을 모으고 붉은 운석을 피해 최고 기록에 도전하세요!</div>
+                </div>
+                <div class="play-btn">게임하기 →</div>
+            </div>
+
+            <!-- 게임 3: 네온 아레나 -->
+            <div class="game-card" onclick="openGame('arena')">
+                <div>
+                    <div class="game-icon">⚔️</div>
+                    <div class="game-title">네온 아레나 (전투)</div>
+                    <div class="game-desc">몰려오는 적들을 검으로 물리치며 웨이브를 돌파하는 액션 생존 게임입니다.</div>
+                </div>
+                <div class="play-btn">게임하기 →</div>
             </div>
         </div>
 
-        <!-- 오른쪽 영역: 핸드폰 인터랙티브 목업 -->
-        <div class="right-device">
-            <div class="phone-mockup">
-                <div class="phone-header">@moonbogyeong</div>
+        <footer>
+            <p style="margin-top:50px; color:#727fae; font-size:12px; text-align:center;">© 2026 BOKYEONG LAND. All rights reserved.</p>
+        </footer>
+    </div>
 
-                <!-- 클릭 요소 1 -->
-                <div class="interactive-card active" onclick="showContent('contents')">
-                    <div>
-                        <div class="card-title">🎬 콘텐츠 기획</div>
-                        <small style="color: rgba(255,255,255,0.7); font-size: 11px;">클릭하여 보기</small>
-                    </div>
-                    <span class="card-icon">➔</span>
-                </div>
-
-                <!-- 클릭 요소 2 -->
-                <div class="interactive-card" onclick="showContent('brand')">
-                    <div>
-                        <div class="card-title">💼 브랜드 협업</div>
-                        <small style="color: rgba(255,255,255,0.7); font-size: 11px;">클릭하여 보기</small>
-                    </div>
-                    <span class="card-icon">➔</span>
-                </div>
-
-                <!-- 클릭 요소 3 -->
-                <div class="interactive-card" onclick="showContent('data')">
-                    <div>
-                        <div class="card-title">📊 데이터 분석</div>
-                        <small style="color: rgba(255,255,255,0.7); font-size: 11px;">클릭하여 보기</small>
-                    </div>
-                    <span class="card-icon">➔</span>
-                </div>
-
-            </div>
+    <!-- 게임이 실행되는 모달 팝업 -->
+    <div id="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeGame()">✕</button>
+            <div id="gameContainer" class="game-frame-wrap"></div>
         </div>
     </div>
 
-    <!-- 클릭 시 내용을 바꾸어주는 자바스크립트 -->
     <script>
-        const contentData = {
-            'contents': {
-                title: '🎬 콘텐츠 기획 (Content Strategy)',
-                desc: '트렌디한 숏폼 비디오 및 스토리텔링 중심의 기획을 진행합니다. AI 비디오 제너레이션 툴과 창의적인 스크립트를 활용해 높은 몰입감을 선사합니다.'
-            },
-            'brand': {
-                title: '💼 브랜드 협업 (Brand Collaboration)',
-                desc: '브랜드 가치에 맞는 매력적인 비주얼과 메시지를 전달합니다. 다양한 매체를 연결하여 마케팅 효과를 극대화합니다.'
-            },
-            'data': {
-                title: '📊 데이터 분석 (Data Analytics)',
-                desc: '단순한 조회수를 넘어 반응율, 유저 행동 데이터 및 도달 범위를 분석하여 효율적인 성과 방향을 제시합니다.'
+        const modal = document.getElementById('modal');
+        const container = document.getElementById('gameContainer');
+
+        function openGame(type) {
+            modal.style.display = 'flex';
+            if (type === 'pizza') {
+                container.innerHTML = `
+                    <div class="pizza-app">
+                        <h2>🍕 피자 공방</h2>
+                        <div class="pizza-layout">
+                            <div class="p-card">
+                                <h3>나만의 피자 만들기</h3>
+                                <div class="pizza-stage"><canvas id="pizzaCanvas" width="400" height="400"></canvas></div>
+                                <p style="font-size:11px; color:#d8cde3; margin-top:8px; text-align:center;">재료를 선택한 뒤 피자 위를 눌러 올려보세요!</p>
+                            </div>
+                            <div class="p-card">
+                                <div class="order-box">
+                                    <div><small style="color:#c6b9d4">손님 주문</small><br><strong id="pOrderName" style="color:#a9f4d0">치즈 폭탄 피자</strong></div>
+                                    <span id="pOrderEmoji" style="font-size:26px">🧀</span>
+                                </div>
+                                <div class="ingredients-grid" id="pIngredients"></div>
+                                <div class="action-row">
+                                    <button style="background:#ffffff15; color:#fff;" id="pClear">다시 만들기</button>
+                                    <button style="background:linear-gradient(100deg,#ffd56b,#ffb16c); color:#2d1723;" id="pServe">서빙하기 ✨</button>
+                                </div>
+                                <div id="pFeedback" style="margin-top:10px; font-size:12px; color:#e6dced; background:#0003; padding:8px; border-radius:8px;">도우를 선택하고 피자를 눌러주세요.</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                initPizzaGame();
+            } else if (type === 'star') {
+                container.innerHTML = `
+                    <div style="text-align:center; padding:20px;">
+                        <h2 style="color:#77f5ff; margin-bottom:10px;">✦ 별빛 수집가</h2>
+                        <p style="color:#c6ccef; font-size:13px; margin-bottom:15px;">별을 모으고 운석을 피하세요! (좌우 방향키 또는 터치)</p>
+                        <iframe src="star.html" style="width:100%; max-width:480px; height:550px; border:none; border-radius:16px;" onerror="this.outerHTML='<p style=\\'color:#ff77c8\\'>star.html 파일을 업로드해주세요!</p>'"></iframe>
+                    </div>
+                `;
+            } else if (type === 'arena') {
+                container.innerHTML = `
+                    <div style="text-align:center; padding:20px;">
+                        <h2 style="color:#5cf4ff; margin-bottom:10px;">⚔️ 네온 아레나 전투</h2>
+                        <p style="color:#c6ccef; font-size:13px; margin-bottom:15px;">WASD 이동, 스페이스바 공격!</p>
+                        <iframe src="arena.html" style="width:100%; max-width:760px; height:500px; border:none; border-radius:16px;" onerror="this.outerHTML='<p style=\\'color:#ff77c8\\'>arena.html 파일을 업로드해주세요!</p>'"></iframe>
+                    </div>
+                `;
             }
-        };
-
-        function showContent(key) {
-            // 내용 변경
-            document.getElementById('detailTitle').innerText = contentData[key].title;
-            document.getElementById('detailDesc').innerText = contentData[key].desc;
-
-            // 클릭된 카드 스타일 변경
-            const cards = document.querySelectorAll('.interactive-card');
-            cards.forEach(card => card.classList.remove('active'));
-            event.currentTarget.classList.add('active');
         }
 
-        // 초기 실행
-        showContent('contents');
+        function closeGame() {
+            modal.style.display = 'none';
+            container.innerHTML = '';
+        }
+
+        // 피자 게임 내부 실행 로직
+        function initPizzaGame() {
+            const canvas = document.getElementById('pizzaCanvas'), ctx = canvas.getContext('2d');
+            const ingredients = [
+                {id:'dough',emoji:'🫓',name:'도우',desc:'바닥',color:'#e8b96d',base:true},
+                {id:'sauce',emoji:'🍅',name:'토마토소스',desc:'새콤',color:'#e95745'},
+                {id:'cheese',emoji:'🧀',name:'모차렐라',desc:'치즈',color:'#ffe9a0'},
+                {id:'pepperoni',emoji:'🍕',name:'페퍼로니',desc:'토핑',color:'#bd3e3e'},
+                {id:'mushroom',emoji:'🍄',name:'버섯',desc:'풍미',color:'#d5b8a1'},
+                {id:'olive',emoji:'🫒',name:'올리브',desc:'감칠맛',color:'#32383b'}
+            ];
+            const orders = [
+                {name:'치즈 폭탄 피자',emoji:'🧀',need:['dough','sauce','cheese','cheese','cheese']},
+                {name:'페퍼로니 클래식',emoji:'🍕',need:['dough','sauce','cheese','pepperoni','pepperoni']}
+            ];
+            let orderIndex=0, selected='dough', placed=[];
+            const rand=(a,b)=>a+Math.random()*(b-a);
+
+            function draw() {
+                ctx.clearRect(0,0,400,400);
+                ctx.fillStyle='#bd7a40'; ctx.beginPath(); ctx.arc(200,200,165,0,Math.PI*2); ctx.fill();
+                ctx.fillStyle='#f5d18b'; ctx.beginPath(); ctx.arc(200,200,150,0,Math.PI*2); ctx.fill();
+                if(placed.some(p=>p.id==='sauce')){
+                    ctx.fillStyle='#d94839'; ctx.beginPath(); ctx.arc(200,200,135,0,Math.PI*2); ctx.fill();
+                }
+                if(placed.filter(p=>p.id==='cheese').length){
+                    ctx.fillStyle='#ffe9a6'; ctx.beginPath(); ctx.arc(200,200,130,0,Math.PI*2); ctx.fill();
+                }
+                placed.filter(p=>!['dough','sauce','cheese'].includes(p.id)).forEach(p=>{
+                    ctx.fillStyle='#8f252e'; ctx.beginPath(); ctx.arc(p.x,p.y,12,0,Math.PI*2); ctx.fill();
+                });
+                if(!placed.length){
+                    ctx.fillStyle='#8c573b'; ctx.font='bold 16px sans-serif'; ctx.textAlign='center'; ctx.fillText('여기를 눌러 도우를 놓으세요!',200,205);
+                }
+            }
+
+            function buildBtns() {
+                const root = document.getElementById('pIngredients');
+                root.innerHTML = '';
+                ingredients.forEach(it=>{
+                    const b = document.createElement('button');
+                    b.className = 'ing-btn' + (selected === it.id ? ' active' : '');
+                    b.innerHTML = `<span class="emoji">${it.emoji}</span><span><div><b>${it.name}</b></div><small style="color:#c6b9d4">${it.desc}</small></span>`;
+                    b.onclick = () => { selected = selected === it.id ? '' : it.id; buildBtns(); };
+                    root.appendChild(b);
+                });
+            }
+
+            canvas.onclick = (e) => {
+                if(!selected) return;
+                const rect = canvas.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width * 400;
+                const y = (e.clientY - rect.top) / rect.height * 400;
+                if(Math.hypot(x-200, y-200) > 140) return;
+                if(selected==='dough' && placed.some(p=>p.id==='dough')) return;
+                if(selected==='sauce' && !placed.some(p=>p.id==='dough')) return;
+                if(selected==='cheese' && !placed.some(p=>p.id==='sauce')) return;
+                
+                if(selected==='dough') { placed.push({id:'dough',x:200,y:200}); selected='sauce'; }
+                else { placed.push({id:selected,x,y}); }
+                buildBtns(); draw();
+            };
+
+            document.getElementById('pClear').onclick = () => { placed=[]; selected='dough'; buildBtns(); draw(); };
+            document.getElementById('pServe').onclick = () => {
+                if(!placed.length) return;
+                alert('피자가 완성되었습니다! 손님이 맛있게 먹어요 🍕✨');
+                placed=[]; selected='dough'; buildBtns(); draw();
+            };
+
+            buildBtns(); draw();
+        }
     </script>
 </body>
 </html>
