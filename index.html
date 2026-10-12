@@ -3,355 +3,156 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>보경이네 미니게임 천국</title>
-<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+<title>별빛 수집가</title>
 <style>
-    :root { color-scheme: dark; --primary: #77f5ff; --accent: #ff77c8; --bg: #090d22; }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-        background: radial-gradient(ellipse at 50% 0%, #222c60 0%, #101633 40%, #070a18 100%);
-        color: #f7f7ff;
-        font-family: 'Pretendard', sans-serif;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 40px 20px;
-    }
-    .container {
-        width: 100%;
-        max-width: 900px;
-    }
-    header {
-        text-align: center;
-        margin-bottom: 40px;
-    }
-    .badge {
-        display: inline-block;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        padding: 6px 16px;
-        border-radius: 20px;
-        font-size: 13px;
-        color: var(--primary);
-        margin-bottom: 14px;
-    }
-    h1 {
-        font-size: clamp(28px, 5vw, 42px);
-        font-weight: 800;
-        letter-spacing: -1px;
-        margin-bottom: 10px;
-    }
-    h1 span {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-    p.subtitle {
-        color: #aeb8e6;
-        font-size: 15px;
-    }
-    .game-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 20px;
-    }
-    .game-card {
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        padding: 24px;
-        text-decoration: none;
-        color: white;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        transition: all 0.25s ease;
-        cursor: pointer;
-    }
-    .game-card:hover {
-        transform: translateY(-5px);
-        background: rgba(255, 255, 255, 0.07);
-        border-color: var(--primary);
-        box-shadow: 0 15px 35px rgba(119, 245, 255, 0.15);
-    }
-    .game-icon {
-        font-size: 42px;
-        margin-bottom: 16px;
-    }
-    .game-title {
-        font-size: 20px;
-        font-weight: 700;
-        margin-bottom: 8px;
-    }
-    .game-desc {
-        color: #b3bdde;
-        font-size: 13px;
-        line-height: 1.5;
-        margin-bottom: 20px;
-    }
-    .play-btn {
-        align-self: flex-start;
-        background: linear-gradient(100deg, var(--primary), #b9ffdf);
-        color: #071021;
-        font-weight: 800;
-        font-size: 13px;
-        padding: 8px 18px;
-        border-radius: 99px;
-        transition: transform 0.2s ease;
-    }
-    .game-card:hover .play-btn {
-        transform: scale(1.05);
-    }
-    
-    /* 게임 플레이 모달 화면 스타일 */
-    #modal {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(7, 10, 24, 0.85);
-        backdrop-filter: blur(8px);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-    }
-    .modal-content {
-        position: relative;
-        width: 100%;
-        max-width: 860px;
-        max-height: 90vh;
-        background: #111326;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 24px;
-        overflow-y: auto;
-        padding: 30px;
-        box-shadow: 0 25px 60px rgba(0,0,0,0.8);
-    }
-    .close-btn {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: rgba(255, 255, 255, 0.1);
-        border: none;
-        color: white;
-        font-size: 18px;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: grid;
-        place-items: center;
-        transition: background 0.2s;
-    }
-    .close-btn:hover {
-        background: rgba(255, 255, 255, 0.25);
-    }
-    
-    /* 각 게임 내부 디자인 스타일 적용 */
-    .game-frame-wrap { margin-top: 10px; }
-    
-    /* 피자공방 스타일 */
-    .pizza-app { --cream:#fff1ce; --tomato:#ff755d; --gold:#ffd56b; --mint:#a9f4d0; width:100%; }
-    .pizza-app header-top { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px; }
-    .pizza-app h2 { font-size:24px; margin:0 0 12px; color:var(--gold); }
-    .pizza-layout { display:grid; grid-template-columns:1.1fr .9fr; gap:14px; }
-    .p-card { background:#ffffff0b; border:1px solid #ffffff20; border-radius:20px; padding:16px; }
-    .pizza-stage { min-height:300px; display:grid; place-items:center; position:relative; overflow:hidden; border-radius:16px; background:radial-gradient(ellipse,#543047,#2a203b 68%,#211b34); }
-    .pizza-stage canvas { width:min(100%,320px); aspect-ratio:1; display:block; touch-action:manipulation; cursor:pointer; }
-    .ingredients-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:10px; }
-    .ing-btn { display:flex; align-items:center; gap:8px; text-align:left; border:1px solid #ffffff20; background:#ffffff0a; color:#fff8e9; padding:8px 10px; border-radius:13px; cursor:pointer; font:inherit; }
-    .ing-btn.active { border-color:var(--gold); background:#ffd56b20; }
-    .ing-btn .emoji { font-size:22px; }
-    .order-box { display:flex; align-items:center; justify-content:space-between; background:#ffffff0c; border:1px solid #ffffff14; border-radius:12px; padding:10px 12px; margin-bottom:12px; }
-    .action-row { display:flex; gap:8px; margin-top:12px; }
-    .action-row button { flex:1; border:0; border-radius:999px; padding:10px; font-weight:800; cursor:pointer; }
-    
-    @media(max-width:650px) { .pizza-layout { grid-template-columns:1fr; } }
+  :root { color-scheme: dark; --cyan:#77f5ff; --pink:#ff77c8; --bg:#090d22; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; padding:18px;
+    font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif; color:#f7f7ff;
+    background:radial-gradient(ellipse at 50% 0%,#222c60 0%,#101633 40%,#070a18 100%); }
+  .wrap { width:min(100%,520px); }
+  header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
+  h1 { margin:0; font-size:clamp(22px,5vw,30px); letter-spacing:-1px; }
+  h1 span { color:var(--cyan); }
+  .stats { display:flex; gap:8px; }
+  .stat { background:#ffffff0d; border:1px solid #ffffff20; border-radius:12px; padding:8px 12px; min-width:76px; text-align:center; }
+  .stat small { display:block; color:#aeb8e6; font-size:11px; }
+  .stat strong { font-size:20px; }
+  .gamebox { position:relative; overflow:hidden; border:1px solid #8fa4ff50; border-radius:20px; box-shadow:0 20px 70px #0008,0 0 35px #4d7dff18; }
+  canvas { display:block; width:100%; aspect-ratio:4/5; background:#080d25; touch-action:none; }
+  .overlay { position:absolute; inset:0; display:grid; place-items:center; padding:26px; text-align:center;
+    background:linear-gradient(#080d25b8,#080d25df); }
+  .overlay.hidden { display:none; }
+  .panel { max-width:330px; }
+  .eyebrow { color:var(--cyan); font-weight:800; letter-spacing:3px; font-size:11px; }
+  .panel h2 { font-size:32px; margin:8px 0; letter-spacing:-1px; }
+  .panel p { color:#c6ccef; line-height:1.65; margin:10px 0 20px; font-size:14px; }
+  button { border:0; cursor:pointer; color:#071021; font-weight:850; font-size:15px; padding:13px 24px; border-radius:999px;
+    background:linear-gradient(100deg,var(--cyan),#b9ffdf); box-shadow:0 6px 25px #77f5ff30; }
+  button:active { transform:scale(.97); }
+  .hint { display:flex; justify-content:space-between; gap:10px; color:#aeb8e6; font-size:12px; padding:12px 4px 0; }
+  .hint b { color:#fff; }
+  .mobile { display:none; justify-content:center; gap:14px; margin-top:12px; }
+  .mobile button { width:72px; height:48px; padding:0; font-size:22px; background:#ffffff12; border:1px solid #ffffff25; color:white; box-shadow:none; }
+  @media (pointer:coarse) { .mobile { display:flex; } }
 </style>
 </head>
 <body>
-
-    <div class="container">
-        <header>
-            <div class="badge">✨ RETRO ARCADE PLATFORM</div>
-            <h1>보경이네 <span>미니게임 천국</span></h1>
-            <p class="subtitle">추억의 주니어 네이버처럼 즐기는 가볍고 재밌는 웹 게임들!</p>
-        </header>
-
-        <div class="game-grid">
-            <!-- 게임 1: 피자 공방 -->
-            <div class="game-card" onclick="openGame('pizza')">
-                <div>
-                    <div class="game-icon">🍕</div>
-                    <div class="game-title">피자 공방</div>
-                    <div class="game-desc">주문서에 맞추어 도우, 소스, 치즈와 토핑을 얹어 완벽한 피자를 만들고 팁을 모아보세요!</div>
-                </div>
-                <div class="play-btn">게임하기 →</div>
-            </div>
-
-            <!-- 게임 2: 별빛 수집가 -->
-            <div class="game-card" onclick="openGame('star')">
-                <div>
-                    <div class="game-icon">✦</div>
-                    <div class="game-title">별빛 수집가</div>
-                    <div class="game-desc">우주 속에서 반짝이는 별을 모으고 붉은 운석을 피해 최고 기록에 도전하세요!</div>
-                </div>
-                <div class="play-btn">게임하기 →</div>
-            </div>
-
-            <!-- 게임 3: 네온 아레나 -->
-            <div class="game-card" onclick="openGame('arena')">
-                <div>
-                    <div class="game-icon">⚔️</div>
-                    <div class="game-title">네온 아레나 (전투)</div>
-                    <div class="game-desc">몰려오는 적들을 검으로 물리치며 웨이브를 돌파하는 액션 생존 게임입니다.</div>
-                </div>
-                <div class="play-btn">게임하기 →</div>
-            </div>
-        </div>
-
-        <footer>
-            <p style="margin-top:50px; color:#727fae; font-size:12px; text-align:center;">© 2026 BOKYEONG LAND. All rights reserved.</p>
-        </footer>
+<main class="wrap">
+  <header>
+    <h1>별빛 <span>수집가</span> ✦</h1>
+    <div class="stats">
+      <div class="stat"><small>점수</small><strong id="score">0</strong></div>
+      <div class="stat"><small>최고 점수</small><strong id="best">0</strong></div>
     </div>
-
-    <!-- 게임이 실행되는 모달 팝업 -->
-    <div id="modal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeGame()">✕</button>
-            <div id="gameContainer" class="game-frame-wrap"></div>
-        </div>
+  </header>
+  <section class="gamebox">
+    <canvas id="game" width="480" height="600" aria-label="별빛 수집 게임"></canvas>
+    <div class="overlay" id="overlay">
+      <div class="panel">
+        <div class="eyebrow">COSMIC ARCADE</div>
+        <h2 id="headline">별빛을 모아봐! ✨</h2>
+        <p id="message">반짝이는 별을 모으고, 붉은 운석은 피하세요.<br>오래 버틸수록 운석이 점점 빨라져요.</p>
+        <button id="start">게임 시작</button>
+      </div>
     </div>
+  </section>
+  <div class="hint"><span>이동 <b>← →</b> 또는 <b>A / D</b></span><span>별 +10 · 운석에 닿으면 종료</span></div>
+  <div class="mobile"><button id="left" aria-label="왼쪽">←</button><button id="right" aria-label="오른쪽">→</button></div>
+</main>
+<script>
+(() => {
+  const canvas = document.getElementById('game'), ctx = canvas.getContext('2d');
+  const scoreEl = document.getElementById('score'), bestEl = document.getElementById('best');
+  const overlay = document.getElementById('overlay'), headline = document.getElementById('headline');
+  const message = document.getElementById('message'), startBtn = document.getElementById('start');
+  const W = canvas.width, H = canvas.height;
+  let running = false, score = 0, best = Number(localStorage.getItem('starCollectorBest') || 0);
+  let player, stars, rocks, particles, bgStars, keys = {}, spawnTick = 0, frame = 0, last = 0;
+  bestEl.textContent = best;
+  const rand = (a,b) => a + Math.random()*(b-a);
 
-    <script>
-        const modal = document.getElementById('modal');
-        const container = document.getElementById('gameContainer');
-
-        function openGame(type) {
-            modal.style.display = 'flex';
-            if (type === 'pizza') {
-                container.innerHTML = `
-                    <div class="pizza-app">
-                        <h2>🍕 피자 공방</h2>
-                        <div class="pizza-layout">
-                            <div class="p-card">
-                                <h3>나만의 피자 만들기</h3>
-                                <div class="pizza-stage"><canvas id="pizzaCanvas" width="400" height="400"></canvas></div>
-                                <p style="font-size:11px; color:#d8cde3; margin-top:8px; text-align:center;">재료를 선택한 뒤 피자 위를 눌러 올려보세요!</p>
-                            </div>
-                            <div class="p-card">
-                                <div class="order-box">
-                                    <div><small style="color:#c6b9d4">손님 주문</small><br><strong id="pOrderName" style="color:#a9f4d0">치즈 폭탄 피자</strong></div>
-                                    <span id="pOrderEmoji" style="font-size:26px">🧀</span>
-                                </div>
-                                <div class="ingredients-grid" id="pIngredients"></div>
-                                <div class="action-row">
-                                    <button style="background:#ffffff15; color:#fff;" id="pClear">다시 만들기</button>
-                                    <button style="background:linear-gradient(100deg,#ffd56b,#ffb16c); color:#2d1723;" id="pServe">서빙하기 ✨</button>
-                                </div>
-                                <div id="pFeedback" style="margin-top:10px; font-size:12px; color:#e6dced; background:#0003; padding:8px; border-radius:8px;">도우를 선택하고 피자를 눌러주세요.</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                initPizzaGame();
-            } else if (type === 'star') {
-                container.innerHTML = `
-                    <div style="text-align:center; padding:20px;">
-                        <h2 style="color:#77f5ff; margin-bottom:10px;">✦ 별빛 수집가</h2>
-                        <p style="color:#c6ccef; font-size:13px; margin-bottom:15px;">별을 모으고 운석을 피하세요! (좌우 방향키 또는 터치)</p>
-                        <iframe src="star.html" style="width:100%; max-width:480px; height:550px; border:none; border-radius:16px;" onerror="this.outerHTML='<p style=\\'color:#ff77c8\\'>star.html 파일을 업로드해주세요!</p>'"></iframe>
-                    </div>
-                `;
-            } else if (type === 'arena') {
-                container.innerHTML = `
-                    <div style="text-align:center; padding:20px;">
-                        <h2 style="color:#5cf4ff; margin-bottom:10px;">⚔️ 네온 아레나 전투</h2>
-                        <p style="color:#c6ccef; font-size:13px; margin-bottom:15px;">WASD 이동, 스페이스바 공격!</p>
-                        <iframe src="arena.html" style="width:100%; max-width:760px; height:500px; border:none; border-radius:16px;" onerror="this.outerHTML='<p style=\\'color:#ff77c8\\'>arena.html 파일을 업로드해주세요!</p>'"></iframe>
-                    </div>
-                `;
-            }
-        }
-
-        function closeGame() {
-            modal.style.display = 'none';
-            container.innerHTML = '';
-        }
-
-        // 피자 게임 내부 실행 로직
-        function initPizzaGame() {
-            const canvas = document.getElementById('pizzaCanvas'), ctx = canvas.getContext('2d');
-            const ingredients = [
-                {id:'dough',emoji:'🫓',name:'도우',desc:'바닥',color:'#e8b96d',base:true},
-                {id:'sauce',emoji:'🍅',name:'토마토소스',desc:'새콤',color:'#e95745'},
-                {id:'cheese',emoji:'🧀',name:'모차렐라',desc:'치즈',color:'#ffe9a0'},
-                {id:'pepperoni',emoji:'🍕',name:'페퍼로니',desc:'토핑',color:'#bd3e3e'},
-                {id:'mushroom',emoji:'🍄',name:'버섯',desc:'풍미',color:'#d5b8a1'},
-                {id:'olive',emoji:'🫒',name:'올리브',desc:'감칠맛',color:'#32383b'}
-            ];
-            const orders = [
-                {name:'치즈 폭탄 피자',emoji:'🧀',need:['dough','sauce','cheese','cheese','cheese']},
-                {name:'페퍼로니 클래식',emoji:'🍕',need:['dough','sauce','cheese','pepperoni','pepperoni']}
-            ];
-            let orderIndex=0, selected='dough', placed=[];
-            const rand=(a,b)=>a+Math.random()*(b-a);
-
-            function draw() {
-                ctx.clearRect(0,0,400,400);
-                ctx.fillStyle='#bd7a40'; ctx.beginPath(); ctx.arc(200,200,165,0,Math.PI*2); ctx.fill();
-                ctx.fillStyle='#f5d18b'; ctx.beginPath(); ctx.arc(200,200,150,0,Math.PI*2); ctx.fill();
-                if(placed.some(p=>p.id==='sauce')){
-                    ctx.fillStyle='#d94839'; ctx.beginPath(); ctx.arc(200,200,135,0,Math.PI*2); ctx.fill();
-                }
-                if(placed.filter(p=>p.id==='cheese').length){
-                    ctx.fillStyle='#ffe9a6'; ctx.beginPath(); ctx.arc(200,200,130,0,Math.PI*2); ctx.fill();
-                }
-                placed.filter(p=>!['dough','sauce','cheese'].includes(p.id)).forEach(p=>{
-                    ctx.fillStyle='#8f252e'; ctx.beginPath(); ctx.arc(p.x,p.y,12,0,Math.PI*2); ctx.fill();
-                });
-                if(!placed.length){
-                    ctx.fillStyle='#8c573b'; ctx.font='bold 16px sans-serif'; ctx.textAlign='center'; ctx.fillText('여기를 눌러 도우를 놓으세요!',200,205);
-                }
-            }
-
-            function buildBtns() {
-                const root = document.getElementById('pIngredients');
-                root.innerHTML = '';
-                ingredients.forEach(it=>{
-                    const b = document.createElement('button');
-                    b.className = 'ing-btn' + (selected === it.id ? ' active' : '');
-                    b.innerHTML = `<span class="emoji">${it.emoji}</span><span><div><b>${it.name}</b></div><small style="color:#c6b9d4">${it.desc}</small></span>`;
-                    b.onclick = () => { selected = selected === it.id ? '' : it.id; buildBtns(); };
-                    root.appendChild(b);
-                });
-            }
-
-            canvas.onclick = (e) => {
-                if(!selected) return;
-                const rect = canvas.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / rect.width * 400;
-                const y = (e.clientY - rect.top) / rect.height * 400;
-                if(Math.hypot(x-200, y-200) > 140) return;
-                if(selected==='dough' && placed.some(p=>p.id==='dough')) return;
-                if(selected==='sauce' && !placed.some(p=>p.id==='dough')) return;
-                if(selected==='cheese' && !placed.some(p=>p.id==='sauce')) return;
-                
-                if(selected==='dough') { placed.push({id:'dough',x:200,y:200}); selected='sauce'; }
-                else { placed.push({id:selected,x,y}); }
-                buildBtns(); draw();
-            };
-
-            document.getElementById('pClear').onclick = () => { placed=[]; selected='dough'; buildBtns(); draw(); };
-            document.getElementById('pServe').onclick = () => {
-                if(!placed.length) return;
-                alert('피자가 완성되었습니다! 손님이 맛있게 먹어요 🍕✨');
-                placed=[]; selected='dough'; buildBtns(); draw();
-            };
-
-            buildBtns(); draw();
-        }
-    </script>
+  function reset() {
+    score = 0; frame = 0; spawnTick = 0;
+    player = { x:W/2, y:H-65, r:16, speed:5.8 };
+    stars = []; rocks = []; particles = [];
+    bgStars = Array.from({length:75}, () => ({x:rand(0,W),y:rand(0,H),r:rand(.5,1.8),v:rand(.4,1.5),a:rand(.2,.8)}));
+    scoreEl.textContent = score;
+  }
+  function start() {
+    reset(); running = true; overlay.classList.add('hidden'); last = performance.now();
+    requestAnimationFrame(loop);
+  }
+  function end() {
+    running = false;
+    if (score > best) { best = score; localStorage.setItem('starCollectorBest', best); bestEl.textContent = best; }
+    headline.textContent = '우주 탐험 종료 💫';
+    message.innerHTML = `최종 점수는 <b style="color:#77f5ff">${score}점</b>!<br>${score >= best && score > 0 ? '새로운 최고 기록일지도 몰라요. 멋져요!' : '다시 도전해서 기록을 깨보세요.'}`;
+    startBtn.textContent = '다시 도전';
+    overlay.classList.remove('hidden');
+  }
+  function burst(x,y,color,n=10) {
+    for(let i=0;i<n;i++) particles.push({x,y,vx:rand(-2.5,2.5),vy:rand(-2.8,2.2),life:rand(18,35),max:35,color,r:rand(1,3)});
+  }
+  function spawn() {
+    if (Math.random() < .72) stars.push({x:rand(24,W-24),y:-20,r:rand(8,12),v:rand(2.2,3.4)+score*.002,rot:rand(0,6)});
+    else rocks.push({x:rand(24,W-24),y:-30,r:rand(13,21),v:rand(2.4,3.7)+score*.003,rot:rand(0,6),spin:rand(-.04,.04)});
+  }
+  function starShape(x,y,r,rot=0) {
+    ctx.beginPath();
+    for(let i=0;i<10;i++){const a=rot+i*Math.PI/5-Math.PI/2, rr=i%2?r*.43:r; const px=x+Math.cos(a)*rr,py=y+Math.sin(a)*rr; i?ctx.lineTo(px,py):ctx.moveTo(px,py);}
+    ctx.closePath();
+  }
+  function drawPlayer() {
+    ctx.save(); ctx.translate(player.x,player.y);
+    ctx.shadowBlur=22; ctx.shadowColor='#77f5ff';
+    ctx.fillStyle='#a6fcff'; ctx.beginPath(); ctx.moveTo(0,-20); ctx.lineTo(15,13); ctx.lineTo(0,8); ctx.lineTo(-15,13); ctx.closePath(); ctx.fill();
+    ctx.shadowBlur=0; ctx.fillStyle='#536fff'; ctx.beginPath(); ctx.moveTo(-5,12);ctx.lineTo(0,24+Math.sin(frame*.45)*4);ctx.lineTo(5,12);ctx.fill();
+    ctx.fillStyle='#fff'; ctx.beginPath();ctx.arc(0,-2,4,0,Math.PI*2);ctx.fill();ctx.restore();
+  }
+  function loop(now) {
+    if (!running) return;
+    const dt = Math.min((now-last)/16.67,2); last = now; frame++;
+    update(dt); draw(); requestAnimationFrame(loop);
+  }
+  function update(dt) {
+    if(keys.ArrowLeft||keys.a||keys.A) player.x -= player.speed*dt;
+    if(keys.ArrowRight||keys.d||keys.D) player.x += player.speed*dt;
+    player.x = Math.max(20,Math.min(W-20,player.x));
+    bgStars.forEach(s=>{s.y+=s.v*dt;if(s.y>H){s.y=0;s.x=rand(0,W);}});
+    spawnTick += dt;
+    if(spawnTick > Math.max(18,43-score*.035)){spawn();spawnTick=0;}
+    for(let i=stars.length-1;i>=0;i--){
+      const s=stars[i]; s.y+=s.v*dt;s.rot+=.025*dt;
+      if(Math.hypot(s.x-player.x,s.y-player.y)<s.r+player.r){score+=10;scoreEl.textContent=score;burst(s.x,s.y,'#ffe88a',12);stars.splice(i,1);}
+      else if(s.y>H+30) stars.splice(i,1);
+    }
+    for(let i=rocks.length-1;i>=0;i--){
+      const r=rocks[i];r.y+=r.v*dt;r.rot+=r.spin*dt;
+      if(Math.hypot(r.x-player.x,r.y-player.y)<r.r+player.r*.65){burst(player.x,player.y,'#ff77c8',25);draw();end();return;}
+      if(r.y>H+40) rocks.splice(i,1);
+    }
+    for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;if(p.life<=0)particles.splice(i,1);}
+  }
+  function draw() {
+    const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#101a43');g.addColorStop(1,'#080b20');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    bgStars.forEach(s=>{ctx.globalAlpha=s.a;ctx.fillStyle='#d8e8ff';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();});ctx.globalAlpha=1;
+    // faint orbital arcs
+    ctx.strokeStyle='#758cff12';ctx.lineWidth=1;
+    for(let y=90;y<H;y+=105){ctx.beginPath();ctx.ellipse(W/2,y,W*.55,27,0,0,Math.PI*2);ctx.stroke();}
+    stars.forEach(s=>{ctx.save();ctx.translate(s.x,s.y);ctx.rotate(s.rot);ctx.shadowBlur=18;ctx.shadowColor='#ffe88a';ctx.fillStyle='#ffe88a';starShape(0,0,s.r);ctx.fill();ctx.restore();});
+    rocks.forEach(r=>{ctx.save();ctx.translate(r.x,r.y);ctx.rotate(r.rot);ctx.shadowBlur=12;ctx.shadowColor='#ff477e';ctx.fillStyle='#ff648e';ctx.strokeStyle='#ffb1c8';ctx.lineWidth=2;ctx.beginPath();for(let i=0;i<9;i++){let a=i*Math.PI*2/9,rr=r.r*(i%2?.8:1);let x=Math.cos(a)*rr,y=Math.sin(a)*rr;i?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();});
+    particles.forEach(p=>{ctx.globalAlpha=Math.max(0,p.life/p.max);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();});ctx.globalAlpha=1;
+    if(player) drawPlayer();
+  }
+  document.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();keys[e.key]=true;if(!running&&e.key===' ')start();});
+  document.addEventListener('keyup',e=>keys[e.key]=false);
+  startBtn.addEventListener('click',start);
+  function holdButton(id,key){const el=document.getElementById(id);el.addEventListener('pointerdown',e=>{e.preventDefault();keys[key]=true;});['pointerup','pointerleave','pointercancel'].forEach(ev=>el.addEventListener(ev,()=>keys[key]=false));}
+  holdButton('left','ArrowLeft');holdButton('right','ArrowRight');
+  canvas.addEventListener('pointermove',e=>{if(running&&e.pointerType!=='mouse') {const rect=canvas.getBoundingClientRect();player.x=(e.clientX-rect.left)/rect.width*W;}});
+  reset(); draw();
+})();
+</script>
 </body>
 </html>

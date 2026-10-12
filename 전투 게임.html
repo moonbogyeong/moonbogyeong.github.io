@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEON ARENA — 전투 게임</title>
+<style>
+:root{color-scheme:dark;--cyan:#5cf4ff;--pink:#ff5e91;--gold:#ffe58b}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:16px;background:radial-gradient(ellipse at top,#20295a,#090c1d 65%);color:#f4f7ff;font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+main{width:min(100%,760px)}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+h1{font-size:clamp(22px,4vw,30px);margin:0;letter-spacing:-1px}h1 span{color:var(--cyan)}
+.stats{display:flex;gap:8px}.stat{padding:7px 13px;border:1px solid #ffffff20;border-radius:12px;background:#ffffff0b;text-align:center;min-width:76px}.stat small{display:block;color:#aab5df;font-size:11px}.stat strong{font-size:20px}
+.arena{position:relative;border:1px solid #6f8fff55;border-radius:18px;overflow:hidden;box-shadow:0 20px 70px #0008}
+canvas{display:block;width:100%;aspect-ratio:16/10;background:#090d20;touch-action:none}
+.overlay{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;background:#070b1bd9}.overlay.hidden{display:none}.panel{max-width:420px}.eyebrow{font-size:11px;letter-spacing:4px;color:var(--cyan);font-weight:900}.panel h2{font-size:clamp(26px,6vw,38px);margin:10px 0;letter-spacing:-1px}.panel p{font-size:14px;line-height:1.7;color:#c4cbed;margin:10px 0 20px}
+button{border:0;border-radius:999px;background:linear-gradient(100deg,var(--cyan),#b5ffd9);color:#071021;font-weight:900;font-size:15px;padding:13px 24px;cursor:pointer}button:active{transform:scale(.97)}
+.help{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:12px 4px 0;color:#aeb8e6;font-size:12px}.help b{color:#fff}
+.mobile{display:none;justify-content:space-between;align-items:center;gap:8px;margin-top:12px}.mobile .cluster{display:flex;gap:8px}.mobile button{width:52px;height:48px;padding:0;border:1px solid #ffffff2b;background:#ffffff12;color:white;font-size:20px;box-shadow:none;border-radius:12px}.mobile .attack{width:auto;padding:0 18px;background:#ff5e9126;color:#ffb1c9;border-color:#ff5e9166;font-size:13px}
+@media(pointer:coarse){.mobile{display:flex}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>NEON <span>ARENA</span> ⚔️</h1>
+<div class="stats">
+<div class="stat"><small>체력</small><strong id="hp">100</strong></div>
+<div class="stat"><small>처치</small><strong id="kills">0</strong></div>
+<div class="stat"><small>웨이브</small><strong id="wave">1</strong></div>
+</div>
+</header>
+<section class="arena">
+<canvas id="game" width="960" height="600" aria-label="적을 물리치는 전투 게임"></canvas>
+<div class="overlay" id="overlay"><div class="panel">
+<div class="eyebrow">SURVIVE THE ARENA</div><h2 id="title">전투를 시작하라</h2>
+<p id="desc">검으로 몰려오는 적을 물리치세요.<br>적을 처치하면 다음 웨이브가 시작됩니다.<br><b>이동:</b> WASD / 방향키　<b>공격:</b> 스페이스바</p>
+<button id="start">전투 시작</button>
+</div></div>
+</section>
+<div class="help"><span>이동 <b>W A S D</b> 또는 <b>방향키</b></span><span>공격 <b>Space</b> · 적을 처치해 웨이브 돌파</span></div>
+<div class="mobile">
+<div class="cluster"><button id="up">↑</button><button id="left">←</button><button id="down">↓</button><button id="right">→</button></div>
+<button class="attack" id="attack">⚔ 공격</button>
+</div>
+</main>
+<script>
+(()=>{
+const c=document.getElementById('game'),ctx=c.getContext('2d'),W=c.width,H=c.height;
+const $=id=>document.getElementById(id);
+const overlay=$('overlay');let running=false,last=0,keys={},player,enemies=[],particles=[],slashes=[],kills=0,wave=1,spawned=0,spawnDelay=0,shake=0;
+const rand=(a,b)=>a+Math.random()*(b-a);
+function reset(){kills=0;wave=1;spawned=0;spawnDelay=0;enemies=[];particles=[];slashes=[];shake=0;player={x:W/2,y:H/2,r:19,hp:100,faceX:1,faceY:0,speed:4.1,attack:0,invuln:0};for(let i=0;i<4;i++)spawnEnemy();updateUI();}
+function updateUI(){$('hp').textContent=Math.max(0,Math.ceil(player.hp));$('kills').textContent=kills;$('wave').textContent=wave;}
+function start(){reset();running=true;overlay.classList.add('hidden');last=performance.now();requestAnimationFrame(loop);}
+function end(){running=false;$('title').textContent='전투 종료';$('desc').innerHTML=`최종 처치 수: <b style="color:#5cf4ff">${kills}</b><br>${wave} 웨이브까지 생존했어요. 다시 도전할까요?`;$('start').textContent='다시 전투';overlay.classList.remove('hidden');}
+function spawnEnemy(){let side=Math.floor(Math.random()*4),x=side===0?-30:side===1?W+30:rand(0,W),y=side===2?-30:side===3?H+30:rand(0,H);if(Math.hypot(x-player.x,y-player.y)<200){x=x<W/2?W-40:40;y=y<H/2?H-40:40;}
+const heavy=Math.random()<Math.min(.12+wave*.025,.35);enemies.push({x,y,r:heavy?23:16,hp:heavy?3:1,maxHp:heavy?3:1,speed:(heavy?1.0:1.35)+Math.min(wave*.07,1.1),hit:0,phase:rand(0,6),heavy});spawned++;}
+function burst(x,y,color,n=9){for(let i=0;i<n;i++)particles.push({x,y,vx:rand(-3,3),vy:rand(-3,3),life:rand(15,30),max:30,color,r:rand(2,5)});}
+function attack(){if(!running||player.attack>0)return;player.attack=17;slashes.push({x:player.x,y:player.y,dx:player.faceX,dy:player.faceY,life:12});let hit=false;
+for(let i=enemies.length-1;i>=0;i--){let e=enemies[i],dx=e.x-player.x,dy=e.y-player.y,dist=Math.hypot(dx,dy),dot=(dx*player.faceX+dy*player.faceY)/(dist||1);if(dist<92+e.r&&dot>-.1){e.hp--;e.hit=8;burst(e.x,e.y,e.heavy?'#ffb56b':'#ff5e91',7);hit=true;if(e.hp<=0){burst(e.x,e.y,'#ffe58b',16);enemies.splice(i,1);kills++;if(kills%5===0){wave++;player.hp=Math.min(100,player.hp+12);}}}}
+if(hit)shake=5;updateUI();}
+function loop(t){if(!running)return;let dt=Math.min((t-last)/16.67,2);last=t;update(dt);draw();requestAnimationFrame(loop);}
+function update(dt){
+let mx=0,my=0;if(keys.ArrowLeft||keys.a||keys.A)mx--;if(keys.ArrowRight||keys.d||keys.D)mx++;if(keys.ArrowUp||keys.w||keys.W)my--;if(keys.ArrowDown||keys.s||keys.S)my++;
+if(mx||my){let l=Math.hypot(mx,my);mx/=l;my/=l;player.x+=mx*player.speed*dt;player.y+=my*player.speed*dt;player.faceX=mx;player.faceY=my;}
+player.x=Math.max(player.r,Math.min(W-player.r,player.x));player.y=Math.max(player.r,Math.min(H-player.r,player.y));
+player.attack=Math.max(0,player.attack-dt);player.invuln=Math.max(0,player.invuln-dt);
+spawnDelay+=dt;if(spawnDelay>Math.max(22,70-wave*3)&&enemies.length<Math.min(5+wave*2,22)){spawnEnemy();spawnDelay=0;}
+enemies.forEach(e=>{let dx=player.x-e.x,dy=player.y-e.y,d=Math.hypot(dx,dy)||1;e.x+=dx/d*e.speed*dt;e.y+=dy/d*e.speed*dt;e.phase+=.08*dt;e.hit=Math.max(0,e.hit-dt);if(d<e.r+player.r-2&&player.invuln<=0){player.hp-=e.heavy?0.65:0.42;player.invuln=20;shake=4;burst(player.x,player.y,'#ff5e91',5);updateUI();}});
+particles.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.97;p.vy*=.97;p.life-=dt;});particles=particles.filter(p=>p.life>0);
+slashes.forEach(s=>s.life-=dt);slashes=slashes.filter(s=>s.life>0);shake=Math.max(0,shake-dt*.6);
+if(player.hp<=0){player.hp=0;updateUI();draw();end();}
+}
+function draw(){
+ctx.save();if(shake>0)ctx.translate(rand(-shake,shake),rand(-shake,shake));
+ctx.fillStyle='#090d20';ctx.fillRect(-10,-10,W+20,H+20);
+ctx.strokeStyle='#18234b';ctx.lineWidth=1;for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+ctx.strokeStyle='#324477';ctx.lineWidth=3;ctx.strokeRect(10,10,W-20,H-20);
+slashes.forEach(s=>{let alpha=s.life/12;ctx.save();ctx.globalAlpha=alpha;ctx.translate(s.x,s.y);ctx.rotate(Math.atan2(s.dy,s.dx));ctx.strokeStyle='#b9ffff';ctx.shadowBlur=28;ctx.shadowColor='#5cf4ff';ctx.lineWidth=12;ctx.beginPath();ctx.arc(0,0,65,-.85,.85);ctx.stroke();ctx.restore();});
+enemies.forEach(e=>{ctx.save();ctx.translate(e.x,e.y);let col=e.heavy?'#ffad5e':'#ff5e91';ctx.shadowBlur=e.hit?28:14;ctx.shadowColor=col;ctx.fillStyle=e.hit?'#fff':col;ctx.beginPath();ctx.arc(0,0,e.r+Math.sin(e.phase)*1.5,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='#2a1028';ctx.beginPath();ctx.arc(-5,-3,3,0,Math.PI*2);ctx.arc(5,-3,3,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#fff0f4';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-5,6);ctx.lineTo(5,6);ctx.stroke();if(e.maxHp>1){ctx.fillStyle='#35152b';ctx.fillRect(-22,-e.r-12,44,5);ctx.fillStyle='#ffcf82';ctx.fillRect(-22,-e.r-12,44*(e.hp/e.maxHp),5);}ctx.restore();});
+particles.forEach(p=>{ctx.globalAlpha=Math.max(0,p.life/p.max);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();});ctx.globalAlpha=1;
+ctx.save();ctx.translate(player.x,player.y);if(player.invuln>0&&Math.floor(player.invuln/3)%2===0)ctx.globalAlpha=.4;ctx.shadowBlur=22;ctx.shadowColor='#5cf4ff';ctx.fillStyle='#5cf4ff';ctx.beginPath();ctx.arc(0,0,player.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='#11274a';ctx.beginPath();ctx.arc(0,0,player.r-6,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#d8ffff';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(player.faceX*8,player.faceY*8);ctx.lineTo(player.faceX*29,player.faceY*29);ctx.stroke();ctx.restore();
+ctx.restore();
+}
+document.addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();keys[e.key]=true;if(e.code==='Space'&&!e.repeat)attack();if(!running&&e.code==='Enter')start();});
+document.addEventListener('keyup',e=>keys[e.key]=false);$('start').addEventListener('click',start);
+const hold=(id,key)=>{let b=$(id);b.addEventListener('pointerdown',e=>{e.preventDefault();keys[key]=true;b.setPointerCapture(e.pointerId)});['pointerup','pointercancel','lostpointercapture'].forEach(ev=>b.addEventListener(ev,()=>keys[key]=false));};
+hold('up','ArrowUp');hold('down','ArrowDown');hold('left','ArrowLeft');hold('right','ArrowRight');$('attack').addEventListener('pointerdown',e=>{e.preventDefault();attack()});
+let touchX=null,touchY=null;c.addEventListener('pointerdown',e=>{if(e.pointerType==='touch'){const r=c.getBoundingClientRect();touchX=(e.clientX-r.left)/r.width*W;touchY=(e.clientY-r.top)/r.height*H;}});
+c.addEventListener('pointermove',e=>{if(e.pointerType==='touch'&&running&&touchX!==null){const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*W,y=(e.clientY-r.top)/r.height*H;let dx=x-touchX,dy=y-touchY;if(Math.hypot(dx,dy)>8){player.faceX=dx/Math.hypot(dx,dy);player.faceY=dy/Math.hypot(dx,dy);player.x=Math.max(20,Math.min(W-20,player.x+dx*.55));player.y=Math.max(20,Math.min(H-20,player.y+dy*.55));touchX=x;touchY=y;}}});
+c.addEventListener('pointerup',()=>{touchX=null;touchY=null;});
+reset();draw();
+})();
+</script>
+</body>
+</html>
