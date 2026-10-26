@@ -340,6 +340,7 @@
     .card-icon.star  { box-shadow: inset 0 0 20px var(--cyan-soft); }
     .card-icon.arena { box-shadow: inset 0 0 20px rgba(255, 119, 200, 0.12); }
     .card-icon.pizza { box-shadow: inset 0 0 20px var(--orange-soft); }
+    .card-icon.pacman { box-shadow: inset 0 0 20px rgba(255, 227, 77, 0.15); }
     .card-id {
         font-family: var(--mono);
         font-size: 14px;
@@ -771,6 +772,19 @@
                         <span class="play-link">PLAY ▸</span>
                     </div>
                 </div>
+
+                <div class="game-card reveal" onclick="openGame('pacman')">
+                    <div class="card-head">
+                        <div class="card-icon pacman">🟡</div>
+                        <div class="card-id">ID:04<br><span class="ver">v1.0</span></div>
+                    </div>
+                    <div class="card-title">팩맨</div>
+                    <div class="card-desc">미로 속 점을 모두 먹고 유령을 피하세요. 파워펠릿을 먹으면 반격 찬스!</div>
+                    <div class="card-foot">
+                        <div class="card-tags"><span>ARCADE</span><span>MAZE</span><span>ALL</span></div>
+                        <span class="play-link">PLAY ▸</span>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -879,6 +893,7 @@
                     <a href="#" onclick="openGame('pizza'); return false;">피자 공방</a>
                     <a href="#" onclick="openGame('star'); return false;">별빛 수집가</a>
                     <a href="#" onclick="openGame('arena'); return false;">네온 아레나</a>
+                    <a href="#" onclick="openGame('pacman'); return false;">팩맨</a>
                 </div>
                 <div class="footer-col">
                     <h5>// LINKS</h5>
@@ -953,6 +968,13 @@
                     <div style="text-align:center; padding:10px;">
                         <h2 style="color:#ff77c8; margin-bottom:10px; font-family:'VT323',monospace; font-size:28px; letter-spacing:2px;">⚔ NEON ARENA</h2>
                         <iframe src="arena.html" style="width:100%; max-width:760px; height:520px; border:none; border-radius:12px;"></iframe>
+                    </div>
+                `;
+            } else if (type === 'pacman') {
+                container.innerHTML = `
+                    <div style="text-align:center; padding:10px;">
+                        <h2 style="color:#ffe34d; margin-bottom:10px; font-family:'VT323',monospace; font-size:28px; letter-spacing:2px;">🟡 PAC-MAN</h2>
+                        <iframe src="pacman.html" style="width:100%; max-width:480px; height:620px; border:none; border-radius:12px;"></iframe>
                     </div>
                 `;
             }
