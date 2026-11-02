@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>팩맨 · PLAYON</title>
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root { color-scheme: dark; --bg:#0c0d14; --wall:#2d6cff; --dot:#ffd56b; --pac:#ffe34d; --text:#f0f0f5; --cyan:#5cf4ff; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px;
+    font-family: 'VT323', system-ui, monospace; color: var(--text);
+    background: radial-gradient(ellipse at 50% 0%, #1a1c28 0%, #0c0d14 60%);
+  }
+  .wrap { width: min(100%, 460px); }
+  header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px; }
+  h1 { margin: 0; font-size: 34px; letter-spacing: 2px; color: var(--pac); }
+  .stats { display: flex; gap: 10px; }
+  .stat { background: #14151f; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 4px 12px; text-align: center; min-width: 70px; }
+  .stat small { display: block; font-size: 14px; color: var(--cyan); letter-spacing: 1px; }
+  .stat strong { font-size: 24px; letter-spacing: 1px; }
+  .gamebox { position: relative; border: 2px solid rgba(45,108,255,0.5); border-radius: 12px; overflow: hidden; box-shadow: 0 0 40px rgba(45,108,255,0.2); }
+  canvas { display: block; width: 100%; background: #05060d; touch-action: none; }
+  .overlay { position: absolute; inset: 0; display: grid; place-items: center; text-align: center;
+    background: rgba(5,6,13,0.9); padding: 24px; }
+  .overlay.hidden { display: none; }
+  .overlay h2 { font-size: 40px; margin: 0 0 8px; color: var(--pac); letter-spacing: 2px; }
+  .overlay p { color: #b3b3c6; font-size: 20px; margin: 0 0 18px; letter-spacing: 1px; }
+  button { font-family: inherit; font-size: 22px; letter-spacing: 2px; cursor: pointer; border: 0;
+    color: #1a0a00; background: var(--pac); padding: 10px 26px; border-radius: 10px; box-shadow: 0 0 24px rgba(255,227,77,0.4); }
+  button:active { transform: scale(0.97); }
+  .hint { color: #8b8fa3; font-size: 18px; text-align: center; margin-top: 10px; letter-spacing: 1px; }
+  .mobile { display: none; grid-template-columns: repeat(3, 56px); gap: 8px; justify-content: center; margin-top: 14px; }
+  .mobile button { font-size: 26px; padding: 0; width: 56px; height: 52px; background: #14151f; color: var(--cyan); border: 1px solid rgba(255,255,255,0.15); box-shadow: none; border-radius: 10px; }
+  .mobile .up { grid-column: 2; }
+  .mobile .left { grid-column: 1; grid-row: 2; }
+  .mobile .down { grid-column: 2; grid-row: 2; }
+  .mobile .right { grid-column: 3; grid-row: 2; }
+  @media (pointer: coarse) { .mobile { display: grid; } }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>PAC-MAN</h1>
+      <div class="stats">
+        <div class="stat"><small>SCORE</small><strong id="score">0</strong></div>
+        <div class="stat"><small>LIVES</small><strong id="lives">3</strong></div>
+      </div>
+    </header>
+
+    <div class="gamebox">
+      <canvas id="game" width="448" height="496"></canvas>
+      <div class="overlay" id="overlay">
+        <div>
+          <h2 id="ovTitle">PAC-MAN</h2>
+          <p id="ovMsg">방향키 또는 WASD로 이동하세요</p>
+          <button id="startBtn">START ▶</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="hint">← ↑ → ↓ / W A S D 로 이동 · 점을 모두 먹으면 클리어!</p>
+
+    <div class="mobile">
+      <button class="up" data-dir="up">▲</button>
+      <button class="left" data-dir="left">◀</button>
+      <button class="down" data-dir="down">▼</button>
+      <button class="right" data-dir="right">▶</button>
+    </div>
+  </div>
+
+<script>
+(function () {
+  const TILE = 16;
+  // 미로 레이아웃: 28 x 31
+  // # 벽, . 점, o 파워펠릿, (공백) 빈칸, - 유령집 문, 'P' 팩맨 시작, 'G' 유령 시작
+  const MAP = [
+    "############################",
+    "#............##............#",
+    "#.####.#####.##.#####.####.#",
+    "#o####.#####.##.#####.####o#",
+    "#.####.#####.##.#####.####.#",
+    "#..........................#",
+    "#.####.##.########.##.####.#",
+    "#.####.##.########.##.####.#",
+    "#......##....##....##......#",
+    "######.##### ## #####.######",
+    "     #.##### ## #####.#     ",
+    "     #.##          ##.#     ",
+    "     #.## ###--### ##.#     ",
+    "######.## #      # ##.######",
+    "      .   #  GG  #   .      ",
+    "######.## #      # ##.######",
+    "     #.## ######## ##.#     ",
+    "     #.##          ##.#     ",
+    "     #.## ######## ##.#     ",
+    "######.## ######## ##.######",
+    "#............##............#",
+    "#.####.#####.##.#####.####.#",
+    "#.####.#####.##.#####.####.#",
+    "#o..##.......P .......##..o#",
+    "###.##.##.########.##.##.###",
+    "###.##.##.########.##.##.###",
+    "#......##....##....##......#",
+    "#.##########.##.##########.#",
+    "#.##########.##.##########.#",
+    "#..........................#",
+    "############################"
+  ];
+  const COLS = 28, ROWS = 31;
+
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const scoreEl = document.getElementById('score');
+  const livesEl = document.getElementById('lives');
+  const overlay = document.getElementById('overlay');
+  const ovTitle = document.getElementById('ovTitle');
+  const ovMsg = document.getElementById('ovMsg');
+  const startBtn = document.getElementById('startBtn');
+
+  let grid, dotsLeft, score, lives, running, frightTimer;
+  let pac, ghosts, animTimer = 0;
+
+  const GHOST_COLORS = ['#ff4d6d', '#ffb8de', '#5cf4ff', '#ffb347'];
+
+  function parseMap() {
+    grid = [];
+    dotsLeft = 0;
+    let pacStart = { c: 13, r: 23 };
+    const ghostStarts = [];
+    for (let r = 0; r < ROWS; r++) {
+      grid[r] = [];
+      for (let c = 0; c < COLS; c++) {
+        const ch = MAP[r][c] || ' ';
+        let cell = 'empty';
+        if (ch === '#') cell = 'wall';
+        else if (ch === '.') { cell = 'dot'; dotsLeft++; }
+        else if (ch === 'o') { cell = 'power'; dotsLeft++; }
+        else if (ch === '-') cell = 'door';
+        else if (ch === 'P') { cell = 'empty'; pacStart = { c, r }; }
+        else if (ch === 'G') { cell = 'empty'; ghostStarts.push({ c, r }); }
+        grid[r][c] = cell;
+      }
+    }
+    return { pacStart, ghostStarts };
+  }
+
+  function isWall(c, r, forGhost) {
+    if (r < 0 || r >= ROWS) return true;
+    // 좌우 터널 통과
+    if (c < 0 || c >= COLS) return false;
+    const cell = grid[r][c];
+    if (cell === 'wall') return true;
+    if (cell === 'door') return !forGhost; // 문은 유령만 통과
+    return false;
+  }
+
+  function reset() {
+    const { pacStart, ghostStarts } = parseMap();
+    score = 0; lives = 3; frightTimer = 0;
+    pac = { c: pacStart.c, r: pacStart.r, x: pacStart.c * TILE, y: pacStart.r * TILE, dir: 'left', next: 'left', speed: 2, mouth: 0 };
+    ghosts = GHOST_COLORS.map((col, i) => {
+      const s = ghostStarts[i % ghostStarts.length] || { c: 13, r: 14 };
+      return { c: s.c, r: s.r, x: s.c * TILE, y: s.r * TILE, dir: ['up','left','down','right'][i], color: col, fright: false, speed: 1.6, home: { c: s.c, r: s.r }, release: i * 40 };
+    });
+    updateHud();
+  }
+
+  function updateHud() {
+    scoreEl.textContent = score;
+    livesEl.textContent = lives;
+  }
+
+  const DIRS = { up:{dc:0,dr:-1}, down:{dc:0,dr:1}, left:{dc:-1,dr:0}, right:{dc:1,dr:0} };
+
+  function atCenter(e) {
+    return Math.abs(e.x - e.c * TILE) < 1 && Math.abs(e.y - e.r * TILE) < 1;
+  }
+
+  function tryTurn(e, dir, forGhost) {
+    const d = DIRS[dir];
+    if (!d) return false;
+    if (!isWall(e.c + d.dc, e.r + d.dr, forGhost)) { e.dir = dir; return true; }
+    return false;
+  }
+
+  function moveEntity(e, forGhost) {
+    if (atCenter(e)) {
+      e.x = e.c * TILE; e.y = e.r * TILE;
+      if (e.next) tryTurn(e, e.next, forGhost);
+      const d = DIRS[e.dir];
+      if (isWall(e.c + d.dc, e.r + d.dr, forGhost)) return; // 벽이면 정지
+    }
+    const d = DIRS[e.dir];
+    e.x += d.dc * e.speed;
+    e.y += d.dr * e.speed;
+    // 셀 갱신
+    e.c = Math.round(e.x / TILE);
+    e.r = Math.round(e.y / TILE);
+    // 터널 래핑
+    if (e.x < -TILE) { e.x = COLS * TILE; e.c = COLS - 1; }
+    if (e.x > COLS * TILE) { e.x = -TILE; e.c = 0; }
+  }
+
+  function ghostAI(g) {
+    if (!atCenter(g)) return;
+    g.x = g.c * TILE; g.y = g.r * TILE;
+    // 가능한 방향 중 되돌아가기 제외하고 선택
+    const opposite = { up:'down', down:'up', left:'right', right:'left' };
+    const options = Object.keys(DIRS).filter(dir => {
+      if (dir === opposite[g.dir]) return false;
+      const d = DIRS[dir];
+      return !isWall(g.c + d.dc, g.r + d.dr, true);
+    });
+    const choices = options.length ? options : [opposite[g.dir]];
+    // 겁먹었으면 팩맨에서 멀어지게, 아니면 가까워지게
+    let best = choices[0], bestScore = g.fright ? -Infinity : Infinity;
+    for (const dir of choices) {
+      const d = DIRS[dir];
+      const nc = g.c + d.dc, nr = g.r + d.dr;
+      const dist = Math.hypot(nc - pac.c, nr - pac.r);
+      if (g.fright) { if (dist > bestScore) { bestScore = dist; best = dir; } }
+      else { if (dist < bestScore) { bestScore = dist; best = dir; } }
+    }
+    // 약간의 랜덤성
+    if (Math.random() < 0.15 && choices.length > 1) best = choices[Math.floor(Math.random() * choices.length)];
+    g.dir = best;
+  }
+
+  function eatDots() {
+    const cell = grid[pac.r] && grid[pac.r][pac.c];
+    if (cell === 'dot') { grid[pac.r][pac.c] = 'empty'; score += 10; dotsLeft--; updateHud(); }
+    else if (cell === 'power') {
+      grid[pac.r][pac.c] = 'empty'; score += 50; dotsLeft--; updateHud();
+      frightTimer = 360; // 약 6초
+      ghosts.forEach(g => { g.fright = true; });
+    }
+    if (dotsLeft <= 0) win();
+  }
+
+  function checkGhostCollision() {
+    for (const g of ghosts) {
+      if (Math.abs(g.x - pac.x) < TILE * 0.7 && Math.abs(g.y - pac.y) < TILE * 0.7) {
+        if (g.fright) {
+          score += 200; updateHud();
+          g.fright = false;
+          g.c = g.home.c; g.r = g.home.r; g.x = g.c * TILE; g.y = g.r * TILE; g.release = 60;
+        } else {
+          loseLife();
+          return;
+        }
+      }
+    }
+  }
+
+  function loseLife() {
+    lives--; updateHud();
+    if (lives <= 0) { gameOver(); return; }
+    // 위치 리셋
+    const { pacStart, ghostStarts } = { pacStart:{c:13,r:23}, ghostStarts: [] };
+    pac.c = 13; pac.r = 23; pac.x = pac.c*TILE; pac.y = pac.r*TILE; pac.dir='left'; pac.next='left';
+    ghosts.forEach((g, i) => { g.c = g.home.c; g.r = g.home.r; g.x = g.c*TILE; g.y = g.r*TILE; g.fright=false; g.release = i*40; });
+    frightTimer = 0;
+  }
+
+  function loop() {
+    if (!running) return;
+    animTimer++;
+    // 팩맨
+    moveEntity(pac, false);
+    eatDots();
+    // 유령
+    if (frightTimer > 0) { frightTimer--; if (frightTimer === 0) ghosts.forEach(g => g.fright = false); }
+    ghosts.forEach(g => {
+      if (g.release > 0) { g.release--; return; }
+      ghostAI(g);
+      g.speed = g.fright ? 1.1 : 1.6;
+      moveEntity(g, true);
+    });
+    checkGhostCollision();
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  function draw() {
+    ctx.fillStyle = '#05060d';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // 미로
+    for (let r = 0; r < ROWS; r++) {
+      for (let c = 0; c < COLS; c++) {
+        const cell = grid[r][c];
+        const x = c * TILE, y = r * TILE;
+        if (cell === 'wall') {
+          ctx.fillStyle = '#0a1a3d';
+          ctx.fillRect(x, y, TILE, TILE);
+          ctx.strokeStyle = '#2d6cff';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(x + 2, y + 2, TILE - 4, TILE - 4);
+        } else if (cell === 'door') {
+          ctx.fillStyle = '#ffb8de';
+          ctx.fillRect(x, y + TILE/2 - 1, TILE, 2);
+        } else if (cell === 'dot') {
+          ctx.fillStyle = '#ffd56b';
+          ctx.beginPath(); ctx.arc(x + TILE/2, y + TILE/2, 2, 0, Math.PI*2); ctx.fill();
+        } else if (cell === 'power') {
+          ctx.fillStyle = '#ffe34d';
+          const pr = (animTimer % 30 < 15) ? 5 : 3;
+          ctx.beginPath(); ctx.arc(x + TILE/2, y + TILE/2, pr, 0, Math.PI*2); ctx.fill();
+        }
+      }
+    }
+    // 팩맨
+    const cx = pac.x + TILE/2, cy = pac.y + TILE/2;
+    const mouth = Math.abs(Math.sin(animTimer * 0.2)) * 0.3;
+    let a0 = mouth, a1 = Math.PI*2 - mouth, rot = 0;
+    if (pac.dir === 'right') rot = 0;
+    else if (pac.dir === 'down') rot = Math.PI/2;
+    else if (pac.dir === 'left') rot = Math.PI;
+    else if (pac.dir === 'up') rot = -Math.PI/2;
+    ctx.save();
+    ctx.translate(cx, cy); ctx.rotate(rot);
+    ctx.fillStyle = '#ffe34d';
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.arc(0, 0, TILE/2 - 1, a0, a1);
+    ctx.closePath(); ctx.fill();
+    ctx.restore();
+    // 유령
+    ghosts.forEach(g => {
+      const gx = g.x + TILE/2, gy = g.y + TILE/2, rr = TILE/2 - 1;
+      ctx.fillStyle = g.fright ? (frightTimer < 120 && animTimer % 20 < 10 ? '#fff' : '#2d4bff') : g.color;
+      ctx.beginPath();
+      ctx.arc(gx, gy - 1, rr, Math.PI, 0);
+      ctx.lineTo(gx + rr, gy + rr);
+      // 지그재그 하단
+      for (let i = 0; i < 3; i++) {
+        ctx.lineTo(gx + rr - (rr*2/3)*(i*2+1)/2, gy + rr - 3);
+        ctx.lineTo(gx + rr - (rr*2/3)*(i+1), gy + rr);
+      }
+      ctx.closePath(); ctx.fill();
+      // 눈
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(gx - 3, gy - 2, 2.4, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(gx + 3, gy - 2, 2.4, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = g.fright ? '#fff' : '#0a1a3d';
+      const look = DIRS[g.dir] || {dc:0,dr:0};
+      ctx.beginPath(); ctx.arc(gx - 3 + look.dc, gy - 2 + look.dr, 1.2, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(gx + 3 + look.dc, gy - 2 + look.dr, 1.2, 0, Math.PI*2); ctx.fill();
+    });
+  }
+
+  function start() {
+    reset();
+    overlay.classList.add('hidden');
+    running = true;
+    loop();
+  }
+
+  function win() {
+    running = false;
+    ovTitle.textContent = 'CLEAR!';
+    ovTitle.style.color = '#5fe07a';
+    ovMsg.textContent = 'SCORE ' + score + ' · 다시 도전해보세요!';
+    startBtn.textContent = 'PLAY AGAIN ▶';
+    overlay.classList.remove('hidden');
+  }
+
+  function gameOver() {
+    running = false;
+    ovTitle.textContent = 'GAME OVER';
+    ovTitle.style.color = '#ff4d6d';
+    ovMsg.textContent = 'SCORE ' + score;
+    startBtn.textContent = 'RETRY ▶';
+    overlay.classList.remove('hidden');
+  }
+
+  // 입력
+  const keyMap = {
+    ArrowUp:'up', ArrowDown:'down', ArrowLeft:'left', ArrowRight:'right',
+    w:'up', s:'down', a:'left', d:'right', W:'up', S:'down', A:'left', D:'right'
+  };
+  window.addEventListener('keydown', e => {
+    const dir = keyMap[e.key];
+    if (dir) { pac.next = dir; e.preventDefault(); }
+  });
+  document.querySelectorAll('.mobile button').forEach(btn => {
+    btn.addEventListener('click', () => { pac.next = btn.dataset.dir; });
+  });
+  // 스와이프
+  let tsx, tsy;
+  canvas.addEventListener('touchstart', e => { const t = e.touches[0]; tsx = t.clientX; tsy = t.clientY; }, {passive:true});
+  canvas.addEventListener('touchend', e => {
+    const t = e.changedTouches[0];
+    const dx = t.clientX - tsx, dy = t.clientY - tsy;
+    if (Math.abs(dx) > Math.abs(dy)) pac.next = dx > 0 ? 'right' : 'left';
+    else pac.next = dy > 0 ? 'down' : 'up';
+  }, {passive:true});
+
+  startBtn.addEventListener('click', start);
+
+  // 초기 화면 그리기
+  reset();
+  draw();
+})();
+</script>
+</body>
+</html>

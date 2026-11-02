@@ -4,46 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PLAYON · 미니게임 아케이드</title>
-<meta name="description" content="설치 없이 브라우저에서 바로 즐기는 레트로 감성 미니게임 아케이드. 별빛 수집가, 네온 아레나, 피자 공방, 팩맨을 무료로 플레이하세요.">
-<meta name="keywords" content="미니게임, 브라우저 게임, 무료 게임, 아케이드, 레트로 게임, PLAYON, 팩맨, 웹게임">
-<meta name="author" content="PLAYON">
-<meta name="theme-color" content="#ff8a3d">
-<link rel="canonical" href="https://moonbogyeong.github.io/">
-
-<!-- Open Graph (카카오톡/페이스북 공유) -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="PLAYON">
-<meta property="og:title" content="PLAYON · 미니게임 아케이드">
-<meta property="og:description" content="설치도 로그인도 없이, 브라우저에서 바로 즐기는 레트로 감성 미니게임 아케이드.">
-<meta property="og:url" content="https://moonbogyeong.github.io/">
-<meta property="og:image" content="https://moonbogyeong.github.io/og-image.png">
-<meta property="og:locale" content="ko_KR">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="PLAYON · 미니게임 아케이드">
-<meta name="twitter:description" content="설치 없이 브라우저에서 바로 즐기는 레트로 감성 미니게임 아케이드.">
-<meta name="twitter:image" content="https://moonbogyeong.github.io/og-image.png">
-
-<!-- 구조화 데이터 (검색엔진 + AI 이해용) -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "PLAYON",
-  "alternateName": "PLAYON 미니게임 아케이드",
-  "url": "https://moonbogyeong.github.io/",
-  "description": "설치 없이 브라우저에서 바로 즐기는 레트로 감성 미니게임 아케이드",
-  "inLanguage": "ko",
-  "about": "무료 브라우저 미니게임 모음",
-  "hasPart": [
-    { "@type": "VideoGame", "name": "별빛 수집가", "genre": "아케이드", "playMode": "SinglePlayer" },
-    { "@type": "VideoGame", "name": "네온 아레나", "genre": "액션", "playMode": "SinglePlayer" },
-    { "@type": "VideoGame", "name": "피자 공방", "genre": "퍼즐", "playMode": "SinglePlayer" },
-    { "@type": "VideoGame", "name": "팩맨", "genre": "아케이드", "playMode": "SinglePlayer" }
-  ]
-}
-</script>
+<meta name="description" content="설치 없이 브라우저에서 바로 즐기는 레트로 감성 미니게임 아케이드">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -738,21 +699,6 @@
         font-size: 13px;
         margin-bottom: 20px;
     }
-    .nick-input {
-        width: 100%;
-        padding: 11px 14px;
-        margin-bottom: 14px;
-        background: var(--bg-3);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        color: var(--text);
-        font-family: var(--sans);
-        font-size: 14px;
-        outline: none;
-        transition: border-color .18s;
-    }
-    .nick-input:focus { border-color: var(--cyan); }
-    .nick-input::placeholder { color: var(--dim); }
     .vote-options { display: grid; gap: 10px; }
     .vote-btn {
         display: flex;
@@ -949,11 +895,37 @@
         <section id="top10">
             <div class="section-head reveal">
                 <span class="label">HIGH SCORES</span>
-                <h2 class="section-title">실시간 <span>랭킹</span></h2>
-                <p class="section-sub">게임을 플레이하면 점수가 서버(Supabase)에 저장되어 게임별 최고 기록이 실시간으로 표시됩니다.</p>
+                <h2 class="section-title">오늘의 <span>랭킹</span></h2>
+                <p class="section-sub">오늘 가장 많이 플레이된 게임 순위입니다.</p>
             </div>
-            <div class="rank-board reveal" id="rankBoard">
-                <div style="padding:24px;text-align:center;color:var(--dim);font-family:var(--mono);">랭킹을 불러오는 중...</div>
+            <div class="rank-board reveal">
+                <div class="rank-row top1" onclick="openGame('star')">
+                    <div class="rank-num">01</div>
+                    <div class="rank-thumb">✦</div>
+                    <div class="rank-info">
+                        <div class="rank-name">별빛 수집가</div>
+                        <div class="rank-meta">ARCADE · 1P · 98% LIKE</div>
+                    </div>
+                    <div class="rank-bar">▲ 2,841</div>
+                </div>
+                <div class="rank-row top2" onclick="openGame('arena')">
+                    <div class="rank-num">02</div>
+                    <div class="rank-thumb">⚔️</div>
+                    <div class="rank-info">
+                        <div class="rank-name">네온 아레나</div>
+                        <div class="rank-meta">ACTION · WAVE · 95% LIKE</div>
+                    </div>
+                    <div class="rank-bar">▲ 1,902</div>
+                </div>
+                <div class="rank-row" onclick="openGame('pizza')">
+                    <div class="rank-num">03</div>
+                    <div class="rank-thumb">🍕</div>
+                    <div class="rank-info">
+                        <div class="rank-name">피자 공방</div>
+                        <div class="rank-meta">COOKING · PUZZLE · 92% LIKE</div>
+                    </div>
+                    <div class="rank-bar">▲ 1,557</div>
+                </div>
             </div>
         </section>
 
@@ -1017,8 +989,7 @@
             <div class="poll-wrap reveal">
                 <div class="poll-card">
                     <h3>투표하기</h3>
-                    <p class="poll-note">닉네임을 정하면 랭킹에도 함께 표시됩니다. 한 게임을 선택하면 바로 반영됩니다.</p>
-                    <input id="nickInput" class="nick-input" type="text" maxlength="12" placeholder="닉네임 (선택, 최대 12자)" />
+                    <p class="poll-note">한 게임을 선택하면 바로 반영됩니다.</p>
                     <div class="vote-options" id="voteOptions">
                         <button class="vote-btn" data-game="star"><span class="v-emoji">✦</span><span>별빛 수집가</span></button>
                         <button class="vote-btn" data-game="arena"><span class="v-emoji">⚔️</span><span>네온 아레나</span></button>
@@ -1172,7 +1143,6 @@
   function end() {
     running = false;
     if (score > best) { best = score; localStorage.setItem('starCollectorBest', best); bestEl.textContent = best; }
-    try { parent.postMessage({ type: 'playon-score', game: 'star', score: score }, '*'); } catch(e) {}
     headline.textContent = '우주 탐험 종료 💫';
     message.innerHTML = \`최종 점수는 <b style=&quot;color:#77f5ff&quot;>\${score}점</b>!<br>\${score >= best &amp;&amp; score > 0 ? '새로운 최고 기록일지도 몰라요. 멋져요!' : '다시 도전해서 기록을 깨보세요.'}\`;
     startBtn.textContent = '다시 도전';
@@ -1301,7 +1271,7 @@ const rand=(a,b)=>a+Math.random()*(b-a);
 function reset(){kills=0;wave=1;spawned=0;spawnDelay=0;enemies=[];particles=[];slashes=[];shake=0;player={x:W/2,y:H/2,r:19,hp:100,faceX:1,faceY:0,speed:4.1,attack:0,invuln:0};for(let i=0;i<4;i++)spawnEnemy();updateUI();}
 function updateUI(){$('hp').textContent=Math.max(0,Math.ceil(player.hp));$('kills').textContent=kills;$('wave').textContent=wave;}
 function start(){reset();running=true;overlay.classList.add('hidden');last=performance.now();requestAnimationFrame(loop);}
-function end(){running=false;try{parent.postMessage({type:'playon-score',game:'arena',score:kills},'*');}catch(e){}$('title').textContent='전투 종료';$('desc').innerHTML=\`최종 처치 수: <b style=&quot;color:#5cf4ff&quot;>\${kills}</b><br>\${wave} 웨이브까지 생존했어요. 다시 도전할까요?\`;$('start').textContent='다시 전투';overlay.classList.remove('hidden');}
+function end(){running=false;$('title').textContent='전투 종료';$('desc').innerHTML=\`최종 처치 수: <b style=&quot;color:#5cf4ff&quot;>\${kills}</b><br>\${wave} 웨이브까지 생존했어요. 다시 도전할까요?\`;$('start').textContent='다시 전투';overlay.classList.remove('hidden');}
 function spawnEnemy(){let side=Math.floor(Math.random()*4),x=side===0?-30:side===1?W+30:rand(0,W),y=side===2?-30:side===3?H+30:rand(0,H);if(Math.hypot(x-player.x,y-player.y)<200){x=x<W/2?W-40:40;y=y<H/2?H-40:40;}
 const heavy=Math.random()<Math.min(.12+wave*.025,.35);enemies.push({x,y,r:heavy?23:16,hp:heavy?3:1,maxHp:heavy?3:1,speed:(heavy?1.0:1.35)+Math.min(wave*.07,1.1),hit:0,phase:rand(0,6),heavy});spawned++;}
 function burst(x,y,color,n=9){for(let i=0;i<n;i++)particles.push({x,y,vx:rand(-3,3),vy:rand(-3,3),life:rand(15,30),max:30,color,r:rand(2,5)});}
@@ -1707,7 +1677,6 @@ reset();draw();
 
   function win() {
     running = false;
-    try { parent.postMessage({ type: 'playon-score', game: 'pacman', score: score }, '*'); } catch(e) {}
     ovTitle.textContent = 'CLEAR!';
     ovTitle.style.color = '#5fe07a';
     ovMsg.textContent = 'SCORE ' + score + ' · 다시 도전해보세요!';
@@ -1717,7 +1686,6 @@ reset();draw();
 
   function gameOver() {
     running = false;
-    try { parent.postMessage({ type: 'playon-score', game: 'pacman', score: score }, '*'); } catch(e) {}
     ovTitle.textContent = 'GAME OVER';
     ovTitle.style.color = '#ff4d6d';
     ovMsg.textContent = 'SCORE ' + score;
@@ -1879,10 +1847,7 @@ reset();draw();
 
             document.getElementById('pClear').onclick = () => { placed=[]; selected='dough'; buildBtns(); draw(); };
             document.getElementById('pServe').onclick = () => {
-                const toppings = placed.filter(p => !['dough','sauce','cheese'].includes(p.id)).length;
-                const pizzaScore = placed.length * 10 + toppings * 5;
-                try { window.postMessage({ type: 'playon-score', game: 'pizza', score: pizzaScore }, '*'); } catch(e) {}
-                alert('맛있는 피자가 완성되었어요! 🍕 (점수 ' + pizzaScore + ')');
+                alert('맛있는 피자가 완성되었어요! 🍕');
                 placed=[]; selected='dough'; buildBtns(); draw();
             };
 
@@ -1917,29 +1882,6 @@ reset();draw();
 
             const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
             const VOTED_KEY = 'playon_voted_game';
-
-            // 간단한 디바이스 지문 (중복 투표 방지 보강용)
-            function getDeviceId() {
-                let id = localStorage.getItem('playon_device_id');
-                if (!id) {
-                    const seed = [navigator.userAgent, navigator.language, screen.width + 'x' + screen.height, new Date().getTimezoneOffset()].join('|');
-                    let h = 0;
-                    for (let i = 0; i < seed.length; i++) { h = (h * 31 + seed.charCodeAt(i)) | 0; }
-                    id = 'd' + Math.abs(h).toString(36) + Date.now().toString(36);
-                    localStorage.setItem('playon_device_id', id);
-                }
-                return id;
-            }
-
-            // 닉네임 입력 연동
-            const nickInput = document.getElementById('nickInput');
-            if (nickInput) {
-                nickInput.value = localStorage.getItem('playon_nickname') || '';
-                nickInput.addEventListener('input', () => {
-                    const v = nickInput.value.trim().slice(0, 12);
-                    localStorage.setItem('playon_nickname', v || '익명');
-                });
-            }
 
             function setMessage(text, isError) {
                 msgEl.textContent = text;
@@ -1978,7 +1920,7 @@ reset();draw();
             async function castVote(game) {
                 voteBtns.forEach(b => b.disabled = true);
                 setMessage('투표를 저장하는 중...', false);
-                const { error } = await client.from('votes').insert({ game, device_id: getDeviceId() });
+                const { error } = await client.from('votes').insert({ game });
                 if (error) {
                     setMessage('투표 저장 실패: ' + error.message, true);
                     voteBtns.forEach(b => b.disabled = false);
@@ -2004,73 +1946,6 @@ reset();draw();
             if (already) markVotedChoice(already);
 
             loadResults();
-
-            // ===== 외부에서 참조할 수 있도록 client 공유 =====
-            window.__playonSupabase = client;
-        })();
-
-        /* ===== 게임 점수 저장 + 실시간 랭킹 ===== */
-        (function () {
-            const client = window.__playonSupabase;
-            const GAME_NAMES = { star: '별빛 수집가', arena: '네온 아레나', pizza: '피자 공방', pacman: '팩맨' };
-            const GAME_ICON = { star: '✦', arena: '⚔️', pizza: '🍕', pacman: '🟡' };
-
-            // 게임(iframe/부모)에서 보내는 점수 수신
-            window.addEventListener('message', async (ev) => {
-                const d = ev.data;
-                if (!d || d.type !== 'playon-score') return;
-                if (!GAME_NAMES[d.game]) return;
-                const score = Math.max(0, Math.floor(Number(d.score) || 0));
-                // 로컬 최고점은 항상 갱신
-                const key = 'playon_best_' + d.game;
-                const prevBest = Number(localStorage.getItem(key) || 0);
-                if (score > prevBest) localStorage.setItem(key, score);
-
-                // Supabase에 기록 (가능할 때만)
-                if (client) {
-                    const player = localStorage.getItem('playon_nickname') || '익명';
-                    const { error } = await client.from('scores').insert({ game: d.game, player, score });
-                    if (!error) loadRanking();
-                }
-            });
-
-            // 실제 데이터 기반 랭킹 렌더링 (가짜 숫자 대체)
-            async function loadRanking() {
-                const board = document.getElementById('rankBoard');
-                if (!board || !client) return;
-                const { data, error } = await client.from('scores').select('game, score, player').order('score', { ascending: false }).limit(50);
-                if (error) return;
-
-                // 게임별 최고 점수 집계
-                const bestByGame = {};
-                (data || []).forEach(row => {
-                    if (!bestByGame[row.game] || row.score > bestByGame[row.game].score) {
-                        bestByGame[row.game] = { score: row.score, player: row.player };
-                    }
-                });
-                const ranked = Object.keys(bestByGame)
-                    .map(g => ({ game: g, ...bestByGame[g] }))
-                    .sort((a, b) => b.score - a.score);
-
-                if (!ranked.length) {
-                    board.innerHTML = '<div style="padding:24px;text-align:center;color:var(--dim);font-family:var(--mono);">아직 기록이 없어요. 게임을 플레이해 첫 기록을 남겨보세요!</div>';
-                    return;
-                }
-                board.innerHTML = ranked.map((r, i) => `
-                    <div class="rank-row ${i===0?'top1':i===1?'top2':''}" onclick="openGame('${r.game}')">
-                        <div class="rank-num">${String(i+1).padStart(2,'0')}</div>
-                        <div class="rank-thumb">${GAME_ICON[r.game]||'🎮'}</div>
-                        <div class="rank-info">
-                            <div class="rank-name">${GAME_NAMES[r.game]||r.game}</div>
-                            <div class="rank-meta">BEST · ${r.player||'익명'}</div>
-                        </div>
-                        <div class="rank-bar">▲ ${r.score.toLocaleString()}</div>
-                    </div>
-                `).join('');
-            }
-
-            loadRanking();
-            window.__playonLoadRanking = loadRanking;
         })();
     </script>
 </body>
