@@ -1772,21 +1772,21 @@ reset();draw();
                 container.innerHTML = `
                     <div style="text-align:center; padding:10px;">
                         <h2 style="color:#5cf4ff; margin-bottom:10px; font-family:'VT323',monospace; font-size:28px; letter-spacing:2px;">✦ STAR COLLECTOR</h2>
-                        <iframe srcdoc="${GAME_SRC.star}" style="width:100%; max-width:480px; height:560px; border:none; border-radius:12px;"></iframe>
+                        <iframe src="star.html" style="width:100%; max-width:480px; height:560px; border:none; border-radius:12px;"></iframe>
                     </div>
                 `;
             } else if (type === 'arena') {
                 container.innerHTML = `
                     <div style="text-align:center; padding:10px;">
                         <h2 style="color:#ff77c8; margin-bottom:10px; font-family:'VT323',monospace; font-size:28px; letter-spacing:2px;">⚔ NEON ARENA</h2>
-                        <iframe srcdoc="${GAME_SRC.arena}" style="width:100%; max-width:760px; height:520px; border:none; border-radius:12px;"></iframe>
+                        <iframe src="arena.html" style="width:100%; max-width:760px; height:520px; border:none; border-radius:12px;"></iframe>
                     </div>
                 `;
             } else if (type === 'pacman') {
                 container.innerHTML = `
                     <div style="text-align:center; padding:10px;">
                         <h2 style="color:#ffe34d; margin-bottom:10px; font-family:'VT323',monospace; font-size:28px; letter-spacing:2px;">🟡 PAC-MAN</h2>
-                        <iframe srcdoc="${GAME_SRC.pacman}" style="width:100%; max-width:480px; height:620px; border:none; border-radius:12px;"></iframe>
+                        <iframe src="pacman.html" style="width:100%; max-width:480px; height:620px; border:none; border-radius:12px;"></iframe>
                     </div>
                 `;
             }
