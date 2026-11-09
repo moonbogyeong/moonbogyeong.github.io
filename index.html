@@ -4,26 +4,64 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PLAYON · 미니게임 아케이드</title>
-<meta name="description" content="설치 없이 브라우저에서 바로 즐기는 레트로 감성 미니게임 아케이드">
+<meta name="description" content="설치 없이 브라우저에서 바로 즐기는 레트로 감성 미니게임 아케이드. 별빛 수집가, 네온 아레나, 피자 공방, 팩맨, 라면 가게를 무료로 플레이하세요.">
+<meta name="keywords" content="미니게임, 브라우저 게임, 무료 게임, 아케이드, 레트로 게임, PLAYON, 팩맨, 라면 게임, 피자 게임">
+<meta name="theme-color" content="#ff8a3d">
+<link rel="canonical" href="https://moonbogyeong.github.io/">
+
+<!-- Open Graph (카카오톡/페이스북 공유) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PLAYON">
+<meta property="og:title" content="PLAYON · 미니게임 아케이드">
+<meta property="og:description" content="설치도 로그인도 없이, 브라우저에서 바로 즐기는 레트로 감성 미니게임 아케이드.">
+<meta property="og:url" content="https://moonbogyeong.github.io/">
+<meta property="og:image" content="https://moonbogyeong.github.io/og-image.png">
+<meta property="og:locale" content="ko_KR">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PLAYON · 미니게임 아케이드">
+<meta name="twitter:description" content="설치 없이 브라우저에서 바로 즐기는 레트로 감성 미니게임 아케이드.">
+<meta name="twitter:image" content="https://moonbogyeong.github.io/og-image.png">
+
+<!-- 구조화 데이터 (검색엔진 + AI 이해용) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "PLAYON",
+  "alternateName": "PLAYON 미니게임 아케이드",
+  "url": "https://moonbogyeong.github.io/",
+  "description": "설치 없이 브라우저에서 바로 즐기는 레트로 감성 미니게임 아케이드",
+  "inLanguage": "ko",
+  "hasPart": [
+    { "@type": "VideoGame", "name": "별빛 수집가", "genre": "아케이드", "playMode": "SinglePlayer" },
+    { "@type": "VideoGame", "name": "네온 아레나", "genre": "액션", "playMode": "SinglePlayer" },
+    { "@type": "VideoGame", "name": "피자 공방", "genre": "퍼즐", "playMode": "SinglePlayer" },
+    { "@type": "VideoGame", "name": "팩맨", "genre": "아케이드", "playMode": "SinglePlayer" },
+    { "@type": "VideoGame", "name": "라면 가게", "genre": "퍼즐", "playMode": "SinglePlayer" }
+  ]
+}
+</script>
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <style>
     :root {
-        --bg: #f6f7fb;
-        --bg-2: #ffffff;
-        --bg-3: #eef0f6;
-        --border: rgba(20, 24, 40, 0.10);
-        --border-strong: rgba(20, 24, 40, 0.22);
-        --text: #1a1d29;
-        --muted: #5b6072;
-        --dim: #9aa0b2;
-        --orange: #f5731f;
-        --orange-glow: rgba(245, 115, 31, 0.28);
-        --orange-soft: rgba(245, 115, 31, 0.10);
-        --cyan: #0bb5d6;
-        --cyan-soft: rgba(11, 181, 214, 0.10);
-        --green: #22a85a;
+        --bg: #0c0d14;
+        --bg-2: #14151f;
+        --bg-3: #1a1c28;
+        --border: rgba(255, 255, 255, 0.08);
+        --border-strong: rgba(255, 255, 255, 0.18);
+        --text: #f0f0f5;
+        --muted: #8b8fa3;
+        --dim: #5b5f72;
+        --orange: #ff8a3d;
+        --orange-glow: rgba(255, 138, 61, 0.4);
+        --orange-soft: rgba(255, 138, 61, 0.12);
+        --cyan: #5cf4ff;
+        --cyan-soft: rgba(92, 244, 255, 0.1);
+        --green: #5fe07a;
         --mono: 'VT323', 'Space Grotesk', monospace;
         --sans: 'Pretendard', 'Space Grotesk', sans-serif;
     }
@@ -32,8 +70,8 @@
     body {
         background: var(--bg);
         background-image:
-            linear-gradient(rgba(20,24,40,0.035) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(20,24,40,0.035) 1px, transparent 90deg);
+            linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 90deg);
         background-size: 48px 48px;
         background-position: -1px -1px;
         color: var(--text);
@@ -52,7 +90,7 @@
         position: sticky;
         top: 0;
         z-index: 100;
-        background: rgba(255, 255, 255, 0.78);
+        background: rgba(12, 13, 20, 0.72);
         backdrop-filter: blur(16px);
         border-bottom: 1px solid var(--border);
     }
@@ -120,6 +158,47 @@
         box-shadow: 0 0 20px var(--orange-glow);
     }
     .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 0 28px var(--orange-glow); }
+
+    /* 테마 토글 버튼 */
+    .theme-toggle {
+        margin-left: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: var(--bg-3);
+        border: 1px solid var(--border);
+        color: var(--text);
+        font-family: var(--sans);
+        font-weight: 700;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all .18s ease;
+    }
+    .theme-toggle:hover { border-color: var(--orange); }
+    /* 토글이 margin-auto를 가져가므로 CTA는 기본 여백 */
+    .theme-toggle + .nav-cta { margin-left: 10px; }
+
+    /* ===== 라이트 모드 ===== */
+    body.light {
+        --bg: #eef1f8;
+        --bg-2: #ffffff;
+        --bg-3: #f3f5fa;
+        --border: rgba(20, 24, 40, 0.10);
+        --border-strong: rgba(20, 24, 40, 0.20);
+        --text: #1a1d29;
+        --muted: #5b6072;
+        --dim: #9096a8;
+    }
+    body.light {
+        background-image:
+            linear-gradient(rgba(20,24,40,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(20,24,40,0.03) 1px, transparent 90deg);
+    }
+    body.light nav { background: rgba(255, 255, 255, 0.8); }
+    body.light .card-tags span { background: rgba(20,24,40,0.05); }
+    body.light #modal { background: rgba(40, 44, 60, 0.45); }
 
     /* ===== 공통 ===== */
     .container { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
@@ -245,6 +324,54 @@
         text-transform: uppercase;
     }
 
+    /* 여우가 봉을 따라 달리는 애니메이션 */
+    .fox-run {
+        position: relative;
+        height: 70px;
+        max-width: 420px;
+        margin-top: 12px;
+    }
+    .fox-pole {
+        position: absolute;
+        left: 0; right: 0;
+        bottom: 14px;
+        height: 6px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--orange-soft), var(--orange), var(--orange-soft));
+        box-shadow: 0 0 16px var(--orange-glow);
+    }
+    .fox-pole::before, .fox-pole::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        width: 14px; height: 14px;
+        border-radius: 50%;
+        background: var(--orange);
+        box-shadow: 0 0 12px var(--orange-glow);
+    }
+    .fox-pole::before { left: -4px; }
+    .fox-pole::after { right: -4px; }
+    .fox-runner {
+        position: absolute;
+        bottom: 16px;
+        left: 0;
+        font-size: 38px;
+        line-height: 1;
+        transform-origin: bottom center;
+        animation: foxTravel 5s ease-in-out infinite, foxHop .5s ease-in-out infinite;
+    }
+    @keyframes foxTravel {
+        0%   { left: 0;   transform: scaleX(1); }
+        48%  { left: calc(100% - 38px); transform: scaleX(1); }
+        50%  { left: calc(100% - 38px); transform: scaleX(-1); }
+        98%  { left: 0;   transform: scaleX(-1); }
+        100% { left: 0;   transform: scaleX(1); }
+    }
+    @keyframes foxHop {
+        0%, 100% { bottom: 16px; }
+        50%      { bottom: 24px; }
+    }
+
     /* 마스코트 */
     .mascot {
         position: relative;
@@ -293,20 +420,36 @@
         letter-spacing: 1.5px;
     }
 
+    /* ===== 장르 소제목 ===== */
+    .genre-head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 38px 0 16px;
+        font-family: var(--mono);
+        font-size: 16px;
+        letter-spacing: 1px;
+        color: var(--cyan);
+    }
+    .genre-head:first-child { margin-top: 0; }
+    .genre-head .g-emoji { font-size: 20px; }
+    .genre-head .g-line { flex: 1; height: 1px; background: var(--border); }
+    .genre-head .g-count { font-size: 13px; color: var(--dim); }
+
     /* ===== 게임 카드 ===== */
     .game-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 18px;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 14px;
     }
     .game-card {
         position: relative;
         background: var(--bg-2);
         border: 1px solid var(--border);
         border-radius: 14px;
-        padding: 24px;
+        padding: 18px;
         cursor: pointer;
-        transition: all .25s ease;
+        transition: all .2s ease;
         overflow: hidden;
     }
     .game-card::before {
@@ -325,15 +468,15 @@
     .game-card:hover::before { height: 100%; }
     .card-head {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: space-between;
-        margin-bottom: 18px;
+        margin-bottom: 12px;
     }
     .card-icon {
-        width: 56px; height: 56px;
+        width: 44px; height: 44px;
         display: grid; place-items: center;
-        font-size: 30px;
-        border-radius: 12px;
+        font-size: 24px;
+        border-radius: 10px;
         background: var(--bg-3);
         border: 1px solid var(--border);
     }
@@ -342,6 +485,9 @@
     .card-icon.pizza { box-shadow: inset 0 0 20px var(--orange-soft); }
     .card-icon.pacman { box-shadow: inset 0 0 20px rgba(255, 227, 77, 0.15); }
     .card-icon.ramen { box-shadow: inset 0 0 20px rgba(255, 170, 80, 0.15); }
+    .card-icon.potion { box-shadow: inset 0 0 20px rgba(180, 120, 255, 0.18); }
+    .card-icon.sudoku { box-shadow: inset 0 0 20px rgba(92, 244, 255, 0.15); }
+    .card-icon.quizface { box-shadow: inset 0 0 20px rgba(255, 119, 200, 0.15); }
     .card-id {
         font-family: var(--mono);
         font-size: 14px;
@@ -350,43 +496,70 @@
         text-align: right;
     }
     .card-id .ver { color: var(--cyan); }
+    .card-genre {
+        font-family: var(--sans);
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--muted);
+        background: var(--bg-3);
+        border: 1px solid var(--border);
+        padding: 4px 9px;
+        border-radius: 999px;
+        white-space: nowrap;
+    }
     .card-title {
-        font-size: 22px;
+        font-size: 17px;
         font-weight: 800;
-        letter-spacing: -1px;
-        margin-bottom: 8px;
+        letter-spacing: -0.5px;
+        margin-bottom: 5px;
     }
     .card-desc {
         color: var(--muted);
-        font-size: 13px;
-        line-height: 1.65;
-        margin-bottom: 20px;
-        min-height: 50px;
+        font-size: 12px;
+        line-height: 1.55;
+        margin-bottom: 12px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 37px;
     }
+    /* 난이도 + 별점 메타 줄 */
+    .card-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        font-size: 12px;
+    }
+    .card-diff {
+        font-family: var(--sans);
+        font-weight: 700;
+        padding: 3px 9px;
+        border-radius: 999px;
+        letter-spacing: 0;
+    }
+    .card-diff.easy   { color: var(--green); background: rgba(95,224,122,0.12); }
+    .card-diff.normal { color: var(--cyan);  background: var(--cyan-soft); }
+    .card-diff.hard   { color: var(--orange); background: var(--orange-soft); }
+    .card-rating {
+        font-family: var(--mono);
+        color: var(--dim);
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .card-rating .stars { color: #ffcf4d; letter-spacing: 1px; }
     .card-foot {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding-top: 16px;
+        padding-top: 12px;
         border-top: 1px solid var(--border);
-    }
-    .card-tags {
-        display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
-    }
-    .card-tags span {
-        font-family: var(--mono);
-        font-size: 13px;
-        color: var(--muted);
-        padding: 3px 8px;
-        background: rgba(255,255,255,0.04);
-        border-radius: 6px;
-        letter-spacing: .5px;
     }
     .play-link {
         font-family: var(--mono);
-        font-size: 15px;
+        font-size: 14px;
         color: var(--orange);
         letter-spacing: 1px;
         transition: gap .2s;
@@ -610,7 +783,7 @@
         display: none;
         position: fixed;
         inset: 0;
-        background: rgba(30, 34, 50, 0.55);
+        background: rgba(8, 9, 14, 0.85);
         backdrop-filter: blur(8px);
         z-index: 1000;
         justify-content: center;
@@ -643,6 +816,28 @@
         border: 1px solid var(--border);
     }
     .close-btn:hover { background: var(--orange); color: #1a0a00; transform: rotate(90deg); }
+
+    /* 별점 입력 오버레이 */
+    #rateOverlay {
+        display: none;
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        background: rgba(8, 9, 14, 0.9);
+        backdrop-filter: blur(6px);
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        border-radius: 16px;
+    }
+    #rateOverlay.show { display: flex; }
+    .rate-box { text-align: center; max-width: 340px; }
+    .rate-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+    .rate-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .rate-stars { font-size: 42px; letter-spacing: 6px; margin-bottom: 24px; cursor: pointer; }
+    .rate-stars span { color: var(--bg-3); transition: color .12s; }
+    .rate-stars span.on { color: #ffcf4d; }
+    .rate-actions { display: flex; gap: 10px; justify-content: center; }
 
     /* 스크롤 등장 애니메이션 */
     .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
@@ -685,6 +880,110 @@
     .r-card { background:#fffaf0; border:2px solid #ffe0b2; border-radius:14px; padding:16px; }
     @media(max-width:650px) { .ramen-layout { grid-template-columns:1fr; } }
 
+    /* 요술 항아리 게임 스타일 (마법 보라 톤) */
+    .potion-app { width:100%; color:#2a1a4a; }
+    .potion-layout { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .potion-app h2, .potion-app h3 { color:#7c3aed; }
+    .pot-card { background:#f6f0ff; border:2px solid #e3d4ff; border-radius:16px; padding:18px; }
+    .cauldron-stage {
+        min-height:280px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+        border-radius:14px; position:relative; overflow:hidden;
+        background: radial-gradient(ellipse at 50% 30%, #3a2a6a, #1a1033 75%);
+    }
+    .cauldron { font-size:110px; line-height:1; filter: drop-shadow(0 8px 20px rgba(124,58,237,0.5)); transition: transform .2s; }
+    .cauldron.shake { animation: potShake .4s ease; }
+    @keyframes potShake { 0%,100%{transform:translateX(0) rotate(0);} 25%{transform:translateX(-6px) rotate(-4deg);} 75%{transform:translateX(6px) rotate(4deg);} }
+    .pot-result { font-size:120px; line-height:1; }
+    .pot-result-name { color:#fff; font-size:22px; font-weight:800; margin-top:8px; }
+    .pot-result-desc { color:#d8c8ff; font-size:13px; margin-top:6px; max-width:260px; text-align:center; }
+    .potion-slots { display:flex; gap:8px; justify-content:center; margin-top:14px; }
+    .potion-slot {
+        width:46px; height:46px; border-radius:12px; border:2px dashed #c4a8ff;
+        display:grid; place-items:center; font-size:24px; background:#fff;
+    }
+    .potion-slot.filled { border-style:solid; border-color:#7c3aed; background:#efe6ff; }
+    .potion-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:12px; }
+    .potion-btn {
+        aspect-ratio:1; border:2px solid #e3d4ff; background:#fff; border-radius:12px;
+        font-size:26px; cursor:pointer; transition: all .15s; display:grid; place-items:center;
+    }
+    .potion-btn:hover:not(:disabled) { border-color:#7c3aed; transform:translateY(-2px); background:#f6f0ff; }
+    .potion-btn:disabled { opacity:.35; cursor:not-allowed; }
+    .potion-actions { display:flex; gap:8px; margin-top:14px; }
+    .potion-actions button { flex:1; border:0; border-radius:12px; padding:12px; font-weight:800; cursor:pointer; font-size:15px; }
+    .pot-dex { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+    .pot-dex span { font-size:22px; filter: grayscale(1) opacity(.35); }
+    .pot-dex span.found { filter:none; }
+    @media(max-width:650px) { .potion-layout { grid-template-columns:1fr; } }
+
+    /* 스도쿠 게임 스타일 */
+    .sudoku-app { width:100%; }
+    .sudoku-app h2 { color:var(--cyan); }
+    .sudoku-top { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+    .diff-tabs { display:flex; gap:6px; flex-wrap:wrap; }
+    .diff-tab {
+        padding:7px 14px; border:1px solid var(--border); background:var(--bg-3); color:var(--muted);
+        border-radius:999px; font-size:13px; font-weight:700; cursor:pointer; transition:all .15s;
+    }
+    .diff-tab.active { background:var(--cyan); color:#05202a; border-color:var(--cyan); }
+    .diff-tab .done { color:var(--green); margin-left:4px; }
+    .level-track { display:flex; gap:6px; margin-bottom:16px; }
+    .level-pip { flex:1; height:8px; border-radius:999px; background:var(--bg-3); border:1px solid var(--border); }
+    .level-pip.cleared { background:var(--green); border-color:var(--green); }
+    .level-pip.current { background:var(--cyan); border-color:var(--cyan); }
+    .sudoku-wrap { display:grid; grid-template-columns:auto 1fr; gap:16px; align-items:start; }
+    .sudoku-grid {
+        display:grid; grid-template-columns:repeat(9,1fr); width:min(100%,360px); aspect-ratio:1;
+        background:var(--border-strong); border:3px solid var(--text); border-radius:6px; overflow:hidden; gap:1px;
+    }
+    .s-cell {
+        background:var(--bg-2); display:grid; place-items:center; font-size:clamp(13px,3.5vw,18px);
+        font-weight:700; cursor:pointer; user-select:none; color:var(--text); transition:background .1s;
+    }
+    .s-cell.fixed { color:var(--muted); background:var(--bg-3); cursor:default; }
+    .s-cell.sel { background:var(--cyan-soft); outline:2px solid var(--cyan); outline-offset:-2px; }
+    .s-cell.wrong { color:#ff5e91; }
+    .s-cell.bt { border-top:2px solid var(--text); }
+    .s-cell.bl { border-left:2px solid var(--text); }
+    .sudoku-pad { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; max-width:200px; }
+    .sudoku-pad button {
+        aspect-ratio:1; border:1px solid var(--border); background:var(--bg-3); color:var(--text);
+        border-radius:10px; font-size:20px; font-weight:800; cursor:pointer;
+    }
+    .sudoku-pad button:hover { border-color:var(--cyan); }
+    .sudoku-pad .erase { grid-column:span 3; aspect-ratio:auto; padding:10px; font-size:14px; }
+    .sudoku-msg { margin-top:14px; font-family:var(--mono); color:var(--cyan); min-height:22px; letter-spacing:.5px; text-align:center; font-size:15px; }
+    .sd-lives { font-size:20px; letter-spacing:2px; }
+    .sudoku-stage { display:flex; flex-direction:column; align-items:center; }
+    .sudoku-grid.big { width:min(100%,520px); }
+    .sudoku-grid.big .s-cell { font-size:clamp(18px,5vw,28px); }
+    .s-cell.sel { background:var(--cyan-soft); outline:3px solid var(--cyan); outline-offset:-3px; }
+    .s-cell.flash-wrong { animation: sdWrong .5s ease; }
+    @keyframes sdWrong { 0%,100%{background:var(--bg-2);} 30%{background:rgba(255,94,145,0.5);} }
+    @media(max-width:640px){ .sudoku-wrap { grid-template-columns:1fr; justify-items:center; } }
+
+    /* 인물 퀴즈 스타일 */
+    .qf-app { width:100%; max-width:480px; margin:0 auto; text-align:center; }
+    .qf-hud { display:flex; justify-content:space-between; margin-bottom:16px; font-family:var(--mono); color:var(--muted); font-size:14px; }
+    .qf-hud b { color:var(--cyan); }
+    .qf-rank { display:inline-block; padding:4px 14px; border-radius:999px; background:var(--orange-soft); color:var(--orange); font-weight:800; font-size:13px; }
+    .qf-face {
+        font-size:120px; line-height:1; margin:10px 0;
+        min-height:140px; display:grid; place-items:center;
+        background:var(--bg-3); border:1px solid var(--border); border-radius:18px;
+    }
+    .qf-hint { color:var(--muted); font-size:14px; margin-bottom:18px; min-height:22px; }
+    .qf-options { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .qf-opt {
+        padding:14px; border:1px solid var(--border); background:var(--bg-3); color:var(--text);
+        border-radius:12px; font-size:15px; font-weight:700; cursor:pointer; transition:all .15s;
+    }
+    .qf-opt:hover:not(:disabled) { border-color:var(--orange); background:var(--orange-soft); }
+    .qf-opt.correct { background:var(--green); color:#063; border-color:var(--green); }
+    .qf-opt.wrong { background:#ff5e91; color:#fff; border-color:#ff5e91; }
+    .qf-opt:disabled { cursor:default; }
+    .qf-next { margin-top:16px; }
+
     /* ===== 콘텐츠 선호도 조사 (투표) ===== */
     .poll-wrap {
         display: grid;
@@ -709,27 +1008,26 @@
         font-size: 13px;
         margin-bottom: 20px;
     }
-    .vote-options { display: grid; gap: 10px; }
+    .vote-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .vote-btn {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
         width: 100%;
         text-align: left;
-        padding: 14px 16px;
+        padding: 9px 12px;
         background: var(--bg-3);
         border: 1px solid var(--border);
-        border-radius: 12px;
-        font-size: 15px;
+        border-radius: 10px;
+        font-size: 13px;
         font-weight: 700;
         color: var(--text);
-        transition: all .18s ease;
+        transition: all .15s ease;
     }
-    .vote-btn .v-emoji { font-size: 22px; }
+    .vote-btn .v-emoji { font-size: 17px; }
     .vote-btn:hover:not(:disabled) {
         border-color: var(--orange);
         background: var(--orange-soft);
-        transform: translateY(-2px);
     }
     .vote-btn:disabled { opacity: .55; cursor: not-allowed; }
     .vote-btn.voted-choice { border-color: var(--orange); box-shadow: inset 0 0 0 1px var(--orange); }
@@ -743,36 +1041,79 @@
     }
     .poll-msg.error { color: var(--orange); }
 
-    .result-row { margin-bottom: 16px; }
+    .result-row { margin-bottom: 14px; }
     .result-row:last-child { margin-bottom: 0; }
     .result-head {
         display: flex;
         justify-content: space-between;
-        align-items: baseline;
-        margin-bottom: 7px;
+        align-items: center;
+        margin-bottom: 6px;
         font-size: 14px;
     }
-    .result-head .r-name { font-weight: 700; }
+    .result-head .r-name { font-weight: 700; display: flex; align-items: center; gap: 6px; }
+    .result-head .r-rank {
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--dim);
+        min-width: 18px;
+    }
+    .result-row.lead .r-name { color: var(--orange); }
+    .result-row.lead .r-rank { color: var(--orange); }
     .result-head .r-count {
         font-family: var(--mono);
         color: var(--muted);
         font-size: 13px;
-        letter-spacing: 1px;
+        letter-spacing: .5px;
     }
+    .result-head .r-count b { color: var(--cyan); font-size: 15px; }
+    .result-row.lead .r-count b { color: var(--orange); }
     .result-track {
-        height: 12px;
+        height: 22px;
         background: var(--bg-3);
         border: 1px solid var(--border);
         border-radius: 999px;
         overflow: hidden;
+        position: relative;
     }
     .result-fill {
         height: 100%;
         width: 0;
         border-radius: 999px;
-        background: linear-gradient(90deg, var(--orange), var(--cyan));
-        transition: width .6s ease;
+        background: linear-gradient(90deg, var(--cyan), var(--cyan));
+        transition: width .7s cubic-bezier(.2,.8,.2,1);
     }
+    .result-row.lead .result-fill {
+        background: linear-gradient(90deg, var(--orange), #ffb347);
+    }
+    .result-pct {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-family: var(--mono);
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--text);
+    }
+
+    /* 투표 도넛 차트 */
+    .donut-wrap { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+    .donut-chart { position: relative; width: 200px; height: 200px; }
+    .donut-chart svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .donut-center {
+        position: absolute; inset: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        text-align: center;
+    }
+    .donut-center .dc-num { font-family: var(--sans); font-weight: 800; font-size: 34px; color: var(--text); line-height: 1; }
+    .donut-center .dc-label { font-family: var(--mono); font-size: 12px; color: var(--dim); letter-spacing: 1px; margin-top: 4px; }
+    .donut-legend { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; width: 100%; }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+    .legend-item .dot { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+    .legend-item .l-name { color: var(--text); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .legend-item .l-pct { font-family: var(--mono); color: var(--muted); font-size: 12px; }
+    .legend-item.lead .l-name { color: var(--orange); font-weight: 700; }
+    @media(max-width:480px){ .donut-legend { grid-template-columns: 1fr; } }
     .poll-total {
         margin-top: 18px;
         padding-top: 16px;
@@ -784,6 +1125,77 @@
     }
     .poll-total span { color: var(--cyan); }
     @media(max-width:780px) { .poll-wrap { grid-template-columns: 1fr; } }
+
+    /* ===== 게임 추천 퀴즈 ===== */
+    .quiz-box {
+        background: var(--bg-2);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 36px;
+        max-width: 640px;
+        margin: 0 auto;
+    }
+    .quiz-progress {
+        font-family: var(--mono);
+        font-size: 14px;
+        color: var(--dim);
+        letter-spacing: 1px;
+        margin-bottom: 14px;
+    }
+    .quiz-progress b { color: var(--orange); }
+    .quiz-q {
+        font-size: clamp(20px, 3vw, 26px);
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        margin-bottom: 24px;
+        line-height: 1.3;
+    }
+    .quiz-options { display: grid; gap: 12px; }
+    .quiz-opt {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        width: 100%;
+        text-align: left;
+        padding: 16px 18px;
+        background: var(--bg-3);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        color: var(--text);
+        font-size: 15px;
+        font-weight: 600;
+        transition: all .18s ease;
+    }
+    .quiz-opt .q-emoji { font-size: 24px; }
+    .quiz-opt:hover {
+        border-color: var(--orange);
+        background: var(--orange-soft);
+        transform: translateX(4px);
+    }
+    .quiz-result { text-align: center; }
+    .quiz-result .result-eyebrow {
+        font-family: var(--mono);
+        font-size: 14px;
+        color: var(--cyan);
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+    }
+    .quiz-result .result-icon { font-size: 72px; margin: 10px 0; display: block; }
+    .quiz-result .result-name {
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: -1px;
+        margin-bottom: 10px;
+    }
+    .quiz-result .result-name span { color: var(--orange); }
+    .quiz-result .result-desc {
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.7;
+        max-width: 420px;
+        margin: 0 auto 24px;
+    }
+    .quiz-result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 </style>
 <!-- Supabase JS 클라이언트 (콘텐츠 선호도 조사 저장/조회용) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -802,9 +1214,11 @@
                 <a href="#games">GAMES</a>
                 <a href="#top10">RANKING</a>
                 <a href="#news">NEWS</a>
+                <a href="#quiz">QUIZ</a>
                 <a href="#poll">POLL</a>
                 <a href="#about">ABOUT</a>
             </div>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="테마 전환"><span id="themeIcon">🌙</span><span id="themeLabel">다크모드</span></button>
             <a href="#games" class="nav-cta">PLAY NOW</a>
         </div>
     </nav>
@@ -824,11 +1238,9 @@
                         <button class="btn-primary" onclick="document.getElementById('games').scrollIntoView()">▶ 게임 시작</button>
                         <button class="btn-ghost" onclick="document.getElementById('about').scrollIntoView()">더 보기</button>
                     </div>
-                    <div class="stats">
-                        <div class="stat"><div class="num"><span>03</span></div><small>TITLES</small></div>
-                        <div class="stat"><div class="num"><span>0</span>₩</div><small>FREE</small></div>
-                        <div class="stat"><div class="num"><span>100</span>%</div><small>BROWSER</small></div>
-                        <div class="stat"><div class="num"><span>'26</span></div><small>SINCE</small></div>
+                    <div class="fox-run" aria-hidden="true">
+                        <div class="fox-pole"></div>
+                        <div class="fox-runner">🦊</div>
                     </div>
                 </div>
                 <div class="mascot reveal">
@@ -839,77 +1251,134 @@
             </div>
         </section>
 
+        <!-- 게임 추천 퀴즈 -->
+        <section id="quiz">
+            <div class="section-head reveal">
+                <span class="label">FIND YOUR GAME</span>
+                <h2 class="section-title">나에게 어울리는 <span>게임은?</span></h2>
+                <p class="section-sub">5개의 질문에 답하면 8개 게임 중 당신에게 딱 맞는 게임을 추천해 드려요.</p>
+            </div>
+            <div class="quiz-box reveal" id="quizBox"></div>
+        </section>
+
         <!-- 게임 -->
         <section id="games">
             <div class="section-head reveal">
                 <span class="label">SELECT GAME</span>
                 <h2 class="section-title">지금 플레이 <span>가능</span></h2>
-                <p class="section-sub">원하는 게임을 선택해 바로 시작. 모든 게임은 브라우저에서 즉시 실행됩니다.</p>
+                <p class="section-sub">카드를 선택해 바로 시작하세요. 총 8개의 게임이 브라우저에서 즉시 실행됩니다.</p>
             </div>
             <div class="game-grid">
                 <div class="game-card reveal" onclick="openGame('star')">
                     <div class="card-head">
                         <div class="card-icon star">✦</div>
-                        <div class="card-id">ID:01<br><span class="ver">v1.0</span></div>
+                        <span class="card-genre">🕹️ 아케이드</span>
                     </div>
                     <div class="card-title">별빛 수집가</div>
-                    <div class="card-desc">우주 속에서 반짝이는 별을 모으고 붉은 운석을 피해 최고 기록에 도전하는 아케이드.</div>
-                    <div class="card-foot">
-                        <div class="card-tags"><span>ARCADE</span><span>1P</span><span>SCORE</span></div>
-                        <span class="play-link">PLAY ▸</span>
+                    <div class="card-desc">별을 모으고 운석을 피해 최고 기록에 도전.</div>
+                    <div class="card-meta">
+                        <span class="card-diff normal">보통</span>
+                        <span class="card-rating"><span class="stars">★★★★☆</span>4.2</span>
                     </div>
+                    <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">1P · SCORE</span><span class="play-link">PLAY ▸</span></div>
                 </div>
 
                 <div class="game-card reveal" onclick="openGame('arena')">
                     <div class="card-head">
                         <div class="card-icon arena">⚔️</div>
-                        <div class="card-id">ID:02<br><span class="ver">v1.2</span></div>
+                        <span class="card-genre">🕹️ 액션</span>
                     </div>
                     <div class="card-title">네온 아레나</div>
-                    <div class="card-desc">몰려오는 적들을 검으로 물리치며 웨이브를 돌파하는 액션 생존 게임.</div>
-                    <div class="card-foot">
-                        <div class="card-tags"><span>ACTION</span><span>WAVE</span><span>12+</span></div>
-                        <span class="play-link">PLAY ▸</span>
+                    <div class="card-desc">몰려오는 적을 물리치며 웨이브를 돌파.</div>
+                    <div class="card-meta">
+                        <span class="card-diff hard">어려움</span>
+                        <span class="card-rating"><span class="stars">★★★★★</span>4.6</span>
                     </div>
-                </div>
-
-                <div class="game-card reveal" onclick="openGame('pizza')">
-                    <div class="card-head">
-                        <div class="card-icon pizza">🍕</div>
-                        <div class="card-id">ID:03<br><span class="ver">v1.0</span></div>
-                    </div>
-                    <div class="card-title">피자 공방</div>
-                    <div class="card-desc">주문서에 맞춰 도우, 소스, 치즈와 토핑을 얹어 완벽한 피자를 만드는 퍼즐.</div>
-                    <div class="card-foot">
-                        <div class="card-tags"><span>COOKING</span><span>PUZZLE</span><span>ALL</span></div>
-                        <span class="play-link">PLAY ▸</span>
-                    </div>
+                    <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">WAVE · 12+</span><span class="play-link">PLAY ▸</span></div>
                 </div>
 
                 <div class="game-card reveal" onclick="openGame('pacman')">
                     <div class="card-head">
                         <div class="card-icon pacman">🟡</div>
-                        <div class="card-id">ID:04<br><span class="ver">v1.0</span></div>
+                        <span class="card-genre">🕹️ 아케이드</span>
                     </div>
                     <div class="card-title">팩맨</div>
-                    <div class="card-desc">미로 속 점을 모두 먹고 유령을 피하세요. 파워펠릿을 먹으면 반격 찬스!</div>
-                    <div class="card-foot">
-                        <div class="card-tags"><span>ARCADE</span><span>MAZE</span><span>ALL</span></div>
-                        <span class="play-link">PLAY ▸</span>
+                    <div class="card-desc">미로 속 점을 먹고 유령을 피하세요.</div>
+                    <div class="card-meta">
+                        <span class="card-diff normal">보통</span>
+                        <span class="card-rating"><span class="stars">★★★★☆</span>4.4</span>
                     </div>
+                    <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">MAZE · ALL</span><span class="play-link">PLAY ▸</span></div>
+                </div>
+
+                <div class="game-card reveal" onclick="openGame('pizza')">
+                    <div class="card-head">
+                        <div class="card-icon pizza">🍕</div>
+                        <span class="card-genre">🍳 요리</span>
+                    </div>
+                    <div class="card-title">피자 공방</div>
+                    <div class="card-desc">주문에 맞춰 토핑을 올려 피자 완성.</div>
+                    <div class="card-meta">
+                        <span class="card-diff easy">쉬움</span>
+                        <span class="card-rating"><span class="stars">★★★★☆</span>4.3</span>
+                    </div>
+                    <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">ORDER · ALL</span><span class="play-link">PLAY ▸</span></div>
                 </div>
 
                 <div class="game-card reveal" onclick="openGame('ramen')">
                     <div class="card-head">
                         <div class="card-icon ramen">🍜</div>
-                        <div class="card-id">ID:05<br><span class="ver">v1.0</span></div>
+                        <span class="card-genre">🍳 요리</span>
                     </div>
                     <div class="card-title">라면 가게</div>
-                    <div class="card-desc">손님 주문에 맞춰 면을 삶고 국물과 고명을 올려 완벽한 라면을 끓여내는 요리 게임.</div>
-                    <div class="card-foot">
-                        <div class="card-tags"><span>COOKING</span><span>PUZZLE</span><span>ALL</span></div>
-                        <span class="play-link">PLAY ▸</span>
+                    <div class="card-desc">면과 고명을 올려 주문대로 라면 완성.</div>
+                    <div class="card-meta">
+                        <span class="card-diff easy">쉬움</span>
+                        <span class="card-rating"><span class="stars">★★★★☆</span>4.1</span>
                     </div>
+                    <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">ORDER · ALL</span><span class="play-link">PLAY ▸</span></div>
+                </div>
+
+                <div class="game-card reveal" onclick="openGame('sudoku')">
+                    <div class="card-head">
+                        <div class="card-icon sudoku">🔢</div>
+                        <span class="card-genre">🧠 퍼즐</span>
+                    </div>
+                    <div class="card-title">스도쿠</div>
+                    <div class="card-desc">목숨 3개로 도전하는 4단계 숫자 퍼즐.</div>
+                    <div class="card-meta">
+                        <span class="card-diff hard">어려움</span>
+                        <span class="card-rating"><span class="stars">★★★★☆</span>4.5</span>
+                    </div>
+                    <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">LOGIC · LEVEL</span><span class="play-link">PLAY ▸</span></div>
+                </div>
+
+                <div class="game-card reveal" onclick="openGame('potion')">
+                    <div class="card-head">
+                        <div class="card-icon potion">🧪</div>
+                        <span class="card-genre">🧠 매직</span>
+                    </div>
+                    <div class="card-title">요술 항아리</div>
+                    <div class="card-desc">물약을 섞어 캐릭터를 소환·수집.</div>
+                    <div class="card-meta">
+                        <span class="card-diff easy">쉬움</span>
+                        <span class="card-rating"><span class="stars">★★★★★</span>4.7</span>
+                    </div>
+                    <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">CRAFT · ALL</span><span class="play-link">PLAY ▸</span></div>
+                </div>
+
+                <div class="game-card reveal" onclick="openGame('quizface')">
+                    <div class="card-head">
+                        <div class="card-icon quizface">🎬</div>
+                        <span class="card-genre">🎬 퀴즈</span>
+                    </div>
+                    <div class="card-title">이모지 퀴즈</div>
+                    <div class="card-desc">이모지를 보고 영화 제목 맞히기.</div>
+                    <div class="card-meta">
+                        <span class="card-diff normal">보통</span>
+                        <span class="card-rating"><span class="stars">★★★★★</span>4.8</span>
+                    </div>
+                    <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">MOVIE · REWARD</span><span class="play-link">PLAY ▸</span></div>
                 </div>
             </div>
         </section>
@@ -961,14 +1430,14 @@
             </div>
             <div class="news-grid">
                 <div class="news-card reveal">
-                    <div class="news-head"><span class="news-icon">▸</span><span class="news-date">2026.10.15</span></div>
-                    <h4>네온 아레나 전투 시스템 개편</h4>
-                    <p>적 웨이브 패턴을 다양화하고 타격감을 개선했어요. 더 긴장감 있는 전투가 가능합니다.</p>
+                    <div class="news-head"><span class="news-icon">▸</span><span class="news-date">2026.11.02</span></div>
+                    <h4>신작 '라면 가게' 추가</h4>
+                    <p>손님 주문에 맞춰 면과 국물, 고명을 올려 라면을 완성하는 요리 게임이 새로 들어왔어요.</p>
                 </div>
                 <div class="news-card reveal">
-                    <div class="news-head"><span class="news-icon">▸</span><span class="news-date">2026.10.02</span></div>
-                    <h4>피자 공방 토핑 추가 예고</h4>
-                    <p>페퍼로니 외에 새 토핑 라인업을 준비 중입니다. 조만간 더 다양한 레시피가 찾아옵니다.</p>
+                    <div class="news-head"><span class="news-icon">▸</span><span class="news-date">2026.11.02</span></div>
+                    <h4>피자 공방 주문 시스템 개편</h4>
+                    <p>이제 손님이 메뉴를 주문하면 그대로 만들어 서빙하고 점수를 받는 방식으로 바뀌었어요.</p>
                 </div>
                 <div class="news-card reveal">
                     <div class="news-head"><span class="news-icon">▸</span><span class="news-date">2026.09.20</span></div>
@@ -1018,6 +1487,10 @@
                         <button class="vote-btn" data-game="arena"><span class="v-emoji">⚔️</span><span>네온 아레나</span></button>
                         <button class="vote-btn" data-game="pizza"><span class="v-emoji">🍕</span><span>피자 공방</span></button>
                         <button class="vote-btn" data-game="pacman"><span class="v-emoji">🟡</span><span>팩맨</span></button>
+                        <button class="vote-btn" data-game="ramen"><span class="v-emoji">🍜</span><span>라면 가게</span></button>
+                        <button class="vote-btn" data-game="potion"><span class="v-emoji">🧪</span><span>요술 항아리</span></button>
+                        <button class="vote-btn" data-game="sudoku"><span class="v-emoji">🔢</span><span>스도쿠</span></button>
+                        <button class="vote-btn" data-game="quizface"><span class="v-emoji">🎬</span><span>이모지 퀴즈</span></button>
                     </div>
                     <div class="poll-msg" id="pollMsg">투표 결과를 불러오는 중...</div>
                 </div>
@@ -1025,12 +1498,9 @@
                     <h3>실시간 결과</h3>
                     <p class="poll-note">서버에 저장된 전체 투표 집계입니다.</p>
                     <div id="pollResults">
-                        <div class="result-row"><div class="result-head"><span class="r-name">✦ 별빛 수집가</span><span class="r-count" data-count="star">—</span></div><div class="result-track"><div class="result-fill" data-fill="star"></div></div></div>
-                        <div class="result-row"><div class="result-head"><span class="r-name">⚔️ 네온 아레나</span><span class="r-count" data-count="arena">—</span></div><div class="result-track"><div class="result-fill" data-fill="arena"></div></div></div>
-                        <div class="result-row"><div class="result-head"><span class="r-name">🍕 피자 공방</span><span class="r-count" data-count="pizza">—</span></div><div class="result-track"><div class="result-fill" data-fill="pizza"></div></div></div>
-                        <div class="result-row"><div class="result-head"><span class="r-name">🟡 팩맨</span><span class="r-count" data-count="pacman">—</span></div><div class="result-track"><div class="result-fill" data-fill="pacman"></div></div></div>
+                        <div style="padding:20px 0; text-align:center; color:var(--dim); font-family:var(--mono);">결과를 불러오는 중...</div>
                     </div>
-                    <div class="poll-total">총 <span id="pollTotal">0</span>표</div>
+                    <div class="poll-total" style="display:none;">총 <span id="pollTotal">0</span>표</div>
                 </div>
             </div>
         </section>
@@ -1072,683 +1542,22 @@
             <button class="close-btn" onclick="closeGame()" aria-label="닫기">✕</button>
             <div id="gameContainer"></div>
         </div>
-    </div>
-
-    <!-- 통합된 게임 소스 (외부 파일 없이 index.html 단일 파일로 실행) -->
-    <script>
-    const GAME_SRC = {};
-    GAME_SRC.star = `
-<!DOCTYPE html>
-<html lang=&quot;ko&quot;>
-<head>
-<meta charset=&quot;UTF-8&quot;>
-<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
-<title>별빛 수집가</title>
-<style>
-  :root { color-scheme: dark; --cyan:#77f5ff; --pink:#ff77c8; --bg:#090d22; }
-  * { box-sizing:border-box; }
-  body { margin:0; min-height:100vh; display:grid; place-items:center; padding:18px;
-    font-family:system-ui,-apple-system,&quot;Noto Sans KR&quot;,sans-serif; color:#f7f7ff;
-    background:radial-gradient(ellipse at 50% 0%,#222c60 0%,#101633 40%,#070a18 100%); }
-  .wrap { width:min(100%,520px); }
-  header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
-  h1 { margin:0; font-size:clamp(22px,5vw,30px); letter-spacing:-1px; }
-  h1 span { color:var(--cyan); }
-  .stats { display:flex; gap:8px; }
-  .stat { background:#ffffff0d; border:1px solid #ffffff20; border-radius:12px; padding:8px 12px; min-width:76px; text-align:center; }
-  .stat small { display:block; color:#aeb8e6; font-size:11px; }
-  .stat strong { font-size:20px; }
-  .gamebox { position:relative; overflow:hidden; border:1px solid #8fa4ff50; border-radius:20px; box-shadow:0 20px 70px #0008,0 0 35px #4d7dff18; }
-  canvas { display:block; width:100%; aspect-ratio:4/5; background:#080d25; touch-action:none; }
-  .overlay { position:absolute; inset:0; display:grid; place-items:center; padding:26px; text-align:center;
-    background:linear-gradient(#080d25b8,#080d25df); }
-  .overlay.hidden { display:none; }
-  .panel { max-width:330px; }
-  .eyebrow { color:var(--cyan); font-weight:800; letter-spacing:3px; font-size:11px; }
-  .panel h2 { font-size:32px; margin:8px 0; letter-spacing:-1px; }
-  .panel p { color:#c6ccef; line-height:1.65; margin:10px 0 20px; font-size:14px; }
-  button { border:0; cursor:pointer; color:#071021; font-weight:850; font-size:15px; padding:13px 24px; border-radius:999px;
-    background:linear-gradient(100deg,var(--cyan),#b9ffdf); box-shadow:0 6px 25px #77f5ff30; }
-  button:active { transform:scale(.97); }
-  .hint { display:flex; justify-content:space-between; gap:10px; color:#aeb8e6; font-size:12px; padding:12px 4px 0; }
-  .hint b { color:#fff; }
-  .mobile { display:none; justify-content:center; gap:14px; margin-top:12px; }
-  .mobile button { width:72px; height:48px; padding:0; font-size:22px; background:#ffffff12; border:1px solid #ffffff25; color:white; box-shadow:none; }
-  @media (pointer:coarse) { .mobile { display:flex; } }
-</style>
-</head>
-<body>
-<main class=&quot;wrap&quot;>
-  <header>
-    <h1>별빛 <span>수집가</span> ✦</h1>
-    <div class=&quot;stats&quot;>
-      <div class=&quot;stat&quot;><small>점수</small><strong id=&quot;score&quot;>0</strong></div>
-      <div class=&quot;stat&quot;><small>최고 점수</small><strong id=&quot;best&quot;>0</strong></div>
-    </div>
-  </header>
-  <section class=&quot;gamebox&quot;>
-    <canvas id=&quot;game&quot; width=&quot;480&quot; height=&quot;600&quot; aria-label=&quot;별빛 수집 게임&quot;></canvas>
-    <div class=&quot;overlay&quot; id=&quot;overlay&quot;>
-      <div class=&quot;panel&quot;>
-        <div class=&quot;eyebrow&quot;>COSMIC ARCADE</div>
-        <h2 id=&quot;headline&quot;>별빛을 모아봐! ✨</h2>
-        <p id=&quot;message&quot;>반짝이는 별을 모으고, 붉은 운석은 피하세요.<br>오래 버틸수록 운석이 점점 빨라져요.</p>
-        <button id=&quot;start&quot;>게임 시작</button>
-      </div>
-    </div>
-  </section>
-  <div class=&quot;hint&quot;><span>이동 <b>← →</b> 또는 <b>A / D</b></span><span>별 +10 · 운석에 닿으면 종료</span></div>
-  <div class=&quot;mobile&quot;><button id=&quot;left&quot; aria-label=&quot;왼쪽&quot;>←</button><button id=&quot;right&quot; aria-label=&quot;오른쪽&quot;>→</button></div>
-</main>
-<script>
-(() => {
-  const canvas = document.getElementById('game'), ctx = canvas.getContext('2d');
-  const scoreEl = document.getElementById('score'), bestEl = document.getElementById('best');
-  const overlay = document.getElementById('overlay'), headline = document.getElementById('headline');
-  const message = document.getElementById('message'), startBtn = document.getElementById('start');
-  const W = canvas.width, H = canvas.height;
-  let running = false, score = 0, best = Number(localStorage.getItem('starCollectorBest') || 0);
-  let player, stars, rocks, particles, bgStars, keys = {}, spawnTick = 0, frame = 0, last = 0;
-  bestEl.textContent = best;
-  const rand = (a,b) => a + Math.random()*(b-a);
-
-  function reset() {
-    score = 0; frame = 0; spawnTick = 0;
-    player = { x:W/2, y:H-65, r:16, speed:5.8 };
-    stars = []; rocks = []; particles = [];
-    bgStars = Array.from({length:75}, () => ({x:rand(0,W),y:rand(0,H),r:rand(.5,1.8),v:rand(.4,1.5),a:rand(.2,.8)}));
-    scoreEl.textContent = score;
-  }
-  function start() {
-    reset(); running = true; overlay.classList.add('hidden'); last = performance.now();
-    requestAnimationFrame(loop);
-  }
-  function end() {
-    running = false;
-    if (score > best) { best = score; localStorage.setItem('starCollectorBest', best); bestEl.textContent = best; }
-    headline.textContent = '우주 탐험 종료 💫';
-    message.innerHTML = \`최종 점수는 <b style=&quot;color:#77f5ff&quot;>\${score}점</b>!<br>\${score >= best &amp;&amp; score > 0 ? '새로운 최고 기록일지도 몰라요. 멋져요!' : '다시 도전해서 기록을 깨보세요.'}\`;
-    startBtn.textContent = '다시 도전';
-    overlay.classList.remove('hidden');
-  }
-  function burst(x,y,color,n=10) {
-    for(let i=0;i<n;i++) particles.push({x,y,vx:rand(-2.5,2.5),vy:rand(-2.8,2.2),life:rand(18,35),max:35,color,r:rand(1,3)});
-  }
-  function spawn() {
-    if (Math.random() < .72) stars.push({x:rand(24,W-24),y:-20,r:rand(8,12),v:rand(2.2,3.4)+score*.002,rot:rand(0,6)});
-    else rocks.push({x:rand(24,W-24),y:-30,r:rand(13,21),v:rand(2.4,3.7)+score*.003,rot:rand(0,6),spin:rand(-.04,.04)});
-  }
-  function starShape(x,y,r,rot=0) {
-    ctx.beginPath();
-    for(let i=0;i<10;i++){const a=rot+i*Math.PI/5-Math.PI/2, rr=i%2?r*.43:r; const px=x+Math.cos(a)*rr,py=y+Math.sin(a)*rr; i?ctx.lineTo(px,py):ctx.moveTo(px,py);}
-    ctx.closePath();
-  }
-  function drawPlayer() {
-    ctx.save(); ctx.translate(player.x,player.y);
-    ctx.shadowBlur=22; ctx.shadowColor='#77f5ff';
-    ctx.fillStyle='#a6fcff'; ctx.beginPath(); ctx.moveTo(0,-20); ctx.lineTo(15,13); ctx.lineTo(0,8); ctx.lineTo(-15,13); ctx.closePath(); ctx.fill();
-    ctx.shadowBlur=0; ctx.fillStyle='#536fff'; ctx.beginPath(); ctx.moveTo(-5,12);ctx.lineTo(0,24+Math.sin(frame*.45)*4);ctx.lineTo(5,12);ctx.fill();
-    ctx.fillStyle='#fff'; ctx.beginPath();ctx.arc(0,-2,4,0,Math.PI*2);ctx.fill();ctx.restore();
-  }
-  function loop(now) {
-    if (!running) return;
-    const dt = Math.min((now-last)/16.67,2); last = now; frame++;
-    update(dt); draw(); requestAnimationFrame(loop);
-  }
-  function update(dt) {
-    if(keys.ArrowLeft||keys.a||keys.A) player.x -= player.speed*dt;
-    if(keys.ArrowRight||keys.d||keys.D) player.x += player.speed*dt;
-    player.x = Math.max(20,Math.min(W-20,player.x));
-    bgStars.forEach(s=>{s.y+=s.v*dt;if(s.y>H){s.y=0;s.x=rand(0,W);}});
-    spawnTick += dt;
-    if(spawnTick > Math.max(18,43-score*.035)){spawn();spawnTick=0;}
-    for(let i=stars.length-1;i>=0;i--){
-      const s=stars[i]; s.y+=s.v*dt;s.rot+=.025*dt;
-      if(Math.hypot(s.x-player.x,s.y-player.y)<s.r+player.r){score+=10;scoreEl.textContent=score;burst(s.x,s.y,'#ffe88a',12);stars.splice(i,1);}
-      else if(s.y>H+30) stars.splice(i,1);
-    }
-    for(let i=rocks.length-1;i>=0;i--){
-      const r=rocks[i];r.y+=r.v*dt;r.rot+=r.spin*dt;
-      if(Math.hypot(r.x-player.x,r.y-player.y)<r.r+player.r*.65){burst(player.x,player.y,'#ff77c8',25);draw();end();return;}
-      if(r.y>H+40) rocks.splice(i,1);
-    }
-    for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;if(p.life<=0)particles.splice(i,1);}
-  }
-  function draw() {
-    const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#101a43');g.addColorStop(1,'#080b20');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-    bgStars.forEach(s=>{ctx.globalAlpha=s.a;ctx.fillStyle='#d8e8ff';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();});ctx.globalAlpha=1;
-    // faint orbital arcs
-    ctx.strokeStyle='#758cff12';ctx.lineWidth=1;
-    for(let y=90;y<H;y+=105){ctx.beginPath();ctx.ellipse(W/2,y,W*.55,27,0,0,Math.PI*2);ctx.stroke();}
-    stars.forEach(s=>{ctx.save();ctx.translate(s.x,s.y);ctx.rotate(s.rot);ctx.shadowBlur=18;ctx.shadowColor='#ffe88a';ctx.fillStyle='#ffe88a';starShape(0,0,s.r);ctx.fill();ctx.restore();});
-    rocks.forEach(r=>{ctx.save();ctx.translate(r.x,r.y);ctx.rotate(r.rot);ctx.shadowBlur=12;ctx.shadowColor='#ff477e';ctx.fillStyle='#ff648e';ctx.strokeStyle='#ffb1c8';ctx.lineWidth=2;ctx.beginPath();for(let i=0;i<9;i++){let a=i*Math.PI*2/9,rr=r.r*(i%2?.8:1);let x=Math.cos(a)*rr,y=Math.sin(a)*rr;i?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();});
-    particles.forEach(p=>{ctx.globalAlpha=Math.max(0,p.life/p.max);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();});ctx.globalAlpha=1;
-    if(player) drawPlayer();
-  }
-  document.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();keys[e.key]=true;if(!running&amp;&amp;e.key===' ')start();});
-  document.addEventListener('keyup',e=>keys[e.key]=false);
-  startBtn.addEventListener('click',start);
-  function holdButton(id,key){const el=document.getElementById(id);el.addEventListener('pointerdown',e=>{e.preventDefault();keys[key]=true;});['pointerup','pointerleave','pointercancel'].forEach(ev=>el.addEventListener(ev,()=>keys[key]=false));}
-  holdButton('left','ArrowLeft');holdButton('right','ArrowRight');
-  canvas.addEventListener('pointermove',e=>{if(running&amp;&amp;e.pointerType!=='mouse') {const rect=canvas.getBoundingClientRect();player.x=(e.clientX-rect.left)/rect.width*W;}});
-  reset(); draw();
-})();
-</script>
-</body>
-</html>
-`;
-    GAME_SRC.arena = `
-<!DOCTYPE html>
-<html lang=&quot;ko&quot;>
-<head>
-<meta charset=&quot;UTF-8&quot;>
-<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
-<title>NEON ARENA — 전투 게임</title>
-<style>
-:root{color-scheme:dark;--cyan:#5cf4ff;--pink:#ff5e91;--gold:#ffe58b}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:grid;place-items:center;padding:16px;background:radial-gradient(ellipse at top,#20295a,#090c1d 65%);color:#f4f7ff;font-family:system-ui,-apple-system,&quot;Noto Sans KR&quot;,sans-serif}
-main{width:min(100%,760px)}
-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
-h1{font-size:clamp(22px,4vw,30px);margin:0;letter-spacing:-1px}h1 span{color:var(--cyan)}
-.stats{display:flex;gap:8px}.stat{padding:7px 13px;border:1px solid #ffffff20;border-radius:12px;background:#ffffff0b;text-align:center;min-width:76px}.stat small{display:block;color:#aab5df;font-size:11px}.stat strong{font-size:20px}
-.arena{position:relative;border:1px solid #6f8fff55;border-radius:18px;overflow:hidden;box-shadow:0 20px 70px #0008}
-canvas{display:block;width:100%;aspect-ratio:16/10;background:#090d20;touch-action:none}
-.overlay{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;background:#070b1bd9}.overlay.hidden{display:none}.panel{max-width:420px}.eyebrow{font-size:11px;letter-spacing:4px;color:var(--cyan);font-weight:900}.panel h2{font-size:clamp(26px,6vw,38px);margin:10px 0;letter-spacing:-1px}.panel p{font-size:14px;line-height:1.7;color:#c4cbed;margin:10px 0 20px}
-button{border:0;border-radius:999px;background:linear-gradient(100deg,var(--cyan),#b5ffd9);color:#071021;font-weight:900;font-size:15px;padding:13px 24px;cursor:pointer}button:active{transform:scale(.97)}
-.help{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:12px 4px 0;color:#aeb8e6;font-size:12px}.help b{color:#fff}
-.mobile{display:none;justify-content:space-between;align-items:center;gap:8px;margin-top:12px}.mobile .cluster{display:flex;gap:8px}.mobile button{width:52px;height:48px;padding:0;border:1px solid #ffffff2b;background:#ffffff12;color:white;font-size:20px;box-shadow:none;border-radius:12px}.mobile .attack{width:auto;padding:0 18px;background:#ff5e9126;color:#ffb1c9;border-color:#ff5e9166;font-size:13px}
-@media(pointer:coarse){.mobile{display:flex}}
-</style>
-</head>
-<body>
-<main>
-<header>
-<h1>NEON <span>ARENA</span> ⚔️</h1>
-<div class=&quot;stats&quot;>
-<div class=&quot;stat&quot;><small>체력</small><strong id=&quot;hp&quot;>100</strong></div>
-<div class=&quot;stat&quot;><small>처치</small><strong id=&quot;kills&quot;>0</strong></div>
-<div class=&quot;stat&quot;><small>웨이브</small><strong id=&quot;wave&quot;>1</strong></div>
-</div>
-</header>
-<section class=&quot;arena&quot;>
-<canvas id=&quot;game&quot; width=&quot;960&quot; height=&quot;600&quot; aria-label=&quot;적을 물리치는 전투 게임&quot;></canvas>
-<div class=&quot;overlay&quot; id=&quot;overlay&quot;><div class=&quot;panel&quot;>
-<div class=&quot;eyebrow&quot;>SURVIVE THE ARENA</div><h2 id=&quot;title&quot;>전투를 시작하라</h2>
-<p id=&quot;desc&quot;>검으로 몰려오는 적을 물리치세요.<br>적을 처치하면 다음 웨이브가 시작됩니다.<br><b>이동:</b> WASD / 방향키　<b>공격:</b> 스페이스바</p>
-<button id=&quot;start&quot;>전투 시작</button>
-</div></div>
-</section>
-<div class=&quot;help&quot;><span>이동 <b>W A S D</b> 또는 <b>방향키</b></span><span>공격 <b>Space</b> · 적을 처치해 웨이브 돌파</span></div>
-<div class=&quot;mobile&quot;>
-<div class=&quot;cluster&quot;><button id=&quot;up&quot;>↑</button><button id=&quot;left&quot;>←</button><button id=&quot;down&quot;>↓</button><button id=&quot;right&quot;>→</button></div>
-<button class=&quot;attack&quot; id=&quot;attack&quot;>⚔ 공격</button>
-</div>
-</main>
-<script>
-(()=>{
-const c=document.getElementById('game'),ctx=c.getContext('2d'),W=c.width,H=c.height;
-const $=id=>document.getElementById(id);
-const overlay=$('overlay');let running=false,last=0,keys={},player,enemies=[],particles=[],slashes=[],kills=0,wave=1,spawned=0,spawnDelay=0,shake=0;
-const rand=(a,b)=>a+Math.random()*(b-a);
-function reset(){kills=0;wave=1;spawned=0;spawnDelay=0;enemies=[];particles=[];slashes=[];shake=0;player={x:W/2,y:H/2,r:19,hp:100,faceX:1,faceY:0,speed:4.1,attack:0,invuln:0};for(let i=0;i<4;i++)spawnEnemy();updateUI();}
-function updateUI(){$('hp').textContent=Math.max(0,Math.ceil(player.hp));$('kills').textContent=kills;$('wave').textContent=wave;}
-function start(){reset();running=true;overlay.classList.add('hidden');last=performance.now();requestAnimationFrame(loop);}
-function end(){running=false;$('title').textContent='전투 종료';$('desc').innerHTML=\`최종 처치 수: <b style=&quot;color:#5cf4ff&quot;>\${kills}</b><br>\${wave} 웨이브까지 생존했어요. 다시 도전할까요?\`;$('start').textContent='다시 전투';overlay.classList.remove('hidden');}
-function spawnEnemy(){let side=Math.floor(Math.random()*4),x=side===0?-30:side===1?W+30:rand(0,W),y=side===2?-30:side===3?H+30:rand(0,H);if(Math.hypot(x-player.x,y-player.y)<200){x=x<W/2?W-40:40;y=y<H/2?H-40:40;}
-const heavy=Math.random()<Math.min(.12+wave*.025,.35);enemies.push({x,y,r:heavy?23:16,hp:heavy?3:1,maxHp:heavy?3:1,speed:(heavy?1.0:1.35)+Math.min(wave*.07,1.1),hit:0,phase:rand(0,6),heavy});spawned++;}
-function burst(x,y,color,n=9){for(let i=0;i<n;i++)particles.push({x,y,vx:rand(-3,3),vy:rand(-3,3),life:rand(15,30),max:30,color,r:rand(2,5)});}
-function attack(){if(!running||player.attack>0)return;player.attack=17;slashes.push({x:player.x,y:player.y,dx:player.faceX,dy:player.faceY,life:12});let hit=false;
-for(let i=enemies.length-1;i>=0;i--){let e=enemies[i],dx=e.x-player.x,dy=e.y-player.y,dist=Math.hypot(dx,dy),dot=(dx*player.faceX+dy*player.faceY)/(dist||1);if(dist<92+e.r&amp;&amp;dot>-.1){e.hp--;e.hit=8;burst(e.x,e.y,e.heavy?'#ffb56b':'#ff5e91',7);hit=true;if(e.hp<=0){burst(e.x,e.y,'#ffe58b',16);enemies.splice(i,1);kills++;if(kills%5===0){wave++;player.hp=Math.min(100,player.hp+12);}}}}
-if(hit)shake=5;updateUI();}
-function loop(t){if(!running)return;let dt=Math.min((t-last)/16.67,2);last=t;update(dt);draw();requestAnimationFrame(loop);}
-function update(dt){
-let mx=0,my=0;if(keys.ArrowLeft||keys.a||keys.A)mx--;if(keys.ArrowRight||keys.d||keys.D)mx++;if(keys.ArrowUp||keys.w||keys.W)my--;if(keys.ArrowDown||keys.s||keys.S)my++;
-if(mx||my){let l=Math.hypot(mx,my);mx/=l;my/=l;player.x+=mx*player.speed*dt;player.y+=my*player.speed*dt;player.faceX=mx;player.faceY=my;}
-player.x=Math.max(player.r,Math.min(W-player.r,player.x));player.y=Math.max(player.r,Math.min(H-player.r,player.y));
-player.attack=Math.max(0,player.attack-dt);player.invuln=Math.max(0,player.invuln-dt);
-spawnDelay+=dt;if(spawnDelay>Math.max(22,70-wave*3)&amp;&amp;enemies.length<Math.min(5+wave*2,22)){spawnEnemy();spawnDelay=0;}
-enemies.forEach(e=>{let dx=player.x-e.x,dy=player.y-e.y,d=Math.hypot(dx,dy)||1;e.x+=dx/d*e.speed*dt;e.y+=dy/d*e.speed*dt;e.phase+=.08*dt;e.hit=Math.max(0,e.hit-dt);if(d<e.r+player.r-2&amp;&amp;player.invuln<=0){player.hp-=e.heavy?0.65:0.42;player.invuln=20;shake=4;burst(player.x,player.y,'#ff5e91',5);updateUI();}});
-particles.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.97;p.vy*=.97;p.life-=dt;});particles=particles.filter(p=>p.life>0);
-slashes.forEach(s=>s.life-=dt);slashes=slashes.filter(s=>s.life>0);shake=Math.max(0,shake-dt*.6);
-if(player.hp<=0){player.hp=0;updateUI();draw();end();}
-}
-function draw(){
-ctx.save();if(shake>0)ctx.translate(rand(-shake,shake),rand(-shake,shake));
-ctx.fillStyle='#090d20';ctx.fillRect(-10,-10,W+20,H+20);
-ctx.strokeStyle='#18234b';ctx.lineWidth=1;for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-ctx.strokeStyle='#324477';ctx.lineWidth=3;ctx.strokeRect(10,10,W-20,H-20);
-slashes.forEach(s=>{let alpha=s.life/12;ctx.save();ctx.globalAlpha=alpha;ctx.translate(s.x,s.y);ctx.rotate(Math.atan2(s.dy,s.dx));ctx.strokeStyle='#b9ffff';ctx.shadowBlur=28;ctx.shadowColor='#5cf4ff';ctx.lineWidth=12;ctx.beginPath();ctx.arc(0,0,65,-.85,.85);ctx.stroke();ctx.restore();});
-enemies.forEach(e=>{ctx.save();ctx.translate(e.x,e.y);let col=e.heavy?'#ffad5e':'#ff5e91';ctx.shadowBlur=e.hit?28:14;ctx.shadowColor=col;ctx.fillStyle=e.hit?'#fff':col;ctx.beginPath();ctx.arc(0,0,e.r+Math.sin(e.phase)*1.5,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='#2a1028';ctx.beginPath();ctx.arc(-5,-3,3,0,Math.PI*2);ctx.arc(5,-3,3,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#fff0f4';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-5,6);ctx.lineTo(5,6);ctx.stroke();if(e.maxHp>1){ctx.fillStyle='#35152b';ctx.fillRect(-22,-e.r-12,44,5);ctx.fillStyle='#ffcf82';ctx.fillRect(-22,-e.r-12,44*(e.hp/e.maxHp),5);}ctx.restore();});
-particles.forEach(p=>{ctx.globalAlpha=Math.max(0,p.life/p.max);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();});ctx.globalAlpha=1;
-ctx.save();ctx.translate(player.x,player.y);if(player.invuln>0&amp;&amp;Math.floor(player.invuln/3)%2===0)ctx.globalAlpha=.4;ctx.shadowBlur=22;ctx.shadowColor='#5cf4ff';ctx.fillStyle='#5cf4ff';ctx.beginPath();ctx.arc(0,0,player.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='#11274a';ctx.beginPath();ctx.arc(0,0,player.r-6,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#d8ffff';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(player.faceX*8,player.faceY*8);ctx.lineTo(player.faceX*29,player.faceY*29);ctx.stroke();ctx.restore();
-ctx.restore();
-}
-document.addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();keys[e.key]=true;if(e.code==='Space'&amp;&amp;!e.repeat)attack();if(!running&amp;&amp;e.code==='Enter')start();});
-document.addEventListener('keyup',e=>keys[e.key]=false);$('start').addEventListener('click',start);
-const hold=(id,key)=>{let b=$(id);b.addEventListener('pointerdown',e=>{e.preventDefault();keys[key]=true;b.setPointerCapture(e.pointerId)});['pointerup','pointercancel','lostpointercapture'].forEach(ev=>b.addEventListener(ev,()=>keys[key]=false));};
-hold('up','ArrowUp');hold('down','ArrowDown');hold('left','ArrowLeft');hold('right','ArrowRight');$('attack').addEventListener('pointerdown',e=>{e.preventDefault();attack()});
-let touchX=null,touchY=null;c.addEventListener('pointerdown',e=>{if(e.pointerType==='touch'){const r=c.getBoundingClientRect();touchX=(e.clientX-r.left)/r.width*W;touchY=(e.clientY-r.top)/r.height*H;}});
-c.addEventListener('pointermove',e=>{if(e.pointerType==='touch'&amp;&amp;running&amp;&amp;touchX!==null){const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*W,y=(e.clientY-r.top)/r.height*H;let dx=x-touchX,dy=y-touchY;if(Math.hypot(dx,dy)>8){player.faceX=dx/Math.hypot(dx,dy);player.faceY=dy/Math.hypot(dx,dy);player.x=Math.max(20,Math.min(W-20,player.x+dx*.55));player.y=Math.max(20,Math.min(H-20,player.y+dy*.55));touchX=x;touchY=y;}}});
-c.addEventListener('pointerup',()=>{touchX=null;touchY=null;});
-reset();draw();
-})();
-</script>
-</body>
-</html>
-`;
-    GAME_SRC.pacman = `
-<!DOCTYPE html>
-<html lang=&quot;ko&quot;>
-<head>
-<meta charset=&quot;UTF-8&quot;>
-<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
-<title>팩맨 · PLAYON</title>
-<link href=&quot;https://fonts.googleapis.com/css2?family=VT323&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
-<style>
-  :root { color-scheme: dark; --bg:#0c0d14; --wall:#2d6cff; --dot:#ffd56b; --pac:#ffe34d; --text:#f0f0f5; --cyan:#5cf4ff; }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px;
-    font-family: 'VT323', system-ui, monospace; color: var(--text);
-    background: radial-gradient(ellipse at 50% 0%, #1a1c28 0%, #0c0d14 60%);
-  }
-  .wrap { width: min(100%, 460px); }
-  header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px; }
-  h1 { margin: 0; font-size: 34px; letter-spacing: 2px; color: var(--pac); }
-  .stats { display: flex; gap: 10px; }
-  .stat { background: #14151f; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 4px 12px; text-align: center; min-width: 70px; }
-  .stat small { display: block; font-size: 14px; color: var(--cyan); letter-spacing: 1px; }
-  .stat strong { font-size: 24px; letter-spacing: 1px; }
-  .gamebox { position: relative; border: 2px solid rgba(45,108,255,0.5); border-radius: 12px; overflow: hidden; box-shadow: 0 0 40px rgba(45,108,255,0.2); }
-  canvas { display: block; width: 100%; background: #05060d; touch-action: none; }
-  .overlay { position: absolute; inset: 0; display: grid; place-items: center; text-align: center;
-    background: rgba(5,6,13,0.9); padding: 24px; }
-  .overlay.hidden { display: none; }
-  .overlay h2 { font-size: 40px; margin: 0 0 8px; color: var(--pac); letter-spacing: 2px; }
-  .overlay p { color: #b3b3c6; font-size: 20px; margin: 0 0 18px; letter-spacing: 1px; }
-  button { font-family: inherit; font-size: 22px; letter-spacing: 2px; cursor: pointer; border: 0;
-    color: #1a0a00; background: var(--pac); padding: 10px 26px; border-radius: 10px; box-shadow: 0 0 24px rgba(255,227,77,0.4); }
-  button:active { transform: scale(0.97); }
-  .hint { color: #8b8fa3; font-size: 18px; text-align: center; margin-top: 10px; letter-spacing: 1px; }
-  .mobile { display: none; grid-template-columns: repeat(3, 56px); gap: 8px; justify-content: center; margin-top: 14px; }
-  .mobile button { font-size: 26px; padding: 0; width: 56px; height: 52px; background: #14151f; color: var(--cyan); border: 1px solid rgba(255,255,255,0.15); box-shadow: none; border-radius: 10px; }
-  .mobile .up { grid-column: 2; }
-  .mobile .left { grid-column: 1; grid-row: 2; }
-  .mobile .down { grid-column: 2; grid-row: 2; }
-  .mobile .right { grid-column: 3; grid-row: 2; }
-  @media (pointer: coarse) { .mobile { display: grid; } }
-</style>
-</head>
-<body>
-  <div class=&quot;wrap&quot;>
-    <header>
-      <h1>PAC-MAN</h1>
-      <div class=&quot;stats&quot;>
-        <div class=&quot;stat&quot;><small>SCORE</small><strong id=&quot;score&quot;>0</strong></div>
-        <div class=&quot;stat&quot;><small>LIVES</small><strong id=&quot;lives&quot;>3</strong></div>
-      </div>
-    </header>
-
-    <div class=&quot;gamebox&quot;>
-      <canvas id=&quot;game&quot; width=&quot;448&quot; height=&quot;496&quot;></canvas>
-      <div class=&quot;overlay&quot; id=&quot;overlay&quot;>
-        <div>
-          <h2 id=&quot;ovTitle&quot;>PAC-MAN</h2>
-          <p id=&quot;ovMsg&quot;>방향키 또는 WASD로 이동하세요</p>
-          <button id=&quot;startBtn&quot;>START ▶</button>
+        <!-- 별점 입력 오버레이 -->
+        <div id="rateOverlay">
+            <div class="rate-box">
+                <div class="rate-title">이 게임 재미있었나요?</div>
+                <div class="rate-sub">별점을 남기면 다른 사람에게 큰 도움이 돼요.</div>
+                <div class="rate-stars" id="rateStars">
+                    <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+                </div>
+                <div class="rate-actions">
+                    <button class="btn-ghost" id="rateSkip">건너뛰기</button>
+                    <button class="btn-primary" id="rateSubmit" disabled>별점 남기기</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
-    <p class=&quot;hint&quot;>← ↑ → ↓ / W A S D 로 이동 · 점을 모두 먹으면 클리어!</p>
-
-    <div class=&quot;mobile&quot;>
-      <button class=&quot;up&quot; data-dir=&quot;up&quot;>▲</button>
-      <button class=&quot;left&quot; data-dir=&quot;left&quot;>◀</button>
-      <button class=&quot;down&quot; data-dir=&quot;down&quot;>▼</button>
-      <button class=&quot;right&quot; data-dir=&quot;right&quot;>▶</button>
-    </div>
-  </div>
-
-<script>
-(function () {
-  const TILE = 16;
-  // 미로 레이아웃: 28 x 31
-  // # 벽, . 점, o 파워펠릿, (공백) 빈칸, - 유령집 문, 'P' 팩맨 시작, 'G' 유령 시작
-  const MAP = [
-    &quot;############################&quot;,
-    &quot;#............##............#&quot;,
-    &quot;#.####.#####.##.#####.####.#&quot;,
-    &quot;#o####.#####.##.#####.####o#&quot;,
-    &quot;#.####.#####.##.#####.####.#&quot;,
-    &quot;#..........................#&quot;,
-    &quot;#.####.##.########.##.####.#&quot;,
-    &quot;#.####.##.########.##.####.#&quot;,
-    &quot;#......##....##....##......#&quot;,
-    &quot;######.##### ## #####.######&quot;,
-    &quot;     #.##### ## #####.#     &quot;,
-    &quot;     #.##          ##.#     &quot;,
-    &quot;     #.## ###--### ##.#     &quot;,
-    &quot;######.## #      # ##.######&quot;,
-    &quot;      .   #  GG  #   .      &quot;,
-    &quot;######.## #      # ##.######&quot;,
-    &quot;     #.## ######## ##.#     &quot;,
-    &quot;     #.##          ##.#     &quot;,
-    &quot;     #.## ######## ##.#     &quot;,
-    &quot;######.## ######## ##.######&quot;,
-    &quot;#............##............#&quot;,
-    &quot;#.####.#####.##.#####.####.#&quot;,
-    &quot;#.####.#####.##.#####.####.#&quot;,
-    &quot;#o..##.......P .......##..o#&quot;,
-    &quot;###.##.##.########.##.##.###&quot;,
-    &quot;###.##.##.########.##.##.###&quot;,
-    &quot;#......##....##....##......#&quot;,
-    &quot;#.##########.##.##########.#&quot;,
-    &quot;#.##########.##.##########.#&quot;,
-    &quot;#..........................#&quot;,
-    &quot;############################&quot;
-  ];
-  const COLS = 28, ROWS = 31;
-
-  const canvas = document.getElementById('game');
-  const ctx = canvas.getContext('2d');
-  const scoreEl = document.getElementById('score');
-  const livesEl = document.getElementById('lives');
-  const overlay = document.getElementById('overlay');
-  const ovTitle = document.getElementById('ovTitle');
-  const ovMsg = document.getElementById('ovMsg');
-  const startBtn = document.getElementById('startBtn');
-
-  let grid, dotsLeft, score, lives, running, frightTimer;
-  let pac, ghosts, animTimer = 0;
-
-  const GHOST_COLORS = ['#ff4d6d', '#ffb8de', '#5cf4ff', '#ffb347'];
-
-  function parseMap() {
-    grid = [];
-    dotsLeft = 0;
-    let pacStart = { c: 13, r: 23 };
-    const ghostStarts = [];
-    for (let r = 0; r < ROWS; r++) {
-      grid[r] = [];
-      for (let c = 0; c < COLS; c++) {
-        const ch = MAP[r][c] || ' ';
-        let cell = 'empty';
-        if (ch === '#') cell = 'wall';
-        else if (ch === '.') { cell = 'dot'; dotsLeft++; }
-        else if (ch === 'o') { cell = 'power'; dotsLeft++; }
-        else if (ch === '-') cell = 'door';
-        else if (ch === 'P') { cell = 'empty'; pacStart = { c, r }; }
-        else if (ch === 'G') { cell = 'empty'; ghostStarts.push({ c, r }); }
-        grid[r][c] = cell;
-      }
-    }
-    return { pacStart, ghostStarts };
-  }
-
-  function isWall(c, r, forGhost) {
-    if (r < 0 || r >= ROWS) return true;
-    // 좌우 터널 통과
-    if (c < 0 || c >= COLS) return false;
-    const cell = grid[r][c];
-    if (cell === 'wall') return true;
-    if (cell === 'door') return !forGhost; // 문은 유령만 통과
-    return false;
-  }
-
-  function reset() {
-    const { pacStart, ghostStarts } = parseMap();
-    score = 0; lives = 3; frightTimer = 0;
-    pac = { c: pacStart.c, r: pacStart.r, x: pacStart.c * TILE, y: pacStart.r * TILE, dir: 'left', next: 'left', speed: 2, mouth: 0 };
-    ghosts = GHOST_COLORS.map((col, i) => {
-      const s = ghostStarts[i % ghostStarts.length] || { c: 13, r: 14 };
-      return { c: s.c, r: s.r, x: s.c * TILE, y: s.r * TILE, dir: ['up','left','down','right'][i], color: col, fright: false, speed: 1.6, home: { c: s.c, r: s.r }, release: i * 40 };
-    });
-    updateHud();
-  }
-
-  function updateHud() {
-    scoreEl.textContent = score;
-    livesEl.textContent = lives;
-  }
-
-  const DIRS = { up:{dc:0,dr:-1}, down:{dc:0,dr:1}, left:{dc:-1,dr:0}, right:{dc:1,dr:0} };
-
-  function atCenter(e) {
-    return Math.abs(e.x - e.c * TILE) < 1 &amp;&amp; Math.abs(e.y - e.r * TILE) < 1;
-  }
-
-  function tryTurn(e, dir, forGhost) {
-    const d = DIRS[dir];
-    if (!d) return false;
-    if (!isWall(e.c + d.dc, e.r + d.dr, forGhost)) { e.dir = dir; return true; }
-    return false;
-  }
-
-  function moveEntity(e, forGhost) {
-    if (atCenter(e)) {
-      e.x = e.c * TILE; e.y = e.r * TILE;
-      if (e.next) tryTurn(e, e.next, forGhost);
-      const d = DIRS[e.dir];
-      if (isWall(e.c + d.dc, e.r + d.dr, forGhost)) return; // 벽이면 정지
-    }
-    const d = DIRS[e.dir];
-    e.x += d.dc * e.speed;
-    e.y += d.dr * e.speed;
-    // 셀 갱신
-    e.c = Math.round(e.x / TILE);
-    e.r = Math.round(e.y / TILE);
-    // 터널 래핑
-    if (e.x < -TILE) { e.x = COLS * TILE; e.c = COLS - 1; }
-    if (e.x > COLS * TILE) { e.x = -TILE; e.c = 0; }
-  }
-
-  function ghostAI(g) {
-    if (!atCenter(g)) return;
-    g.x = g.c * TILE; g.y = g.r * TILE;
-    // 가능한 방향 중 되돌아가기 제외하고 선택
-    const opposite = { up:'down', down:'up', left:'right', right:'left' };
-    const options = Object.keys(DIRS).filter(dir => {
-      if (dir === opposite[g.dir]) return false;
-      const d = DIRS[dir];
-      return !isWall(g.c + d.dc, g.r + d.dr, true);
-    });
-    const choices = options.length ? options : [opposite[g.dir]];
-    // 겁먹었으면 팩맨에서 멀어지게, 아니면 가까워지게
-    let best = choices[0], bestScore = g.fright ? -Infinity : Infinity;
-    for (const dir of choices) {
-      const d = DIRS[dir];
-      const nc = g.c + d.dc, nr = g.r + d.dr;
-      const dist = Math.hypot(nc - pac.c, nr - pac.r);
-      if (g.fright) { if (dist > bestScore) { bestScore = dist; best = dir; } }
-      else { if (dist < bestScore) { bestScore = dist; best = dir; } }
-    }
-    // 약간의 랜덤성
-    if (Math.random() < 0.15 &amp;&amp; choices.length > 1) best = choices[Math.floor(Math.random() * choices.length)];
-    g.dir = best;
-  }
-
-  function eatDots() {
-    const cell = grid[pac.r] &amp;&amp; grid[pac.r][pac.c];
-    if (cell === 'dot') { grid[pac.r][pac.c] = 'empty'; score += 10; dotsLeft--; updateHud(); }
-    else if (cell === 'power') {
-      grid[pac.r][pac.c] = 'empty'; score += 50; dotsLeft--; updateHud();
-      frightTimer = 360; // 약 6초
-      ghosts.forEach(g => { g.fright = true; });
-    }
-    if (dotsLeft <= 0) win();
-  }
-
-  function checkGhostCollision() {
-    for (const g of ghosts) {
-      if (Math.abs(g.x - pac.x) < TILE * 0.7 &amp;&amp; Math.abs(g.y - pac.y) < TILE * 0.7) {
-        if (g.fright) {
-          score += 200; updateHud();
-          g.fright = false;
-          g.c = g.home.c; g.r = g.home.r; g.x = g.c * TILE; g.y = g.r * TILE; g.release = 60;
-        } else {
-          loseLife();
-          return;
-        }
-      }
-    }
-  }
-
-  function loseLife() {
-    lives--; updateHud();
-    if (lives <= 0) { gameOver(); return; }
-    // 위치 리셋
-    const { pacStart, ghostStarts } = { pacStart:{c:13,r:23}, ghostStarts: [] };
-    pac.c = 13; pac.r = 23; pac.x = pac.c*TILE; pac.y = pac.r*TILE; pac.dir='left'; pac.next='left';
-    ghosts.forEach((g, i) => { g.c = g.home.c; g.r = g.home.r; g.x = g.c*TILE; g.y = g.r*TILE; g.fright=false; g.release = i*40; });
-    frightTimer = 0;
-  }
-
-  function loop() {
-    if (!running) return;
-    animTimer++;
-    // 팩맨
-    moveEntity(pac, false);
-    eatDots();
-    // 유령
-    if (frightTimer > 0) { frightTimer--; if (frightTimer === 0) ghosts.forEach(g => g.fright = false); }
-    ghosts.forEach(g => {
-      if (g.release > 0) { g.release--; return; }
-      ghostAI(g);
-      g.speed = g.fright ? 1.1 : 1.6;
-      moveEntity(g, true);
-    });
-    checkGhostCollision();
-    draw();
-    requestAnimationFrame(loop);
-  }
-
-  function draw() {
-    ctx.fillStyle = '#05060d';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    // 미로
-    for (let r = 0; r < ROWS; r++) {
-      for (let c = 0; c < COLS; c++) {
-        const cell = grid[r][c];
-        const x = c * TILE, y = r * TILE;
-        if (cell === 'wall') {
-          ctx.fillStyle = '#0a1a3d';
-          ctx.fillRect(x, y, TILE, TILE);
-          ctx.strokeStyle = '#2d6cff';
-          ctx.lineWidth = 2;
-          ctx.strokeRect(x + 2, y + 2, TILE - 4, TILE - 4);
-        } else if (cell === 'door') {
-          ctx.fillStyle = '#ffb8de';
-          ctx.fillRect(x, y + TILE/2 - 1, TILE, 2);
-        } else if (cell === 'dot') {
-          ctx.fillStyle = '#ffd56b';
-          ctx.beginPath(); ctx.arc(x + TILE/2, y + TILE/2, 2, 0, Math.PI*2); ctx.fill();
-        } else if (cell === 'power') {
-          ctx.fillStyle = '#ffe34d';
-          const pr = (animTimer % 30 < 15) ? 5 : 3;
-          ctx.beginPath(); ctx.arc(x + TILE/2, y + TILE/2, pr, 0, Math.PI*2); ctx.fill();
-        }
-      }
-    }
-    // 팩맨
-    const cx = pac.x + TILE/2, cy = pac.y + TILE/2;
-    const mouth = Math.abs(Math.sin(animTimer * 0.2)) * 0.3;
-    let a0 = mouth, a1 = Math.PI*2 - mouth, rot = 0;
-    if (pac.dir === 'right') rot = 0;
-    else if (pac.dir === 'down') rot = Math.PI/2;
-    else if (pac.dir === 'left') rot = Math.PI;
-    else if (pac.dir === 'up') rot = -Math.PI/2;
-    ctx.save();
-    ctx.translate(cx, cy); ctx.rotate(rot);
-    ctx.fillStyle = '#ffe34d';
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.arc(0, 0, TILE/2 - 1, a0, a1);
-    ctx.closePath(); ctx.fill();
-    ctx.restore();
-    // 유령
-    ghosts.forEach(g => {
-      const gx = g.x + TILE/2, gy = g.y + TILE/2, rr = TILE/2 - 1;
-      ctx.fillStyle = g.fright ? (frightTimer < 120 &amp;&amp; animTimer % 20 < 10 ? '#fff' : '#2d4bff') : g.color;
-      ctx.beginPath();
-      ctx.arc(gx, gy - 1, rr, Math.PI, 0);
-      ctx.lineTo(gx + rr, gy + rr);
-      // 지그재그 하단
-      for (let i = 0; i < 3; i++) {
-        ctx.lineTo(gx + rr - (rr*2/3)*(i*2+1)/2, gy + rr - 3);
-        ctx.lineTo(gx + rr - (rr*2/3)*(i+1), gy + rr);
-      }
-      ctx.closePath(); ctx.fill();
-      // 눈
-      ctx.fillStyle = '#fff';
-      ctx.beginPath(); ctx.arc(gx - 3, gy - 2, 2.4, 0, Math.PI*2); ctx.fill();
-      ctx.beginPath(); ctx.arc(gx + 3, gy - 2, 2.4, 0, Math.PI*2); ctx.fill();
-      ctx.fillStyle = g.fright ? '#fff' : '#0a1a3d';
-      const look = DIRS[g.dir] || {dc:0,dr:0};
-      ctx.beginPath(); ctx.arc(gx - 3 + look.dc, gy - 2 + look.dr, 1.2, 0, Math.PI*2); ctx.fill();
-      ctx.beginPath(); ctx.arc(gx + 3 + look.dc, gy - 2 + look.dr, 1.2, 0, Math.PI*2); ctx.fill();
-    });
-  }
-
-  function start() {
-    reset();
-    overlay.classList.add('hidden');
-    running = true;
-    loop();
-  }
-
-  function win() {
-    running = false;
-    ovTitle.textContent = 'CLEAR!';
-    ovTitle.style.color = '#5fe07a';
-    ovMsg.textContent = 'SCORE ' + score + ' · 다시 도전해보세요!';
-    startBtn.textContent = 'PLAY AGAIN ▶';
-    overlay.classList.remove('hidden');
-  }
-
-  function gameOver() {
-    running = false;
-    ovTitle.textContent = 'GAME OVER';
-    ovTitle.style.color = '#ff4d6d';
-    ovMsg.textContent = 'SCORE ' + score;
-    startBtn.textContent = 'RETRY ▶';
-    overlay.classList.remove('hidden');
-  }
-
-  // 입력
-  const keyMap = {
-    ArrowUp:'up', ArrowDown:'down', ArrowLeft:'left', ArrowRight:'right',
-    w:'up', s:'down', a:'left', d:'right', W:'up', S:'down', A:'left', D:'right'
-  };
-  window.addEventListener('keydown', e => {
-    const dir = keyMap[e.key];
-    if (dir) { pac.next = dir; e.preventDefault(); }
-  });
-  document.querySelectorAll('.mobile button').forEach(btn => {
-    btn.addEventListener('click', () => { pac.next = btn.dataset.dir; });
-  });
-  // 스와이프
-  let tsx, tsy;
-  canvas.addEventListener('touchstart', e => { const t = e.touches[0]; tsx = t.clientX; tsy = t.clientY; }, {passive:true});
-  canvas.addEventListener('touchend', e => {
-    const t = e.changedTouches[0];
-    const dx = t.clientX - tsx, dy = t.clientY - tsy;
-    if (Math.abs(dx) > Math.abs(dy)) pac.next = dx > 0 ? 'right' : 'left';
-    else pac.next = dy > 0 ? 'down' : 'up';
-  }, {passive:true});
-
-  startBtn.addEventListener('click', start);
-
-  // 초기 화면 그리기
-  reset();
-  draw();
-})();
-</script>
-</body>
-</html>
-`;
-    </script>
 
     <script>
         /* 스크롤 등장 애니메이션 */
@@ -1757,6 +1566,36 @@ reset();draw();
                 entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
             }, { threshold: 0.12 });
             document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+        })();
+
+        /* 다크 / 라이트 테마 토글 */
+        (function () {
+            const btn = document.getElementById('themeToggle');
+            const icon = document.getElementById('themeIcon');
+            const label = document.getElementById('themeLabel');
+            if (!btn) return;
+
+            function apply(mode) {
+                if (mode === 'light') {
+                    document.body.classList.add('light');
+                    icon.textContent = '☀️';
+                    label.textContent = '라이트모드';
+                } else {
+                    document.body.classList.remove('light');
+                    icon.textContent = '🌙';
+                    label.textContent = '다크모드';
+                }
+            }
+
+            // 저장된 선택 불러오기 (기본: 다크)
+            const saved = localStorage.getItem('playon_theme') || 'dark';
+            apply(saved);
+
+            btn.addEventListener('click', function () {
+                const next = document.body.classList.contains('light') ? 'dark' : 'light';
+                apply(next);
+                localStorage.setItem('playon_theme', next);
+            });
         })();
 
         /* 게임 모달 */
@@ -1865,6 +1704,76 @@ reset();draw();
                     </div>
                 `;
                 initRamenGame();
+            } else if (type === 'potion') {
+                container.innerHTML = `
+                    <div class="potion-app">
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+                            <h2 style="margin:0;">🧪 요술 항아리</h2>
+                            <div style="background:#f6f0ff; border:2px solid #e3d4ff; border-radius:10px; padding:4px 12px; text-align:center;">
+                                <small style="color:#7c3aed; display:block; font-size:10px;">발견</small>
+                                <strong style="color:#7c3aed;" id="potFound">0 / 8</strong>
+                            </div>
+                        </div>
+                        <div class="potion-layout">
+                            <div class="pot-card">
+                                <div class="cauldron-stage">
+                                    <div id="potStage"><div class="cauldron">🫙</div></div>
+                                    <div class="potion-slots" id="potSlots">
+                                        <div class="potion-slot"></div>
+                                        <div class="potion-slot"></div>
+                                        <div class="potion-slot"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pot-card">
+                                <h3 style="margin-top:0;">물약을 3개 고르세요</h3>
+                                <p style="font-size:12px; color:#8b6fc0; margin-bottom:4px;">물약을 클릭해 항아리에 담고, 휘저으면 무언가 튀어나와요!</p>
+                                <div class="potion-grid" id="potGrid"></div>
+                                <div class="potion-actions">
+                                    <button style="background:#efe6ff; color:#7c3aed;" id="potClear">비우기</button>
+                                    <button style="background:linear-gradient(100deg,#a855f7,#7c3aed); color:#fff;" id="potMix">휘젓기 ✨</button>
+                                </div>
+                                <h3 style="font-size:14px; margin:16px 0 4px;">발견 도감</h3>
+                                <div class="pot-dex" id="potDex"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                initPotionGame();
+            } else if (type === 'sudoku') {
+                container.innerHTML = `
+                    <div class="sudoku-app">
+                        <div class="sudoku-top">
+                            <h2 style="margin:0;">🔢 스도쿠</h2>
+                            <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+                                <span class="sd-lives" id="sdLives">❤️❤️❤️</span>
+                                <div class="diff-tabs" id="sdTabs"></div>
+                            </div>
+                        </div>
+                        <div class="level-track" id="sdTrack"></div>
+                        <div class="sudoku-stage">
+                            <div class="sudoku-grid big" id="sdGrid"></div>
+                            <div class="sudoku-msg" id="sdMsg"></div>
+                        </div>
+                    </div>
+                `;
+                initSudokuGame();
+            } else if (type === 'quizface') {
+                container.innerHTML = `
+                    <div class="qf-app">
+                        <h2 style="color:#ff77c8;">🎬 이모지 퀴즈</h2>
+                        <div class="qf-hud">
+                            <span>점수 <b id="qfScore">0</b></span>
+                            <span class="qf-rank" id="qfRank">새내기</span>
+                            <span>연속 <b id="qfStreak">0</b></span>
+                        </div>
+                        <div class="qf-face" id="qfFace">❓</div>
+                        <div class="qf-hint" id="qfHint"></div>
+                        <div class="qf-options" id="qfOptions"></div>
+                        <div class="qf-next"><button class="btn-ghost" id="qfNext" style="display:none;">다음 문제 ▸</button></div>
+                    </div>
+                `;
+                initQuizFaceGame();
             }
         }
 
@@ -2197,6 +2106,499 @@ reset();draw();
             newOrder();
         }
 
+        function initPotionGame() {
+            const $ = id => document.getElementById(id);
+
+            // 물약 10종 (이모지 + 속성 점수: dark 어둠, light 빛, power 힘, magic 마법)
+            const POTIONS = [
+                { emoji:'🧪', dark:0, light:1, power:0, magic:1 },
+                { emoji:'⚗️', dark:0, light:0, power:1, magic:1 },
+                { emoji:'🩸', dark:2, light:0, power:1, magic:0 },
+                { emoji:'💧', dark:0, light:1, power:0, magic:0 },
+                { emoji:'🔥', dark:1, light:0, power:2, magic:0 },
+                { emoji:'🌙', dark:2, light:0, power:0, magic:1 },
+                { emoji:'☀️', dark:0, light:2, power:1, magic:0 },
+                { emoji:'🍀', dark:0, light:1, power:0, magic:1 },
+                { emoji:'💜', dark:1, light:0, power:0, magic:2 },
+                { emoji:'🖤', dark:3, light:0, power:1, magic:0 }
+            ];
+
+            // 결과 캐릭터 도감 (8종)
+            const CREATURES = {
+                monster:  { icon:'👹', name:'괴물',     desc:'어둠의 기운이 가득한 물약에서 무시무시한 괴물이 튀어나왔어요!' },
+                princess: { icon:'👸', name:'공주',     desc:'빛나고 화사한 물약이 우아한 공주님을 불러냈어요!' },
+                prince:   { icon:'🤴', name:'왕자',     desc:'용맹한 힘의 물약에서 늠름한 왕자님이 등장했어요!' },
+                dragon:   { icon:'🐉', name:'드래곤',   desc:'어둠과 힘이 뒤섞여 전설의 드래곤이 깨어났어요!' },
+                fairy:    { icon:'🧚', name:'요정',     desc:'마법의 기운이 가득해 반짝이는 요정이 나타났어요!' },
+                frog:     { icon:'🐸', name:'개구리',   desc:'어라? 실패한 마법에 개구리가 튀어나왔네요. 다시 도전!' },
+                unicorn:  { icon:'🦄', name:'유니콘',   desc:'빛과 마법이 완벽하게 어우러져 신비한 유니콘이!' },
+                ghost:    { icon:'👻', name:'유령',     desc:'정체불명의 조합에서 장난꾸러기 유령이 깨어났어요!' }
+            };
+            const DEX_ORDER = ['monster','princess','prince','dragon','fairy','unicorn','frog','ghost'];
+
+            let selected = [];
+            const found = JSON.parse(localStorage.getItem('potion_found') || '[]');
+
+            function judge(d, l, p, m) {
+                // 특수 조합 먼저
+                if (d >= 2 && p >= 2) return 'dragon';
+                if (l >= 3 && m >= 2) return 'unicorn';
+                if (m >= 4) return 'fairy';
+                if (d >= 5) return 'ghost';
+                // 기본 성향
+                if (d >= 4) return 'monster';
+                if (l >= 3) return 'princess';
+                if (p >= 3) return 'prince';
+                // 애매하면 개구리
+                return 'frog';
+            }
+
+            function renderGrid() {
+                const grid = $('potGrid');
+                grid.innerHTML = '';
+                POTIONS.forEach((pot, i) => {
+                    const b = document.createElement('button');
+                    b.className = 'potion-btn';
+                    b.textContent = pot.emoji;
+                    b.disabled = selected.includes(i) || selected.length >= 3;
+                    if (selected.includes(i)) b.disabled = true;
+                    b.onclick = () => {
+                        if (selected.length >= 3 || selected.includes(i)) return;
+                        selected.push(i);
+                        renderSlots(); renderGrid();
+                    };
+                    grid.appendChild(b);
+                });
+            }
+
+            function renderSlots() {
+                const slots = $('potSlots').children;
+                for (let i = 0; i < 3; i++) {
+                    const s = slots[i];
+                    if (selected[i] !== undefined) {
+                        s.textContent = POTIONS[selected[i]].emoji;
+                        s.classList.add('filled');
+                    } else {
+                        s.textContent = '';
+                        s.classList.remove('filled');
+                    }
+                }
+            }
+
+            function renderDex() {
+                const dex = $('potDex');
+                dex.innerHTML = '';
+                DEX_ORDER.forEach(key => {
+                    const span = document.createElement('span');
+                    span.textContent = CREATURES[key].icon;
+                    span.title = found.includes(key) ? CREATURES[key].name : '???';
+                    if (found.includes(key)) span.classList.add('found');
+                    dex.appendChild(span);
+                });
+                $('potFound').textContent = found.length + ' / ' + DEX_ORDER.length;
+            }
+
+            function showIdle() {
+                $('potStage').innerHTML = '<div class="cauldron">🫙</div>';
+            }
+
+            $('potClear').onclick = () => { selected = []; renderSlots(); renderGrid(); showIdle(); };
+
+            $('potMix').onclick = () => {
+                if (selected.length < 3) {
+                    $('potStage').innerHTML = '<div class="cauldron">🫙</div><div style="color:#ffd8a8;font-size:13px;margin-top:8px;">물약 3개를 모두 넣어주세요!</div>';
+                    return;
+                }
+                // 합산
+                let d=0,l=0,p=0,m=0;
+                selected.forEach(i => { d+=POTIONS[i].dark; l+=POTIONS[i].light; p+=POTIONS[i].power; m+=POTIONS[i].magic; });
+                // 휘젓는 연출
+                $('potStage').innerHTML = '<div class="cauldron shake">🫙</div>';
+                setTimeout(() => {
+                    $('potStage').innerHTML = '<div class="cauldron">💥</div>';
+                }, 450);
+                setTimeout(() => {
+                    const key = judge(d, l, p, m);
+                    const c = CREATURES[key];
+                    $('potStage').innerHTML =
+                        '<div class="pot-result">' + c.icon + '</div>' +
+                        '<div class="pot-result-name">' + c.name + ' 등장!</div>' +
+                        '<div class="pot-result-desc">' + c.desc + '</div>';
+                    if (!found.includes(key)) {
+                        found.push(key);
+                        localStorage.setItem('potion_found', JSON.stringify(found));
+                    }
+                    renderDex();
+                    // 다음 판 준비
+                    selected = [];
+                    renderSlots(); renderGrid();
+                }, 1000);
+            };
+
+            renderGrid(); renderSlots(); renderDex(); showIdle();
+        }
+
+        function initSudokuGame() {
+            const $ = id => document.getElementById(id);
+            // 난이도별 비울 칸 수 (레벨당 5판)
+            const DIFF = [
+                { key:'easy',   name:'쉬움',   remove:35, levels:5 },
+                { key:'normal', name:'보통',   remove:45, levels:5 },
+                { key:'hard',   name:'어려움', remove:52, levels:5 },
+                { key:'expert', name:'전문가', remove:58, levels:5 }
+            ];
+            const progress = JSON.parse(localStorage.getItem('sudoku_progress') || '{}');
+            DIFF.forEach(d => { if (progress[d.key] === undefined) progress[d.key] = 0; });
+
+            let curDiff = 0, board = [], solution = [], fixed = [], sel = -1;
+            let lives = 3, dead = false;
+
+            // 완성된 스도쿠 판 생성 (베이스 패턴 + 섞기)
+            function makeSolved() {
+                const base = 3, side = 9;
+                const pattern = (r, c) => (base * (r % base) + Math.floor(r / base) + c) % side;
+                const shuffle = a => a.sort(() => Math.random() - 0.5);
+                const rBase = [0,1,2];
+                const rows = [].concat(...shuffle(rBase.slice()).map(g => shuffle(rBase.slice()).map(r => g*base+r)));
+                const cols = [].concat(...shuffle(rBase.slice()).map(g => shuffle(rBase.slice()).map(c => g*base+c)));
+                const nums = shuffle([1,2,3,4,5,6,7,8,9]);
+                const g = [];
+                rows.forEach(r => { const row=[]; cols.forEach(c => row.push(nums[pattern(r,c)])); g.push(row); });
+                return g;
+            }
+
+            function renderLives() {
+                $('sdLives').textContent = '❤️'.repeat(lives) + '🤍'.repeat(3 - lives);
+            }
+
+            function newPuzzle() {
+                const solved = makeSolved();
+                solution = solved.map(r => r.slice());
+                board = solved.map(r => r.slice());
+                fixed = board.map(r => r.map(() => true));
+                let toRemove = DIFF[curDiff].remove;
+                while (toRemove > 0) {
+                    const r = Math.floor(Math.random()*9), c = Math.floor(Math.random()*9);
+                    if (board[r][c] !== 0) { board[r][c] = 0; fixed[r][c] = false; toRemove--; }
+                }
+                sel = -1; lives = 3; dead = false;
+                renderLives();
+                renderGrid();
+                $('sdMsg').textContent = DIFF[curDiff].name + ' · 레벨 ' + (progress[DIFF[curDiff].key]+1) + ' / ' + DIFF[curDiff].levels + ' · 셀을 누르고 숫자키 입력';
+            }
+
+            function renderTabs() {
+                const tabs = $('sdTabs'); tabs.innerHTML = '';
+                DIFF.forEach((d, i) => {
+                    const b = document.createElement('button');
+                    b.className = 'diff-tab' + (i===curDiff?' active':'');
+                    const cleared = progress[d.key] >= d.levels;
+                    b.innerHTML = d.name + (cleared ? '<span class="done">✓</span>' : '');
+                    b.onclick = () => { curDiff = i; renderTabs(); renderTrack(); newPuzzle(); };
+                    tabs.appendChild(b);
+                });
+            }
+
+            function renderTrack() {
+                const track = $('sdTrack'); track.innerHTML = '';
+                const d = DIFF[curDiff];
+                for (let i = 0; i < d.levels; i++) {
+                    const pip = document.createElement('div');
+                    pip.className = 'level-pip' + (i < progress[d.key] ? ' cleared' : (i === progress[d.key] ? ' current' : ''));
+                    track.appendChild(pip);
+                }
+            }
+
+            function renderGrid() {
+                const grid = $('sdGrid'); grid.innerHTML = '';
+                for (let r = 0; r < 9; r++) for (let c = 0; c < 9; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 's-cell';
+                    if (r % 3 === 0 && r !== 0) cell.classList.add('bt');
+                    if (c % 3 === 0 && c !== 0) cell.classList.add('bl');
+                    if (fixed[r][c] && board[r][c] !== 0) cell.classList.add('fixed');
+                    if (sel === r*9+c) cell.classList.add('sel');
+                    if (board[r][c] !== 0 && !fixed[r][c] && board[r][c] !== solution[r][c]) cell.classList.add('wrong');
+                    cell.textContent = board[r][c] || '';
+                    cell.onclick = () => { if (!dead && !fixed[r][c]) { sel = r*9+c; renderGrid(); } };
+                    grid.appendChild(cell);
+                }
+            }
+
+            function place(n) {
+                if (dead || sel < 0) return;
+                const r = Math.floor(sel/9), c = sel%9;
+                if (fixed[r][c]) return;
+                if (n === 0) { board[r][c] = 0; renderGrid(); return; }
+                if (n === solution[r][c]) {
+                    // 정답
+                    board[r][c] = n;
+                    fixed[r][c] = true; // 맞은 칸 고정
+                    renderGrid();
+                    checkWin();
+                } else {
+                    // 오답 → 목숨 차감
+                    lives--;
+                    renderLives();
+                    const grid = $('sdGrid');
+                    const cellEl = grid.children[sel];
+                    if (cellEl) { cellEl.classList.add('flash-wrong'); setTimeout(() => cellEl.classList.remove('flash-wrong'), 500); }
+                    if (lives <= 0) {
+                        dead = true;
+                        $('sdMsg').innerHTML = '💀 게임 오버! 목숨을 모두 잃었어요. <b style="color:var(--cyan);cursor:pointer;" id="sdRetry">다시 도전 ▸</b>';
+                        const retry = $('sdRetry');
+                        if (retry) retry.onclick = newPuzzle;
+                    } else {
+                        $('sdMsg').textContent = '❌ 틀렸어요! 남은 목숨 ' + lives + '개';
+                    }
+                }
+            }
+
+            function checkWin() {
+                for (let r = 0; r < 9; r++) for (let c = 0; c < 9; c++) {
+                    if (board[r][c] !== solution[r][c]) return;
+                }
+                // 클리어!
+                const d = DIFF[curDiff];
+                if (progress[d.key] < d.levels) progress[d.key]++;
+                localStorage.setItem('sudoku_progress', JSON.stringify(progress));
+                renderTabs(); renderTrack();
+                if (progress[d.key] >= d.levels) {
+                    $('sdMsg').textContent = '🏆 ' + d.name + ' 전 레벨 클리어! 다음 난이도에 도전하세요.';
+                } else {
+                    $('sdMsg').textContent = '✅ 레벨 ' + progress[d.key] + ' 클리어! 3초 후 다음 판...';
+                    setTimeout(newPuzzle, 2500);
+                }
+            }
+
+            // 키보드로 숫자 직접 입력
+            function onKey(e) {
+                // 모달이 닫혀 그리드가 없으면 리스너 해제
+                if (!document.getElementById('sdGrid')) { document.removeEventListener('keydown', onKey); return; }
+                if (e.key >= '1' && e.key <= '9') { place(Number(e.key)); }
+                else if (e.key === 'Backspace' || e.key === 'Delete' || e.key === '0') { place(0); }
+            }
+            document.addEventListener('keydown', onKey);
+
+            renderTabs(); renderTrack(); newPuzzle();
+        }
+
+        function initQuizFaceGame() {
+            const $ = id => document.getElementById(id);
+            // 이모지 조합으로 작품(영화/애니) 제목 맞히기
+            const QUIZZES = [
+                { emojis:'💑🚢🌊❄️', answer:'타이타닉' },
+                { emojis:'😎⚡🚂🏰', answer:'해리포터' },
+                { emojis:'👹👧👾🚪', answer:'몬스터 주식회사' },
+                { emojis:'👸❄️⛄🏰', answer:'겨울왕국' },
+                { emojis:'🦁👑🌅🐗', answer:'라이온 킹' },
+                { emojis:'🤖❤️🌱🚀', answer:'월-E' },
+                { emojis:'🐠🔍🌊🐢', answer:'니모를 찾아서' },
+                { emojis:'🧸🤠🚀👦', answer:'토이 스토리' },
+                { emojis:'🎈🏠👴🐶', answer:'업' },
+                { emojis:'🦖🏝️🧬😱', answer:'쥬라기 공원' },
+                { emojis:'💍🌋🧙👑', answer:'반지의 제왕' },
+                { emojis:'🏠💰🐷🌧️', answer:'기생충' },
+                { emojis:'🚄🧟🧟🧟', answer:'부산행' },
+                { emojis:'👊👮🔪🌃', answer:'범죄도시' },
+                { emojis:'🚕👨🏙️🚦', answer:'택시운전사' },
+                { emojis:'🐙🔪🔨😤', answer:'올드보이' },
+                { emojis:'👑🎭😢⚔️', answer:'광해' },
+                { emojis:'🦈🌊🏖️😱', answer:'해운대' },
+                { emojis:'⚽👦🥅🏆', answer:'국가대표' },
+                { emojis:'🤡🎈😱🔪', answer:'조커' }
+            ];
+            const ALL_ANSWERS = QUIZZES.map(q => q.answer);
+
+            const RANKS = [
+                { min:0, name:'새내기' },
+                { min:3, name:'눈썰미' },
+                { min:6, name:'영화광' },
+                { min:10, name:'이모지 고수' },
+                { min:15, name:'이모지 박사 🏆' }
+            ];
+
+            let score = 0, streak = 0, best = Number(localStorage.getItem('qf_best') || 0), cur = null;
+            let pool = [];
+
+            function rankFor(s) {
+                let r = RANKS[0].name;
+                RANKS.forEach(x => { if (s >= x.min) r = x.name; });
+                return r;
+            }
+
+            function shuffle(a){ return a.slice().sort(()=>Math.random()-0.5); }
+
+            function nextQuestion() {
+                if (pool.length === 0) pool = shuffle(QUIZZES.slice());
+                cur = pool.pop();
+                $('qfFace').textContent = cur.emojis;
+                $('qfFace').style.fontSize = '64px';
+                $('qfHint').textContent = '이모지가 가리키는 작품은?';
+                const wrong = shuffle(ALL_ANSWERS.filter(a => a !== cur.answer)).slice(0,3);
+                const opts = shuffle([cur.answer, ...wrong]);
+                const box = $('qfOptions'); box.innerHTML = '';
+                opts.forEach(opt => {
+                    const b = document.createElement('button');
+                    b.className = 'qf-opt'; b.textContent = opt;
+                    b.onclick = () => answer(b, opt);
+                    box.appendChild(b);
+                });
+                $('qfNext').style.display = 'none';
+            }
+
+            function answer(btn, opt) {
+                const btns = $('qfOptions').querySelectorAll('.qf-opt');
+                btns.forEach(b => {
+                    b.disabled = true;
+                    if (b.textContent === cur.answer) b.classList.add('correct');
+                });
+                if (opt === cur.answer) {
+                    score++; streak++;
+                    if (score > best) { best = score; localStorage.setItem('qf_best', best); }
+                } else {
+                    btn.classList.add('wrong');
+                    streak = 0;
+                }
+                $('qfScore').textContent = score;
+                $('qfStreak').textContent = streak;
+                $('qfRank').textContent = rankFor(score);
+                $('qfNext').style.display = 'inline-flex';
+            }
+
+            $('qfNext').onclick = nextQuestion;
+            $('qfScore').textContent = 0; $('qfStreak').textContent = 0; $('qfRank').textContent = rankFor(0);
+            nextQuestion();
+        }
+
+        /* ===== 게임 추천 퀴즈 ===== */
+        (function () {
+            const box = document.getElementById('quizBox');
+            if (!box) return;
+
+            // 각 선택지는 게임별 점수를 더함
+            const QUESTIONS = [
+                {
+                    q: 'Q1. 짧은 휴식 시간, 당신의 선택은?',
+                    options: [
+                        { emoji: '⚡', text: '10초 안에 짜릿하게 몰입하고 싶어', scores: { star: 2, pacman: 2, arena: 1 } },
+                        { emoji: '�', text: '여유롭게 차근차근 즐기고 싶어', scores: { pizza: 2, ramen: 2, sudoku: 1 } },
+                        { emoji: '🎲', text: '예상 못 한 깜짝 재미가 좋아', scores: { potion: 3 } },
+                        { emoji: '🎬', text: '머리 식히며 맞히는 퀴즈가 좋아', scores: { quizface: 3 } }
+                    ]
+                },
+                {
+                    q: 'Q2. 손가락과 머리, 어느 쪽을 더 쓰고 싶나요?',
+                    options: [
+                        { emoji: '🕹️', text: '빠른 반응속도 — 손이 바빠야 재밌지', scores: { star: 2, arena: 2, pacman: 2 } },
+                        { emoji: '🧠', text: '논리와 계산 — 머리 쓰는 게 좋아', scores: { sudoku: 3 } },
+                        { emoji: '�', text: '순서와 조합 — 레시피처럼 맞춰가는 재미', scores: { pizza: 2, ramen: 2 } },
+                        { emoji: '�', text: '관찰과 눈치 — 숨은 의미 찾기', scores: { quizface: 2, potion: 1 } }
+                    ]
+                },
+                {
+                    q: 'Q3. 게임의 "목표"로 가장 끌리는 건?',
+                    options: [
+                        { emoji: '🏆', text: '최고 점수 기록 깨기', scores: { star: 2, arena: 2, pacman: 1 } },
+                        { emoji: '📈', text: '레벨을 하나씩 클리어하기', scores: { sudoku: 3 } },
+                        { emoji: '😋', text: '손님을 만족시키기', scores: { pizza: 2, ramen: 2 } },
+                        { emoji: '🗃️', text: '도감·컬렉션 모으기', scores: { potion: 3 } }
+                    ]
+                },
+                {
+                    q: 'Q4. 분위기는 어떤 쪽이 좋아요?',
+                    options: [
+                        { emoji: '✨', text: '몽환적이고 우주적인', scores: { star: 3 } },
+                        { emoji: '🔥', text: '치열하고 긴장감 넘치는', scores: { arena: 3 } },
+                        { emoji: '🧡', text: '아기자기하고 따뜻한', scores: { pizza: 2, ramen: 2 } },
+                        { emoji: '🔮', text: '신비롭고 마법 같은', scores: { potion: 3 } }
+                    ]
+                },
+                {
+                    q: 'Q5. 지면/실패했을 때 당신은?',
+                    options: [
+                        { emoji: '�', text: '바로 재도전! 기록을 깨야 직성이 풀려', scores: { arena: 2, star: 2, pacman: 1 } },
+                        { emoji: '🤔', text: '어디서 틀렸나 복기하며 분석', scores: { sudoku: 3 } },
+                        { emoji: '😆', text: '결과가 웃기면 그걸로 만족', scores: { potion: 2, quizface: 2 } },
+                        { emoji: '🍽️', text: '천천히 다시 정성껏 완성', scores: { pizza: 2, ramen: 2 } }
+                    ]
+                }
+            ];
+
+            const RESULT = {
+                star:     { icon: '✦', name: '별빛 수집가', desc: '반사신경과 집중력이 뛰어난 당신! 우주를 누비며 별을 모으고 최고 기록에 도전해 보세요.' },
+                arena:    { icon: '⚔️', name: '네온 아레나', desc: '도전과 전투를 즐기는 당신! 몰려오는 적을 물리치며 웨이브를 돌파하세요.' },
+                pizza:    { icon: '🍕', name: '피자 공방', desc: '꼼꼼하고 센스 있는 당신! 주문에 맞춰 완벽한 피자를 만들어 손님을 만족시켜 보세요.' },
+                pacman:   { icon: '🟡', name: '팩맨', desc: '복고 감성과 전략을 좋아하는 당신! 미로를 누비며 점을 모으고 유령을 피하세요.' },
+                ramen:    { icon: '🍜', name: '라면 가게', desc: '차분하고 손맛 좋은 당신! 주문에 맞춰 면과 고명을 올려 최고의 라면을 끓여 보세요.' },
+                sudoku:   { icon: '🔢', name: '스도쿠', desc: '논리적이고 끈기 있는 당신! 목숨 3개로 4단계 난이도의 숫자 퍼즐에 도전해 보세요.' },
+                potion:   { icon: '🧪', name: '요술 항아리', desc: '호기심 많고 창의적인 당신! 물약을 섞어 어떤 캐릭터가 나올지 수집해 보세요.' },
+                quizface: { icon: '🎬', name: '이모지 퀴즈', desc: '눈치 빠르고 영화를 좋아하는 당신! 이모지를 보고 어떤 작품인지 맞혀 등급을 올려 보세요.' }
+            };
+
+            const EMPTY = { star: 0, arena: 0, pizza: 0, pacman: 0, ramen: 0, sudoku: 0, potion: 0, quizface: 0 };
+            let step = 0;
+            let scores = Object.assign({}, EMPTY);
+
+            function renderIntro() {
+                step = 0;
+                scores = Object.assign({}, EMPTY);
+                box.innerHTML =
+                    '<div class="quiz-result">' +
+                    '<div class="result-eyebrow">GAME MATCH TEST</div>' +
+                    '<span class="result-icon">🎮</span>' +
+                    '<div class="result-name">어떤 게임이 <span>나에게</span> 맞을까?</div>' +
+                    '<p class="result-desc">5개의 질문에 답하면 8개 게임 중 당신에게 가장 어울리는 하나를 추천해 드려요.</p>' +
+                    '<div class="quiz-result-actions"><button class="btn-primary" id="quizStart">테스트 시작 ▸</button></div>' +
+                    '</div>';
+                document.getElementById('quizStart').onclick = renderQuestion;
+            }
+
+            function renderQuestion() {
+                const item = QUESTIONS[step];
+                let html = '<div class="quiz-progress">질문 <b>' + (step + 1) + '</b> / ' + QUESTIONS.length + '</div>';
+                html += '<div class="quiz-q">' + item.q + '</div>';
+                html += '<div class="quiz-options">';
+                item.options.forEach(function (opt, i) {
+                    html += '<button class="quiz-opt" data-i="' + i + '"><span class="q-emoji">' + opt.emoji + '</span><span>' + opt.text + '</span></button>';
+                });
+                html += '</div>';
+                box.innerHTML = html;
+                box.querySelectorAll('.quiz-opt').forEach(function (btn) {
+                    btn.onclick = function () {
+                        const opt = item.options[Number(btn.dataset.i)];
+                        for (const g in opt.scores) { scores[g] += opt.scores[g]; }
+                        step++;
+                        if (step < QUESTIONS.length) renderQuestion();
+                        else renderResult();
+                    };
+                });
+            }
+
+            function renderResult() {
+                // 최고 점수 게임 선택 (동점이면 먼저 나온 것)
+                let best = 'star', bestScore = -1;
+                ['star', 'arena', 'pizza', 'pacman', 'ramen', 'sudoku', 'potion', 'quizface'].forEach(function (g) {
+                    if (scores[g] > bestScore) { bestScore = scores[g]; best = g; }
+                });
+                const r = RESULT[best];
+                box.innerHTML =
+                    '<div class="quiz-result">' +
+                    '<div class="result-eyebrow">YOUR GAME</div>' +
+                    '<span class="result-icon">' + r.icon + '</span>' +
+                    '<div class="result-name">당신에게 어울리는 게임은<br><span>' + r.name + '</span></div>' +
+                    '<p class="result-desc">' + r.desc + '</p>' +
+                    '<div class="quiz-result-actions">' +
+                    '<button class="btn-primary" id="quizPlay">지금 플레이 ▸</button>' +
+                    '<button class="btn-ghost" id="quizRetry">다시 하기</button>' +
+                    '</div></div>';
+                document.getElementById('quizPlay').onclick = function () { openGame(best); };
+                document.getElementById('quizRetry').onclick = renderIntro;
+            }
+
+            renderIntro();
+        })();
+
         /* ===== 콘텐츠 선호도 조사: Supabase 저장/조회 ===== */
         (function () {
             // 1) Supabase 프로젝트 설정값 (Supabase 대시보드 → Project Settings → API 에서 복사)
@@ -2207,7 +2609,11 @@ reset();draw();
                 star:   '별빛 수집가',
                 arena:  '네온 아레나',
                 pizza:  '피자 공방',
-                pacman: '팩맨'
+                pacman: '팩맨',
+                ramen:  '라면 가게',
+                potion: '요술 항아리',
+                sudoku: '스도쿠',
+                quizface: '이모지 퀴즈'
             };
 
             const msgEl = document.getElementById('pollMsg');
@@ -2238,17 +2644,60 @@ reset();draw();
                     setMessage('결과를 불러오지 못했습니다: ' + error.message, true);
                     return;
                 }
-                const counts = { star: 0, arena: 0, pizza: 0, pacman: 0 };
+                const counts = { star: 0, arena: 0, pizza: 0, pacman: 0, ramen: 0, potion: 0, sudoku: 0, quizface: 0 };
                 data.forEach(row => { if (counts[row.game] !== undefined) counts[row.game]++; });
                 const total = data.length;
 
-                Object.keys(GAMES).forEach(key => {
-                    const countEl = document.querySelector('[data-count="' + key + '"]');
-                    const fillEl = document.querySelector('[data-fill="' + key + '"]');
-                    const pct = total ? Math.round((counts[key] / total) * 100) : 0;
-                    if (countEl) countEl.textContent = counts[key] + '표 (' + pct + '%)';
-                    if (fillEl) fillEl.style.width = pct + '%';
-                });
+                const ICON = { star:'✦', arena:'⚔️', pizza:'🍕', pacman:'🟡', ramen:'🍜', potion:'🧪', sudoku:'🔢', quizface:'🎬' };
+                const COLORS = {
+                    star:'#5cf4ff', arena:'#ff77c8', pizza:'#ff8a3d', pacman:'#ffe34d',
+                    ramen:'#ffaa50', potion:'#b478ff', sudoku:'#5fe07a', quizface:'#ff5e91'
+                };
+                // 표 많은 순 정렬
+                const ranked = Object.keys(GAMES)
+                    .map(key => ({ key, name: GAMES[key], count: counts[key] }))
+                    .sort((a, b) => b.count - a.count);
+
+                const results = document.getElementById('pollResults');
+
+                // 도넛 차트 SVG 생성
+                const R = 70, C = 2 * Math.PI * R, cx = 100, cy = 100;
+                let offset = 0;
+                let segs = '';
+                if (total > 0) {
+                    ranked.forEach(r => {
+                        if (r.count === 0) return;
+                        const frac = r.count / total;
+                        const len = frac * C;
+                        segs += '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="none" ' +
+                            'stroke="' + COLORS[r.key] + '" stroke-width="26" ' +
+                            'stroke-dasharray="' + len + ' ' + (C - len) + '" ' +
+                            'stroke-dashoffset="' + (-offset) + '"></circle>';
+                        offset += len;
+                    });
+                } else {
+                    segs = '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="none" stroke="var(--bg-3)" stroke-width="26"></circle>';
+                }
+
+                const legend = ranked.map((r, i) => {
+                    const pct = total ? Math.round((r.count / total) * 100) : 0;
+                    const isLead = i === 0 && r.count > 0;
+                    return '<div class="legend-item' + (isLead ? ' lead' : '') + '">' +
+                        '<span class="dot" style="background:' + COLORS[r.key] + '"></span>' +
+                        '<span class="l-name">' + ICON[r.key] + ' ' + r.name + (isLead ? ' 👑' : '') + '</span>' +
+                        '<span class="l-pct">' + pct + '% · ' + r.count + '표</span>' +
+                        '</div>';
+                }).join('');
+
+                results.innerHTML =
+                    '<div class="donut-wrap">' +
+                    '<div class="donut-chart">' +
+                    '<svg viewBox="0 0 200 200">' + segs + '</svg>' +
+                    '<div class="donut-center"><span class="dc-num">' + total + '</span><span class="dc-label">총 투표</span></div>' +
+                    '</div>' +
+                    '<div class="donut-legend">' + legend + '</div>' +
+                    '</div>';
+
                 totalEl.textContent = total;
 
                 const voted = localStorage.getItem(VOTED_KEY);
