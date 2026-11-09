@@ -10,20 +10,20 @@
 <link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <style>
     :root {
-        --bg: #0c0d14;
-        --bg-2: #14151f;
-        --bg-3: #1a1c28;
-        --border: rgba(255, 255, 255, 0.08);
-        --border-strong: rgba(255, 255, 255, 0.18);
-        --text: #f0f0f5;
-        --muted: #8b8fa3;
-        --dim: #5b5f72;
-        --orange: #ff8a3d;
-        --orange-glow: rgba(255, 138, 61, 0.4);
-        --orange-soft: rgba(255, 138, 61, 0.12);
-        --cyan: #5cf4ff;
-        --cyan-soft: rgba(92, 244, 255, 0.1);
-        --green: #5fe07a;
+        --bg: #f6f7fb;
+        --bg-2: #ffffff;
+        --bg-3: #eef0f6;
+        --border: rgba(20, 24, 40, 0.10);
+        --border-strong: rgba(20, 24, 40, 0.22);
+        --text: #1a1d29;
+        --muted: #5b6072;
+        --dim: #9aa0b2;
+        --orange: #f5731f;
+        --orange-glow: rgba(245, 115, 31, 0.28);
+        --orange-soft: rgba(245, 115, 31, 0.10);
+        --cyan: #0bb5d6;
+        --cyan-soft: rgba(11, 181, 214, 0.10);
+        --green: #22a85a;
         --mono: 'VT323', 'Space Grotesk', monospace;
         --sans: 'Pretendard', 'Space Grotesk', sans-serif;
     }
@@ -32,8 +32,8 @@
     body {
         background: var(--bg);
         background-image:
-            linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 90deg);
+            linear-gradient(rgba(20,24,40,0.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(20,24,40,0.035) 1px, transparent 90deg);
         background-size: 48px 48px;
         background-position: -1px -1px;
         color: var(--text);
@@ -52,7 +52,7 @@
         position: sticky;
         top: 0;
         z-index: 100;
-        background: rgba(12, 13, 20, 0.72);
+        background: rgba(255, 255, 255, 0.78);
         backdrop-filter: blur(16px);
         border-bottom: 1px solid var(--border);
     }
@@ -341,6 +341,7 @@
     .card-icon.arena { box-shadow: inset 0 0 20px rgba(255, 119, 200, 0.12); }
     .card-icon.pizza { box-shadow: inset 0 0 20px var(--orange-soft); }
     .card-icon.pacman { box-shadow: inset 0 0 20px rgba(255, 227, 77, 0.15); }
+    .card-icon.ramen { box-shadow: inset 0 0 20px rgba(255, 170, 80, 0.15); }
     .card-id {
         font-family: var(--mono);
         font-size: 14px;
@@ -609,7 +610,7 @@
         display: none;
         position: fixed;
         inset: 0;
-        background: rgba(8, 9, 14, 0.85);
+        background: rgba(30, 34, 50, 0.55);
         backdrop-filter: blur(8px);
         z-index: 1000;
         justify-content: center;
@@ -626,7 +627,7 @@
         border-radius: 16px;
         overflow-y: auto;
         padding: 30px;
-        box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 60px var(--orange-glow);
+        box-shadow: 0 30px 80px rgba(20,24,40,0.25), 0 0 50px var(--orange-glow);
     }
     .close-btn {
         position: absolute;
@@ -674,6 +675,15 @@
         .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--border); }
     }
     @media(max-width:650px) { .pizza-layout { grid-template-columns:1fr; } }
+
+    /* 라면 게임 스타일 (따뜻한 톤) */
+    .ramen-app { width:100%; color:#3a2c1a; }
+    .ramen-layout { display:grid; grid-template-columns:1.1fr .9fr; gap:14px; }
+    .ramen-app h2, .ramen-app h3 { color:#c0392b; }
+    .ramen-stage { min-height:300px; display:grid; place-items:center; position:relative; overflow:hidden; border-radius:12px; background:radial-gradient(ellipse,#fff3e0,#ffe0b2 70%,#ffcc80); }
+    .ramen-stage canvas { width:min(100%,320px); aspect-ratio:1; display:block; touch-action:manipulation; cursor:pointer; }
+    .r-card { background:#fffaf0; border:2px solid #ffe0b2; border-radius:14px; padding:16px; }
+    @media(max-width:650px) { .ramen-layout { grid-template-columns:1fr; } }
 
     /* ===== 콘텐츠 선호도 조사 (투표) ===== */
     .poll-wrap {
@@ -885,6 +895,19 @@
                     <div class="card-desc">미로 속 점을 모두 먹고 유령을 피하세요. 파워펠릿을 먹으면 반격 찬스!</div>
                     <div class="card-foot">
                         <div class="card-tags"><span>ARCADE</span><span>MAZE</span><span>ALL</span></div>
+                        <span class="play-link">PLAY ▸</span>
+                    </div>
+                </div>
+
+                <div class="game-card reveal" onclick="openGame('ramen')">
+                    <div class="card-head">
+                        <div class="card-icon ramen">🍜</div>
+                        <div class="card-id">ID:05<br><span class="ver">v1.0</span></div>
+                    </div>
+                    <div class="card-title">라면 가게</div>
+                    <div class="card-desc">손님 주문에 맞춰 면을 삶고 국물과 고명을 올려 완벽한 라면을 끓여내는 요리 게임.</div>
+                    <div class="card-foot">
+                        <div class="card-tags"><span>COOKING</span><span>PUZZLE</span><span>ALL</span></div>
                         <span class="play-link">PLAY ▸</span>
                     </div>
                 </div>
@@ -1746,7 +1769,19 @@ reset();draw();
             if (type === 'pizza') {
                 container.innerHTML = `
                     <div class="pizza-app">
-                        <h2 style="color:#b85a00; margin-bottom:12px;">🍕 피자 공방</h2>
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+                            <h2 style="color:#b85a00; margin:0;">🍕 피자 공방</h2>
+                            <div style="display:flex; gap:8px;">
+                                <div style="background:#fff5e6; border:2px solid #ffe8c2; border-radius:10px; padding:4px 12px; text-align:center;">
+                                    <small style="color:#a07000; display:block; font-size:10px;">점수</small>
+                                    <strong style="color:#b85a00;" id="pScore">0</strong>
+                                </div>
+                                <div style="background:#fff5e6; border:2px solid #ffe8c2; border-radius:10px; padding:4px 12px; text-align:center;">
+                                    <small style="color:#a07000; display:block; font-size:10px;">완성</small>
+                                    <strong style="color:#b85a00;" id="pServed">0</strong>
+                                </div>
+                            </div>
+                        </div>
                         <div class="pizza-layout">
                             <div class="p-card">
                                 <h3 style="color:#b85a00;">나만의 피자 만들기</h3>
@@ -1755,10 +1790,12 @@ reset();draw();
                             </div>
                             <div class="p-card">
                                 <div class="order-box">
-                                    <div><small>손님 주문</small><br><strong>치즈 폭탄 피자</strong></div>
-                                    <span style="font-size:26px">🧀</span>
+                                    <div><small>손님 주문 <span id="pCustomer">🙂</span></small><br><strong id="pOrderName">주문 준비 중...</strong></div>
+                                    <span style="font-size:26px" id="pOrderIcon">🍕</span>
                                 </div>
+                                <div id="pOrderNeeds" style="font-size:12px; color:#7a4500; background:#fff; border:2px solid #ffe8c2; border-radius:10px; padding:8px 10px; margin-bottom:10px;"></div>
                                 <div class="ingredients-grid" id="pIngredients"></div>
+                                <div id="pFeedback" style="min-height:22px; margin-top:10px; font-size:13px; font-weight:700; text-align:center;"></div>
                                 <div class="action-row">
                                     <button style="background:#fff5e6; color:#b85a00; border:2px solid #ffe8c2;" id="pClear">다시 만들기</button>
                                     <button style="background:linear-gradient(100deg,#ffd56b,#ff9a3d); color:#fff;" id="pServe">서빙하기 ✨</button>
@@ -1789,6 +1826,45 @@ reset();draw();
                         <iframe src="pacman.html" style="width:100%; max-width:480px; height:620px; border:none; border-radius:12px;"></iframe>
                     </div>
                 `;
+            } else if (type === 'ramen') {
+                container.innerHTML = `
+                    <div class="ramen-app">
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+                            <h2 style="margin:0;">🍜 라면 가게</h2>
+                            <div style="display:flex; gap:8px;">
+                                <div style="background:#fff3e0; border:2px solid #ffe0b2; border-radius:10px; padding:4px 12px; text-align:center;">
+                                    <small style="color:#a0522d; display:block; font-size:10px;">점수</small>
+                                    <strong style="color:#c0392b;" id="rScore">0</strong>
+                                </div>
+                                <div style="background:#fff3e0; border:2px solid #ffe0b2; border-radius:10px; padding:4px 12px; text-align:center;">
+                                    <small style="color:#a0522d; display:block; font-size:10px;">완성</small>
+                                    <strong style="color:#c0392b;" id="rServed">0</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ramen-layout">
+                            <div class="r-card">
+                                <h3>나만의 라면 끓이기</h3>
+                                <div class="ramen-stage"><canvas id="ramenCanvas" width="400" height="400"></canvas></div>
+                                <p style="font-size:11px; color:#a0522d; margin-top:8px; text-align:center;">재료 선택 후 그릇을 클릭하세요!</p>
+                            </div>
+                            <div class="r-card">
+                                <div class="order-box" style="background:#fff3e0; border-color:#ffe0b2;">
+                                    <div><small style="color:#a0522d;">손님 주문 <span id="rCustomer">🙂</span></small><br><strong style="color:#c0392b;" id="rOrderName">주문 준비 중...</strong></div>
+                                    <span style="font-size:26px" id="rOrderIcon">🍜</span>
+                                </div>
+                                <div id="rOrderNeeds" style="font-size:12px; color:#7a4500; background:#fff; border:2px solid #ffe0b2; border-radius:10px; padding:8px 10px; margin-bottom:10px;"></div>
+                                <div class="ingredients-grid" id="rIngredients"></div>
+                                <div id="rFeedback" style="min-height:22px; margin-top:10px; font-size:13px; font-weight:700; text-align:center;"></div>
+                                <div class="action-row">
+                                    <button style="background:#fff3e0; color:#c0392b; border:2px solid #ffe0b2;" id="rClear">다시 끓이기</button>
+                                    <button style="background:linear-gradient(100deg,#ff9a3d,#e74c3c); color:#fff;" id="rServe">서빙하기 ✨</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                initRamenGame();
             }
         }
 
@@ -1802,33 +1878,72 @@ reset();draw();
 
         function initPizzaGame() {
             const canvas = document.getElementById('pizzaCanvas'), ctx = canvas.getContext('2d');
+            // 재료 정의 (색상 포함)
             const ingredients = [
-                {id:'dough',emoji:'🫓',name:'도우',desc:'바닥'},
-                {id:'sauce',emoji:'🍅',name:'토마토소스',desc:'새콤'},
-                {id:'cheese',emoji:'🧀',name:'모차렐라',desc:'치즈'},
-                {id:'pepperoni',emoji:'🍕',name:'페퍼로니',desc:'토핑'}
+                {id:'dough',emoji:'🫓',name:'도우',color:null},
+                {id:'sauce',emoji:'🍅',name:'토마토소스',color:'#d94839'},
+                {id:'cheese',emoji:'🧀',name:'모차렐라',color:'#ffe9a6'},
+                {id:'pepperoni',emoji:'🍕',name:'페퍼로니',color:'#8f252e'},
+                {id:'mushroom',emoji:'🍄',name:'버섯',color:'#c9a07a'},
+                {id:'olive',emoji:'🫒',name:'올리브',color:'#3b4a1e'},
+                {id:'basil',emoji:'🌿',name:'바질',color:'#3a7d2c'}
             ];
-            let selected='dough', placed=[];
+            const ingById = Object.fromEntries(ingredients.map(i => [i.id, i]));
+
+            // 손님 주문 메뉴 (base = 도우+소스+치즈는 공통, toppings = 필요한 토핑 집합)
+            const MENU = [
+                {name:'마르게리타', icon:'🍕', toppings:['basil'], tip:'바질 한 가지만!'},
+                {name:'페퍼로니 피자', icon:'🍕', toppings:['pepperoni'], tip:'페퍼로니 듬뿍'},
+                {name:'치즈 폭탄 피자', icon:'🧀', toppings:[], tip:'토핑 없이 치즈만'},
+                {name:'버섯 피자', icon:'🍄', toppings:['mushroom'], tip:'버섯만 올려요'},
+                {name:'콤비네이션', icon:'🍕', toppings:['pepperoni','mushroom','olive'], tip:'페퍼로니+버섯+올리브'},
+                {name:'베지 피자', icon:'🥗', toppings:['mushroom','olive','basil'], tip:'버섯+올리브+바질'}
+            ];
+            const BASE = ['dough','sauce','cheese']; // 모든 피자 공통 베이스
+
+            let selected='dough', placed=[], order=null;
+            let score=0, served=0;
+            const $ = id => document.getElementById(id);
+
+            function newOrder() {
+                order = MENU[Math.floor(Math.random()*MENU.length)];
+                placed = []; selected = 'dough';
+                $('pCustomer').textContent = '🙂';
+                $('pOrderName').textContent = order.name;
+                $('pOrderIcon').textContent = order.icon;
+                const needTop = order.toppings.length ? order.toppings.map(t=>ingById[t].emoji+ingById[t].name).join(', ') : '없음';
+                $('pOrderNeeds').innerHTML = '필요: 도우+소스+치즈(기본) + <b>토핑: '+needTop+'</b><br><span style="color:#a07000;">'+order.tip+'</span>';
+                $('pFeedback').textContent = '';
+                buildBtns(); draw();
+            }
 
             function draw() {
                 ctx.clearRect(0,0,400,400);
-                ctx.fillStyle='#bd7a40'; ctx.beginPath(); ctx.arc(200,200,165,0,Math.PI*2); ctx.fill();
-                ctx.fillStyle='#f5d18b'; ctx.beginPath(); ctx.arc(200,200,150,0,Math.PI*2); ctx.fill();
+                // 접시
+                ctx.fillStyle='#efe7d8'; ctx.beginPath(); ctx.arc(200,200,180,0,Math.PI*2); ctx.fill();
+                const hasDough = placed.some(p=>p.id==='dough');
+                if(hasDough){
+                    ctx.fillStyle='#bd7a40'; ctx.beginPath(); ctx.arc(200,200,165,0,Math.PI*2); ctx.fill();
+                    ctx.fillStyle='#f5d18b'; ctx.beginPath(); ctx.arc(200,200,150,0,Math.PI*2); ctx.fill();
+                }
                 if(placed.some(p=>p.id==='sauce')){ ctx.fillStyle='#d94839'; ctx.beginPath(); ctx.arc(200,200,135,0,Math.PI*2); ctx.fill(); }
                 if(placed.some(p=>p.id==='cheese')){ ctx.fillStyle='#ffe9a6'; ctx.beginPath(); ctx.arc(200,200,130,0,Math.PI*2); ctx.fill(); }
-                placed.filter(p=>!['dough','sauce','cheese'].includes(p.id)).forEach(p=>{
-                    ctx.fillStyle='#8f252e'; ctx.beginPath(); ctx.arc(p.x,p.y,12,0,Math.PI*2); ctx.fill();
+                // 토핑 그리기
+                placed.filter(p=>!BASE.includes(p.id)).forEach(p=>{
+                    const ing = ingById[p.id];
+                    ctx.fillStyle = ing.color || '#8f252e';
+                    ctx.beginPath(); ctx.arc(p.x,p.y, p.id==='basil'?8:12, 0, Math.PI*2); ctx.fill();
                 });
-                if(!placed.length){ ctx.fillStyle='#8c573b'; ctx.font='bold 16px sans-serif'; ctx.textAlign='center'; ctx.fillText('클릭하여 도우를 만들어보세요!',200,205); }
+                if(!placed.length){ ctx.fillStyle='#8c573b'; ctx.font='bold 15px sans-serif'; ctx.textAlign='center'; ctx.fillText('클릭하여 도우부터 올려보세요!',200,205); }
             }
 
             function buildBtns() {
-                const root = document.getElementById('pIngredients');
+                const root = $('pIngredients');
                 root.innerHTML = '';
                 ingredients.forEach(it=>{
                     const b = document.createElement('button');
                     b.className = 'ing-btn' + (selected === it.id ? ' active' : '');
-                    b.innerHTML = `<span style="font-size:22px">${it.emoji}</span><span><b>${it.name}</b></span>`;
+                    b.innerHTML = '<span style="font-size:20px">'+it.emoji+'</span><span><b>'+it.name+'</b></span>';
                     b.onclick = () => { selected = it.id; buildBtns(); };
                     root.appendChild(b);
                 });
@@ -1840,18 +1955,246 @@ reset();draw();
                 const x = (e.clientX - rect.left) / rect.width * 400;
                 const y = (e.clientY - rect.top) / rect.height * 400;
                 if(Math.hypot(x-200, y-200) > 140) return;
-                if(selected==='dough') { placed.push({id:'dough',x:200,y:200}); selected='sauce'; }
-                else { placed.push({id:selected,x,y}); }
+                if(selected==='dough') {
+                    if(!placed.some(p=>p.id==='dough')) placed.push({id:'dough',x:200,y:200});
+                    selected='sauce';
+                } else {
+                    placed.push({id:selected,x,y});
+                }
                 buildBtns(); draw();
             };
 
-            document.getElementById('pClear').onclick = () => { placed=[]; selected='dough'; buildBtns(); draw(); };
-            document.getElementById('pServe').onclick = () => {
-                alert('맛있는 피자가 완성되었어요! 🍕');
-                placed=[]; selected='dough'; buildBtns(); draw();
+            // 주문 채점: 베이스 다 있고, 토핑 집합이 정확히 일치하는지
+            function evaluate() {
+                const placedToppings = [...new Set(placed.filter(p=>!BASE.includes(p.id)).map(p=>p.id))];
+                const needToppings = order.toppings;
+                const hasAllBase = BASE.every(b => placed.some(p=>p.id===b));
+                const missing = needToppings.filter(t => !placedToppings.includes(t));
+                const extra = placedToppings.filter(t => !needToppings.includes(t));
+                return { hasAllBase, missing, extra };
+            }
+
+            $('pClear').onclick = () => { placed=[]; selected='dough'; buildBtns(); draw(); };
+
+            $('pServe').onclick = () => {
+                if(!order) return;
+                const { hasAllBase, missing, extra } = evaluate();
+                const fb = $('pFeedback');
+
+                if(!hasAllBase){
+                    fb.style.color = '#c0392b';
+                    fb.textContent = '❌ 기본(도우+소스+치즈)이 빠졌어요!';
+                    $('pCustomer').textContent = '😠';
+                    return;
+                }
+                if(missing.length===0 && extra.length===0){
+                    // 완벽
+                    const gained = 100;
+                    score += gained; served += 1;
+                    $('pScore').textContent = score; $('pServed').textContent = served;
+                    fb.style.color = '#1e8449';
+                    fb.textContent = '✅ 완벽해요! 손님 만족 (+'+gained+'점)';
+                    $('pCustomer').textContent = '😍';
+                    setTimeout(newOrder, 1400);
+                } else {
+                    // 아쉬움 — 부분 점수
+                    const gained = 30;
+                    score += gained; served += 1;
+                    $('pScore').textContent = score; $('pServed').textContent = served;
+                    let msg = '😅 아쉬워요 (+'+gained+'점). ';
+                    if(missing.length) msg += '빠진 토핑: '+missing.map(t=>ingById[t].name).join(',')+'. ';
+                    if(extra.length) msg += '추가된 토핑: '+extra.map(t=>ingById[t].name).join(',')+'.';
+                    fb.style.color = '#b9770e';
+                    fb.textContent = msg;
+                    $('pCustomer').textContent = '😐';
+                    setTimeout(newOrder, 1800);
+                }
             };
 
-            buildBtns(); draw();
+            newOrder();
+        }
+
+        function initRamenGame() {
+            const canvas = document.getElementById('ramenCanvas'), ctx = canvas.getContext('2d');
+            const $ = id => document.getElementById(id);
+
+            // 재료: 면/국물은 베이스, 나머지는 고명(토핑)
+            const ingredients = [
+                {id:'noodle',emoji:'🍜',name:'면',color:'#f5deb3'},
+                {id:'broth',emoji:'🥣',name:'국물',color:'#c0392b'},
+                {id:'egg',emoji:'🥚',name:'계란',color:'#fff4c2'},
+                {id:'green',emoji:'🧅',name:'파',color:'#4caf50'},
+                {id:'meat',emoji:'🥩',name:'고기',color:'#8d5524'},
+                {id:'kimchi',emoji:'🌶️',name:'김치',color:'#e74c3c'},
+                {id:'seaweed',emoji:'🟩',name:'김',color:'#2d3b1e'}
+            ];
+            const ingById = Object.fromEntries(ingredients.map(i => [i.id, i]));
+
+            // 손님 주문 메뉴 (면+국물은 공통, toppings = 필요한 고명)
+            const MENU = [
+                {name:'기본 라면', icon:'🍜', toppings:['egg','green'], tip:'계란+파'},
+                {name:'김치 라면', icon:'🌶️', toppings:['kimchi','green'], tip:'김치+파'},
+                {name:'고기 라면', icon:'🥩', toppings:['meat','egg'], tip:'고기+계란'},
+                {name:'해물 라면', icon:'🟩', toppings:['seaweed','green'], tip:'김+파'},
+                {name:'스페셜 라면', icon:'⭐', toppings:['egg','meat','green','seaweed'], tip:'계란+고기+파+김'},
+                {name:'담백 라면', icon:'🍥', toppings:[], tip:'고명 없이 면과 국물만'}
+            ];
+            const BASE = ['noodle','broth']; // 공통 베이스
+
+            let selected='noodle', placed=[], order=null;
+            let score=0, served=0;
+
+            function newOrder() {
+                order = MENU[Math.floor(Math.random()*MENU.length)];
+                placed = []; selected = 'noodle';
+                $('rCustomer').textContent = '🙂';
+                $('rOrderName').textContent = order.name;
+                $('rOrderIcon').textContent = order.icon;
+                const needTop = order.toppings.length ? order.toppings.map(t=>ingById[t].emoji+ingById[t].name).join(', ') : '없음';
+                $('rOrderNeeds').innerHTML = '필요: 면+국물(기본) + <b>고명: '+needTop+'</b><br><span style="color:#a0522d;">'+order.tip+'</span>';
+                $('rFeedback').textContent = '';
+                buildBtns(); draw();
+            }
+
+            function draw() {
+                ctx.clearRect(0,0,400,400);
+                // 그릇
+                ctx.fillStyle='#ffe0b2'; ctx.beginPath(); ctx.arc(200,200,180,0,Math.PI*2); ctx.fill();
+                ctx.fillStyle='#e0e0e0'; ctx.beginPath(); ctx.arc(200,200,170,0,Math.PI*2); ctx.fill();
+                const hasBroth = placed.some(p=>p.id==='broth');
+                const hasNoodle = placed.some(p=>p.id==='noodle');
+                if(hasBroth){ ctx.fillStyle='#c0392b'; ctx.beginPath(); ctx.arc(200,200,155,0,Math.PI*2); ctx.fill(); }
+                else { ctx.fillStyle='#fff8e1'; ctx.beginPath(); ctx.arc(200,200,155,0,Math.PI*2); ctx.fill(); }
+                if(hasNoodle){
+                    // 면발 (곡선 여러 개)
+                    ctx.strokeStyle='#f5deb3'; ctx.lineWidth=5;
+                    for(let i=0;i<7;i++){
+                        ctx.beginPath();
+                        const oy = 170 + i*10;
+                        ctx.moveTo(120, oy);
+                        ctx.bezierCurveTo(160, oy-15, 240, oy+15, 280, oy);
+                        ctx.stroke();
+                    }
+                }
+                // 고명 그리기 (재료별 모양)
+                placed.filter(p=>!BASE.includes(p.id)).forEach(p=>{
+                    const ing = ingById[p.id];
+                    ctx.save();
+                    if(p.id==='egg'){
+                        // 반숙 계란: 흰자 + 노른자
+                        ctx.fillStyle='#fff4c2'; ctx.beginPath(); ctx.arc(p.x,p.y,15,0,Math.PI*2); ctx.fill();
+                        ctx.fillStyle='#ffb300'; ctx.beginPath(); ctx.arc(p.x,p.y,6,0,Math.PI*2); ctx.fill();
+                    } else if(p.id==='meat'){
+                        // 차슈: 분홍 속살 + 갈색 테두리 (동그란 고기 슬라이스)
+                        ctx.fillStyle='#8d5524'; ctx.beginPath(); ctx.arc(p.x,p.y,16,0,Math.PI*2); ctx.fill();
+                        ctx.fillStyle='#e8a3a3'; ctx.beginPath(); ctx.arc(p.x,p.y,12,0,Math.PI*2); ctx.fill();
+                        ctx.fillStyle='#c97b7b'; ctx.beginPath(); ctx.arc(p.x,p.y,5,0,Math.PI*2); ctx.fill();
+                    } else if(p.id==='seaweed'){
+                        // 김: 네모난 검은 조각 + 약간의 광택
+                        ctx.fillStyle='#1f2a14';
+                        ctx.fillRect(p.x-14, p.y-18, 28, 36);
+                        ctx.strokeStyle='#3a4a24'; ctx.lineWidth=2;
+                        ctx.strokeRect(p.x-14, p.y-18, 28, 36);
+                    } else if(p.id==='green'){
+                        // 파: 작은 초록 원 여러 개 느낌
+                        ctx.fillStyle='#4caf50';
+                        ctx.beginPath(); ctx.arc(p.x,p.y,5,0,Math.PI*2); ctx.fill();
+                        ctx.fillStyle='#a5d6a7'; ctx.beginPath(); ctx.arc(p.x,p.y,2,0,Math.PI*2); ctx.fill();
+                    } else if(p.id==='kimchi'){
+                        // 김치: 불규칙한 빨강 조각
+                        ctx.fillStyle='#e74c3c';
+                        ctx.beginPath();
+                        ctx.moveTo(p.x-10, p.y-6);
+                        ctx.lineTo(p.x+8, p.y-10);
+                        ctx.lineTo(p.x+12, p.y+6);
+                        ctx.lineTo(p.x-4, p.y+11);
+                        ctx.lineTo(p.x-12, p.y+2);
+                        ctx.closePath(); ctx.fill();
+                        ctx.fillStyle='#c0392b'; ctx.fillRect(p.x-2, p.y-4, 6, 8);
+                    } else {
+                        ctx.fillStyle = ing.color || '#8d5524';
+                        ctx.beginPath(); ctx.arc(p.x,p.y,12,0,Math.PI*2); ctx.fill();
+                    }
+                    ctx.restore();
+                });
+                if(!placed.length){ ctx.fillStyle='#a0522d'; ctx.font='bold 15px sans-serif'; ctx.textAlign='center'; ctx.fillText('클릭하여 면부터 넣어보세요!',200,205); }
+            }
+
+            function buildBtns() {
+                const root = $('rIngredients');
+                root.innerHTML = '';
+                ingredients.forEach(it=>{
+                    const b = document.createElement('button');
+                    b.className = 'ing-btn' + (selected === it.id ? ' active' : '');
+                    b.innerHTML = '<span style="font-size:20px">'+it.emoji+'</span><span><b>'+it.name+'</b></span>';
+                    b.onclick = () => { selected = it.id; buildBtns(); };
+                    root.appendChild(b);
+                });
+            }
+
+            canvas.onclick = (e) => {
+                if(!selected) return;
+                const rect = canvas.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width * 400;
+                const y = (e.clientY - rect.top) / rect.height * 400;
+                if(Math.hypot(x-200, y-200) > 150) return;
+                if(selected==='noodle') {
+                    if(!placed.some(p=>p.id==='noodle')) placed.push({id:'noodle',x:200,y:200});
+                    selected='broth';
+                } else if(selected==='broth') {
+                    if(!placed.some(p=>p.id==='broth')) placed.push({id:'broth',x:200,y:200});
+                    selected='egg';
+                } else {
+                    placed.push({id:selected,x,y});
+                }
+                buildBtns(); draw();
+            };
+
+            function evaluate() {
+                const placedToppings = [...new Set(placed.filter(p=>!BASE.includes(p.id)).map(p=>p.id))];
+                const needToppings = order.toppings;
+                const hasAllBase = BASE.every(b => placed.some(p=>p.id===b));
+                const missing = needToppings.filter(t => !placedToppings.includes(t));
+                const extra = placedToppings.filter(t => !needToppings.includes(t));
+                return { hasAllBase, missing, extra };
+            }
+
+            $('rClear').onclick = () => { placed=[]; selected='noodle'; buildBtns(); draw(); };
+
+            $('rServe').onclick = () => {
+                if(!order) return;
+                const { hasAllBase, missing, extra } = evaluate();
+                const fb = $('rFeedback');
+
+                if(!hasAllBase){
+                    fb.style.color = '#c0392b';
+                    fb.textContent = '❌ 기본(면+국물)이 빠졌어요!';
+                    $('rCustomer').textContent = '😠';
+                    return;
+                }
+                if(missing.length===0 && extra.length===0){
+                    const gained = 100;
+                    score += gained; served += 1;
+                    $('rScore').textContent = score; $('rServed').textContent = served;
+                    fb.style.color = '#1e8449';
+                    fb.textContent = '✅ 완벽해요! 손님 만족 (+'+gained+'점)';
+                    $('rCustomer').textContent = '😍';
+                    setTimeout(newOrder, 1400);
+                } else {
+                    const gained = 30;
+                    score += gained; served += 1;
+                    $('rScore').textContent = score; $('rServed').textContent = served;
+                    let msg = '😅 아쉬워요 (+'+gained+'점). ';
+                    if(missing.length) msg += '빠진 고명: '+missing.map(t=>ingById[t].name).join(',')+'. ';
+                    if(extra.length) msg += '추가된 고명: '+extra.map(t=>ingById[t].name).join(',')+'.';
+                    fb.style.color = '#b9770e';
+                    fb.textContent = msg;
+                    $('rCustomer').textContent = '😐';
+                    setTimeout(newOrder, 1800);
+                }
+            };
+
+            newOrder();
         }
 
         /* ===== 콘텐츠 선호도 조사: Supabase 저장/조회 ===== */
