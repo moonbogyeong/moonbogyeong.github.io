@@ -488,6 +488,9 @@
     .card-icon.potion { box-shadow: inset 0 0 20px rgba(180, 120, 255, 0.18); }
     .card-icon.sudoku { box-shadow: inset 0 0 20px rgba(92, 244, 255, 0.15); }
     .card-icon.quizface { box-shadow: inset 0 0 20px rgba(255, 119, 200, 0.15); }
+    .card-icon.maze { box-shadow: inset 0 0 20px rgba(92, 244, 255, 0.15); }
+    .card-icon.spot { box-shadow: inset 0 0 20px rgba(95, 224, 122, 0.15); }
+    .card-icon.dragonfly { box-shadow: inset 0 0 20px rgba(160, 200, 255, 0.18); }
     .card-id {
         font-family: var(--mono);
         font-size: 14px;
@@ -816,6 +819,86 @@
         border: 1px solid var(--border);
     }
     .close-btn:hover { background: var(--orange); color: #1a0a00; transform: rotate(90deg); }
+
+    /* ===== 미로 찾기 ===== */
+    .maze-app { color: var(--text); }
+    .maze-top { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+    .maze-stat { font-family: var(--mono); font-size:13px; color:var(--dim); }
+    .maze-stat b { color: var(--cyan); }
+    .maze-stage { display:flex; flex-direction:column; align-items:center; gap:14px; }
+    .maze-grid { display:flex; justify-content:center; width:100%; }
+    .mz-svg { background: var(--bg-2); border:1px solid var(--border); border-radius:12px; max-width:100%; height:auto; }
+    .mz-player { transition: all .08s ease; }
+    .maze-msg { font-size:14px; color:var(--muted); text-align:center; min-height:22px; }
+    .maze-msg.ok { color: var(--green); font-size:16px; }
+    .maze-pad { display:flex; flex-direction:column; align-items:center; gap:6px; }
+    .maze-pad-mid { display:flex; gap:6px; }
+    .maze-pad button {
+        width:52px; height:48px; font-size:18px; border-radius:10px;
+        background: var(--bg-3); color: var(--cyan); border:1px solid var(--border-strong);
+        cursor:pointer; transition: background .15s;
+    }
+    .maze-pad button:hover { background: var(--bg-2); }
+    .maze-pad button:active { background: var(--cyan-soft); }
+
+    /* ===== 틀린 그림 찾기 ===== */
+    .spot-app { color: var(--text); }
+    .spot-top { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+    .spot-stat { font-family: var(--mono); font-size:13px; color:var(--dim); }
+    .spot-stat b { color: var(--green); }
+    .spot-boards { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+    .spot-panel { background: var(--bg-2); border:1px solid var(--border); border-radius:12px; padding:10px; }
+    .spot-label { display:block; font-size:12px; color:var(--dim); font-family:var(--mono); margin-bottom:8px; text-align:center; }
+    .sp-board { display:grid; gap:4px; }
+    .sp-cell {
+        width:40px; height:40px; display:flex; align-items:center; justify-content:center;
+        font-size:22px; background: var(--bg-3); border-radius:8px; user-select:none;
+    }
+    .sp-cell.b { cursor:pointer; transition: transform .1s; }
+    .sp-cell.b:hover { transform: scale(1.08); background: var(--bg-2); }
+    .sp-cell.hit { box-shadow: 0 0 0 3px var(--green) inset; border-radius:50%; }
+    .sp-cell.miss { box-shadow: 0 0 0 3px #ff5d6c inset; }
+    .sp-cell.reveal-diff { box-shadow: 0 0 0 3px #ffcf4d inset; border-radius:50%; }
+    .spot-msg { text-align:center; font-size:14px; color:var(--muted); min-height:24px; margin:14px 0; }
+    .spot-msg.ok { color: var(--green); font-weight:700; }
+    .spot-msg.bad { color: #ff5d6c; }
+
+    /* ===== 잠자리 잡기 ===== */
+    .df-app { color: var(--text); text-align:center; }
+    .df-top { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+    .df-stat { font-family: var(--mono); font-size:13px; color:var(--dim); }
+    .df-stat b { color: var(--orange); }
+    .df-field {
+        position:relative; height:280px; border-radius:16px; overflow:hidden;
+        background: radial-gradient(circle at 50% 30%, rgba(160,200,255,0.12), var(--bg-2));
+        border:1px solid var(--border); margin-bottom:14px;
+    }
+    .df-bug {
+        position:absolute; left:50%; top:42%; transform: translate(-50%,-50%) scale(1);
+        font-size:52px; transition: transform .35s ease; will-change: transform;
+    }
+    .df-bug.nervous { animation: dfShake .25s infinite; }
+    .df-bug.grabbed { filter: drop-shadow(0 0 10px var(--green)); }
+    .df-bug.fled { opacity:0; transform: translate(60px,-120px) scale(.4) !important; transition: all .9s ease; }
+    @keyframes dfShake { 0%,100%{ margin-left:-2px; } 50%{ margin-left:2px; } }
+    .df-hand { position:absolute; left:50%; bottom:6px; transform: translateX(-50%); font-size:40px; }
+    .df-alert { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+    .df-alert-label { font-size:12px; color:var(--dim); white-space:nowrap; }
+    .df-alert-track { flex:1; height:12px; background: var(--bg-3); border-radius:999px; overflow:hidden; }
+    .df-alert-bar { height:100%; width:0%; background:#5fe07a; border-radius:999px; transition: width .3s, background .3s; }
+    .df-dist { font-family:var(--mono); font-size:13px; color:var(--cyan); white-space:nowrap; }
+    .df-msg { min-height:24px; font-size:15px; color:var(--muted); margin-bottom:14px; }
+    .df-msg.ok { color: var(--green); font-weight:700; }
+    .df-msg.bad { color: #ff5d6c; font-weight:700; }
+    .df-actions { display:flex; gap:12px; justify-content:center; }
+    .df-btn {
+        flex:1; max-width:200px; padding:14px; font-size:16px; font-weight:800; border-radius:12px;
+        border:none; cursor:pointer; transition: transform .1s, filter .15s;
+    }
+    .df-btn:active { transform: scale(.96); }
+    .df-btn.approach { background: linear-gradient(100deg,#5cf4ff,#4aa8ff); color:#04121a; }
+    .df-btn.grab { background: linear-gradient(100deg,#ffd56b,#ff8a3d); color:#2a1500; }
+    .df-tip { font-size:12px; color:var(--dim); margin-top:14px; }
 
     /* 별점 입력 오버레이 */
     #rateOverlay {
@@ -1380,6 +1463,48 @@
                     </div>
                     <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">MOVIE · REWARD</span><span class="play-link">PLAY ▸</span></div>
                 </div>
+
+                <div class="game-card reveal" onclick="openGame('maze')">
+                    <div class="card-head">
+                        <div class="card-icon maze">🧭</div>
+                        <span class="card-genre">🧠 퍼즐</span>
+                    </div>
+                    <div class="card-title">미로 찾기</div>
+                    <div class="card-desc">4단계 난이도의 미로를 빠져나가기.</div>
+                    <div class="card-meta">
+                        <span class="card-diff normal">보통</span>
+                        <span class="card-rating"><span class="stars">★★★★☆</span>4.4</span>
+                    </div>
+                    <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">MAZE · LEVEL</span><span class="play-link">PLAY ▸</span></div>
+                </div>
+
+                <div class="game-card reveal" onclick="openGame('spot')">
+                    <div class="card-head">
+                        <div class="card-icon spot">🔍</div>
+                        <span class="card-genre">🧠 퍼즐</span>
+                    </div>
+                    <div class="card-title">틀린 그림 찾기</div>
+                    <div class="card-desc">제한 시간 안에 다른 곳을 찾아내기.</div>
+                    <div class="card-meta">
+                        <span class="card-diff hard">어려움</span>
+                        <span class="card-rating"><span class="stars">★★★★☆</span>4.3</span>
+                    </div>
+                    <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">FIND · TIMED</span><span class="play-link">PLAY ▸</span></div>
+                </div>
+
+                <div class="game-card reveal" onclick="openGame('dragonfly')">
+                    <div class="card-head">
+                        <div class="card-icon dragonfly">🧚</div>
+                        <span class="card-genre">🕹️ 아케이드</span>
+                    </div>
+                    <div class="card-title">잠자리 잡기</div>
+                    <div class="card-desc">살금살금 다가가 잠자리를 포획하기.</div>
+                    <div class="card-meta">
+                        <span class="card-diff normal">보통</span>
+                        <span class="card-rating"><span class="stars">★★★★☆</span>4.2</span>
+                    </div>
+                    <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">CATCH · SNEAK</span><span class="play-link">PLAY ▸</span></div>
+                </div>
             </div>
         </section>
 
@@ -1491,6 +1616,9 @@
                         <button class="vote-btn" data-game="potion"><span class="v-emoji">🧪</span><span>요술 항아리</span></button>
                         <button class="vote-btn" data-game="sudoku"><span class="v-emoji">🔢</span><span>스도쿠</span></button>
                         <button class="vote-btn" data-game="quizface"><span class="v-emoji">🎬</span><span>이모지 퀴즈</span></button>
+                        <button class="vote-btn" data-game="maze"><span class="v-emoji">🧭</span><span>미로 찾기</span></button>
+                        <button class="vote-btn" data-game="spot"><span class="v-emoji">🔍</span><span>틀린 그림 찾기</span></button>
+                        <button class="vote-btn" data-game="dragonfly"><span class="v-emoji">🧚</span><span>잠자리 잡기</span></button>
                     </div>
                     <div class="poll-msg" id="pollMsg">투표 결과를 불러오는 중...</div>
                 </div>
@@ -1774,6 +1902,83 @@
                     </div>
                 `;
                 initQuizFaceGame();
+            } else if (type === 'maze') {
+                container.innerHTML = `
+                    <div class="maze-app">
+                        <div class="maze-top">
+                            <h2 style="margin:0;">🧭 미로 찾기</h2>
+                            <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+                                <span class="maze-stat">걸음 <b id="mzMoves">0</b></span>
+                                <span class="maze-stat">⏱ <b id="mzTime">0s</b></span>
+                                <div class="diff-tabs" id="mzTabs"></div>
+                            </div>
+                        </div>
+                        <div class="maze-stage">
+                            <div class="maze-grid" id="mzGrid"></div>
+                            <div class="maze-msg" id="mzMsg"></div>
+                            <div class="maze-pad">
+                                <button id="mzUp">▲</button>
+                                <div class="maze-pad-mid">
+                                    <button id="mzLeft">◀</button>
+                                    <button id="mzDown">▼</button>
+                                    <button id="mzRight">▶</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                initMazeGame();
+            } else if (type === 'spot') {
+                container.innerHTML = `
+                    <div class="spot-app">
+                        <div class="spot-top">
+                            <h2 style="margin:0;">🔍 틀린 그림 찾기</h2>
+                            <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+                                <span class="spot-stat">찾음 <b id="spFound">0 / 0</b></span>
+                                <span class="spot-stat">⏱ <b id="spTime">0s</b></span>
+                                <div class="diff-tabs" id="spTabs"></div>
+                            </div>
+                        </div>
+                        <div class="spot-boards">
+                            <div class="spot-panel"><span class="spot-label">A</span><div id="spA"></div></div>
+                            <div class="spot-panel"><span class="spot-label">B · 여기를 클릭</span><div id="spB"></div></div>
+                        </div>
+                        <div class="spot-msg" id="spMsg"></div>
+                        <div class="action-row" style="justify-content:center;">
+                            <button class="btn-ghost" id="spRetry">새 그림 ↻</button>
+                        </div>
+                    </div>
+                `;
+                initSpotGame();
+            } else if (type === 'dragonfly') {
+                container.innerHTML = `
+                    <div class="df-app">
+                        <div class="df-top">
+                            <h2 style="margin:0;">🧚 잠자리 잡기</h2>
+                            <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                                <span class="df-stat">라운드 <b id="dfRound">1</b></span>
+                                <span class="df-stat">잡음 <b id="dfCaught">0</b></span>
+                                <span class="df-stat">놓침 <b id="dfEscaped">0</b></span>
+                            </div>
+                        </div>
+                        <div class="df-field">
+                            <div class="df-bug" id="dfBug">🧚</div>
+                            <div class="df-hand">🖐️</div>
+                        </div>
+                        <div class="df-alert">
+                            <span class="df-alert-label">경계심</span>
+                            <div class="df-alert-track"><div class="df-alert-bar" id="dfAlertBar"></div></div>
+                            <span class="df-dist" id="dfDist">100cm</span>
+                        </div>
+                        <div class="df-msg" id="dfMsg"></div>
+                        <div class="df-actions">
+                            <button class="df-btn approach" id="dfApproach">🤫 다가가기</button>
+                            <button class="df-btn grab" id="dfGrab">✋ 잡기</button>
+                        </div>
+                        <p class="df-tip">너무 빨리 다가가면 경계심이 올라 도망가요. 거의 닿았을 때 잡기!</p>
+                    </div>
+                `;
+                initDragonflyGame();
             }
         }
 
@@ -2481,8 +2686,8 @@
                 {
                     q: 'Q1. 짧은 휴식 시간, 당신의 선택은?',
                     options: [
-                        { emoji: '⚡', text: '10초 안에 짜릿하게 몰입하고 싶어', scores: { star: 2, pacman: 2, arena: 1 } },
-                        { emoji: '�', text: '여유롭게 차근차근 즐기고 싶어', scores: { pizza: 2, ramen: 2, sudoku: 1 } },
+                        { emoji: '✦', text: '10초 안에 짜릿하게 몰입하고 싶어', scores: { star: 3 } },
+                        { emoji: '�', text: '여유롭게 손맛을 즐기고 싶어', scores: { ramen: 3 } },
                         { emoji: '🎲', text: '예상 못 한 깜짝 재미가 좋아', scores: { potion: 3 } },
                         { emoji: '🎬', text: '머리 식히며 맞히는 퀴즈가 좋아', scores: { quizface: 3 } }
                     ]
@@ -2490,37 +2695,37 @@
                 {
                     q: 'Q2. 손가락과 머리, 어느 쪽을 더 쓰고 싶나요?',
                     options: [
-                        { emoji: '🕹️', text: '빠른 반응속도 — 손이 바빠야 재밌지', scores: { star: 2, arena: 2, pacman: 2 } },
-                        { emoji: '🧠', text: '논리와 계산 — 머리 쓰는 게 좋아', scores: { sudoku: 3 } },
-                        { emoji: '�', text: '순서와 조합 — 레시피처럼 맞춰가는 재미', scores: { pizza: 2, ramen: 2 } },
-                        { emoji: '�', text: '관찰과 눈치 — 숨은 의미 찾기', scores: { quizface: 2, potion: 1 } }
+                        { emoji: '�', text: '빠른 반응속도 — 미로를 질주하며 피하기', scores: { pacman: 3 } },
+                        { emoji: '🔢', text: '논리와 계산 — 숫자로 머리 쓰기', scores: { sudoku: 3 } },
+                        { emoji: '�', text: '순서와 조합 — 레시피처럼 맞춰가기', scores: { pizza: 3 } },
+                        { emoji: '�', text: '관찰과 눈썰미 — 숨은 차이 찾기', scores: { spot: 3 } }
                     ]
                 },
                 {
                     q: 'Q3. 게임의 "목표"로 가장 끌리는 건?',
                     options: [
-                        { emoji: '🏆', text: '최고 점수 기록 깨기', scores: { star: 2, arena: 2, pacman: 1 } },
-                        { emoji: '📈', text: '레벨을 하나씩 클리어하기', scores: { sudoku: 3 } },
-                        { emoji: '😋', text: '손님을 만족시키기', scores: { pizza: 2, ramen: 2 } },
-                        { emoji: '🗃️', text: '도감·컬렉션 모으기', scores: { potion: 3 } }
+                        { emoji: '🗺️', text: '길을 찾아 출구로 빠져나가기', scores: { maze: 3 } },
+                        { emoji: '�️', text: '살금살금 다가가 포획하기', scores: { dragonfly: 3 } },
+                        { emoji: '⚔️', text: '몰려오는 적을 물리치기', scores: { arena: 3 } },
+                        { emoji: '🏆', text: '기록 깨기 & 손맛의 정점 찍기', scores: { star: 3, ramen: 3 } }
                     ]
                 },
                 {
                     q: 'Q4. 분위기는 어떤 쪽이 좋아요?',
                     options: [
-                        { emoji: '✨', text: '몽환적이고 우주적인', scores: { star: 3 } },
-                        { emoji: '🔥', text: '치열하고 긴장감 넘치는', scores: { arena: 3 } },
-                        { emoji: '🧡', text: '아기자기하고 따뜻한', scores: { pizza: 2, ramen: 2 } },
-                        { emoji: '🔮', text: '신비롭고 마법 같은', scores: { potion: 3 } }
+                        { emoji: '🔮', text: '신비롭고 마법 같은', scores: { potion: 3 } },
+                        { emoji: '�', text: '머리 식는 유쾌한 퀴즈', scores: { quizface: 3 } },
+                        { emoji: '🌿', text: '여름밤처럼 아기자기하고 따뜻한', scores: { dragonfly: 3 } },
+                        { emoji: '�', text: '치열하고 긴장감 넘치는', scores: { arena: 3 } }
                     ]
                 },
                 {
                     q: 'Q5. 지면/실패했을 때 당신은?',
                     options: [
-                        { emoji: '�', text: '바로 재도전! 기록을 깨야 직성이 풀려', scores: { arena: 2, star: 2, pacman: 1 } },
-                        { emoji: '🤔', text: '어디서 틀렸나 복기하며 분석', scores: { sudoku: 3 } },
-                        { emoji: '😆', text: '결과가 웃기면 그걸로 만족', scores: { potion: 2, quizface: 2 } },
-                        { emoji: '🍽️', text: '천천히 다시 정성껏 완성', scores: { pizza: 2, ramen: 2 } }
+                        { emoji: '🤔', text: '어디서 틀렸나 논리로 복기', scores: { sudoku: 3 } },
+                        { emoji: '�', text: '다른 점을 끝까지 찾아낸다', scores: { spot: 3 } },
+                        { emoji: '�', text: '바로 재도전! 손이 바빠야 직성이 풀려', scores: { pacman: 3, pizza: 3 } },
+                        { emoji: '🗺️', text: '길을 되짚으며 차분히 다시', scores: { maze: 3 } }
                     ]
                 }
             ];
@@ -2533,10 +2738,13 @@
                 ramen:    { icon: '🍜', name: '라면 가게', desc: '차분하고 손맛 좋은 당신! 주문에 맞춰 면과 고명을 올려 최고의 라면을 끓여 보세요.' },
                 sudoku:   { icon: '🔢', name: '스도쿠', desc: '논리적이고 끈기 있는 당신! 목숨 3개로 4단계 난이도의 숫자 퍼즐에 도전해 보세요.' },
                 potion:   { icon: '🧪', name: '요술 항아리', desc: '호기심 많고 창의적인 당신! 물약을 섞어 어떤 캐릭터가 나올지 수집해 보세요.' },
-                quizface: { icon: '🎬', name: '이모지 퀴즈', desc: '눈치 빠르고 영화를 좋아하는 당신! 이모지를 보고 어떤 작품인지 맞혀 등급을 올려 보세요.' }
+                quizface: { icon: '🎬', name: '이모지 퀴즈', desc: '눈치 빠르고 영화를 좋아하는 당신! 이모지를 보고 어떤 작품인지 맞혀 등급을 올려 보세요.' },
+                maze:     { icon: '🧭', name: '미로 찾기', desc: '길 찾기와 공간 감각이 뛰어난 당신! 4단계 난이도의 미로를 최단 걸음으로 빠져나가 보세요.' },
+                spot:     { icon: '🔍', name: '틀린 그림 찾기', desc: '관찰력이 남다른 당신! 제한 시간 안에 두 그림의 다른 곳을 모두 찾아내 보세요.' },
+                dragonfly:{ icon: '🧚', name: '잠자리 잡기', desc: '침착하고 타이밍 감각이 좋은 당신! 살금살금 다가가 잠자리가 눈치채기 전에 잡아 보세요.' }
             };
 
-            const EMPTY = { star: 0, arena: 0, pizza: 0, pacman: 0, ramen: 0, sudoku: 0, potion: 0, quizface: 0 };
+            const EMPTY = { star: 0, arena: 0, pizza: 0, pacman: 0, ramen: 0, sudoku: 0, potion: 0, quizface: 0, maze: 0, spot: 0, dragonfly: 0 };
             let step = 0;
             let scores = Object.assign({}, EMPTY);
 
@@ -2576,11 +2784,12 @@
             }
 
             function renderResult() {
-                // 최고 점수 게임 선택 (동점이면 먼저 나온 것)
-                let best = 'star', bestScore = -1;
-                ['star', 'arena', 'pizza', 'pacman', 'ramen', 'sudoku', 'potion', 'quizface'].forEach(function (g) {
-                    if (scores[g] > bestScore) { bestScore = scores[g]; best = g; }
-                });
+                // 최고 점수 게임 선택 (동점이면 그중에서 무작위로 하나)
+                const ALL_GAMES = ['star', 'arena', 'pizza', 'pacman', 'ramen', 'sudoku', 'potion', 'quizface', 'maze', 'spot', 'dragonfly'];
+                let bestScore = -1;
+                ALL_GAMES.forEach(function (g) { if (scores[g] > bestScore) bestScore = scores[g]; });
+                const tied = ALL_GAMES.filter(function (g) { return scores[g] === bestScore; });
+                const best = tied[Math.floor(Math.random() * tied.length)];
                 const r = RESULT[best];
                 box.innerHTML =
                     '<div class="quiz-result">' +
@@ -2599,6 +2808,349 @@
             renderIntro();
         })();
 
+        /* ===== 미로 찾기 ===== */
+        function initMazeGame() {
+            const $ = id => document.getElementById(id);
+            const DIFF = [
+                { key:'easy',   name:'쉬움',   n:9  },
+                { key:'normal', name:'보통',   n:13 },
+                { key:'hard',   name:'어려움', n:17 },
+                { key:'expert', name:'전문가', n:23 }
+            ];
+            let curDiff = 0, grid = [], N = 9, px = 0, py = 0, moves = 0, won = false, startedAt = 0, timer = null;
+
+            // 재귀적 백트래킹으로 미로 생성. 각 칸은 {top,right,bottom,left} 벽 boolean
+            function genMaze(n) {
+                const cells = [];
+                for (let y = 0; y < n; y++) {
+                    const row = [];
+                    for (let x = 0; x < n; x++) row.push({ top:true, right:true, bottom:true, left:true, visited:false });
+                    cells.push(row);
+                }
+                const stack = [];
+                let cx = 0, cy = 0;
+                cells[0][0].visited = true;
+                stack.push([0, 0]);
+                while (stack.length) {
+                    [cx, cy] = stack[stack.length - 1];
+                    const neigh = [];
+                    if (cy > 0 && !cells[cy-1][cx].visited) neigh.push(['top', cx, cy-1]);
+                    if (cx < n-1 && !cells[cy][cx+1].visited) neigh.push(['right', cx+1, cy]);
+                    if (cy < n-1 && !cells[cy+1][cx].visited) neigh.push(['bottom', cx, cy+1]);
+                    if (cx > 0 && !cells[cy][cx-1].visited) neigh.push(['left', cx-1, cy]);
+                    if (!neigh.length) { stack.pop(); continue; }
+                    const [dir, nx, ny] = neigh[Math.floor(Math.random() * neigh.length)];
+                    if (dir === 'top')    { cells[cy][cx].top = false;    cells[ny][nx].bottom = false; }
+                    if (dir === 'right')  { cells[cy][cx].right = false;  cells[ny][nx].left = false; }
+                    if (dir === 'bottom') { cells[cy][cx].bottom = false; cells[ny][nx].top = false; }
+                    if (dir === 'left')   { cells[cy][cx].left = false;   cells[ny][nx].right = false; }
+                    cells[ny][nx].visited = true;
+                    stack.push([nx, ny]);
+                }
+                return cells;
+            }
+
+            function render() {
+                const wrap = $('mzGrid');
+                const cell = Math.max(14, Math.floor(Math.min(440, wrap.clientWidth || 440) / N));
+                let html = '<svg width="' + (cell*N) + '" height="' + (cell*N) + '" viewBox="0 0 ' + (cell*N) + ' ' + (cell*N) + '" class="mz-svg">';
+                // 칸 바탕(출발/도착)
+                html += '<rect x="2" y="2" width="' + (cell-4) + '" height="' + (cell-4) + '" rx="3" fill="rgba(95,224,122,0.25)"/>';
+                html += '<rect x="' + ((N-1)*cell+2) + '" y="' + ((N-1)*cell+2) + '" width="' + (cell-4) + '" height="' + (cell-4) + '" rx="3" fill="rgba(255,138,61,0.3)"/>';
+                html += '<text x="' + (cell/2) + '" y="' + (cell*0.7) + '" font-size="' + (cell*0.5) + '" text-anchor="middle">🏁</text>';
+                html += '<text x="' + ((N-1)*cell+cell/2) + '" y="' + ((N-1)*cell+cell*0.72) + '" font-size="' + (cell*0.5) + '" text-anchor="middle">🚩</text>';
+                // 벽
+                html += '<g stroke="#5cf4ff" stroke-width="2" stroke-linecap="round">';
+                for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+                    const c = grid[y][x], X = x*cell, Y = y*cell;
+                    if (c.top)    html += '<line x1="'+X+'" y1="'+Y+'" x2="'+(X+cell)+'" y2="'+Y+'"/>';
+                    if (c.left)   html += '<line x1="'+X+'" y1="'+Y+'" x2="'+X+'" y2="'+(Y+cell)+'"/>';
+                    if (x === N-1 && c.right)  html += '<line x1="'+(X+cell)+'" y1="'+Y+'" x2="'+(X+cell)+'" y2="'+(Y+cell)+'"/>';
+                    if (y === N-1 && c.bottom) html += '<line x1="'+X+'" y1="'+(Y+cell)+'" x2="'+(X+cell)+'" y2="'+(Y+cell)+'"/>';
+                }
+                html += '</g>';
+                // 플레이어
+                html += '<text x="' + (px*cell+cell/2) + '" y="' + (py*cell+cell*0.75) + '" font-size="' + (cell*0.6) + '" text-anchor="middle" class="mz-player">🦊</text>';
+                html += '</svg>';
+                wrap.innerHTML = html;
+            }
+
+            function move(dx, dy) {
+                if (won) return;
+                const c = grid[py][px];
+                if (dx === 1  && c.right)  return;
+                if (dx === -1 && c.left)   return;
+                if (dy === 1  && c.bottom) return;
+                if (dy === -1 && c.top)    return;
+                const nx = px + dx, ny = py + dy;
+                if (nx < 0 || ny < 0 || nx >= N || ny >= N) return;
+                px = nx; py = ny; moves++;
+                $('mzMoves').textContent = moves;
+                render();
+                if (px === N-1 && py === N-1) finish();
+            }
+
+            function finish() {
+                won = true;
+                clearInterval(timer);
+                const secs = Math.round((Date.now() - startedAt) / 1000);
+                $('mzMsg').innerHTML = '🎉 <b>도착!</b> ' + moves + '걸음 · ' + secs + '초';
+                $('mzMsg').classList.add('ok');
+            }
+
+            function tick() {
+                if (won) return;
+                const secs = Math.round((Date.now() - startedAt) / 1000);
+                $('mzTime').textContent = secs + 's';
+            }
+
+            function newMaze() {
+                N = DIFF[curDiff].n;
+                grid = genMaze(N);
+                px = 0; py = 0; moves = 0; won = false; startedAt = Date.now();
+                $('mzMoves').textContent = '0';
+                $('mzMsg').textContent = '🦊 를 🚩 까지 데려가세요. 방향키 또는 버튼으로 이동!';
+                $('mzMsg').classList.remove('ok');
+                clearInterval(timer); timer = setInterval(tick, 500);
+                render();
+            }
+
+            function renderTabs() {
+                $('mzTabs').innerHTML = DIFF.map((d, i) =>
+                    '<button class="diff-tab' + (i === curDiff ? ' active' : '') + '" data-i="' + i + '">' + d.name + '</button>'
+                ).join('');
+                $('mzTabs').querySelectorAll('.diff-tab').forEach(b => {
+                    b.onclick = () => { curDiff = Number(b.dataset.i); renderTabs(); newMaze(); };
+                });
+            }
+
+            // 방향 버튼 + 키보드
+            ['Up','Down','Left','Right'].forEach(d => {
+                const el = $('mz' + d);
+                if (el) el.onclick = () => move(d==='Left'?-1:d==='Right'?1:0, d==='Up'?-1:d==='Down'?1:0);
+            });
+            function keyHandler(e) {
+                if (!document.getElementById('mzGrid')) { document.removeEventListener('keydown', keyHandler); return; }
+                const k = e.key;
+                if (k === 'ArrowUp')    { move(0, -1); e.preventDefault(); }
+                if (k === 'ArrowDown')  { move(0,  1); e.preventDefault(); }
+                if (k === 'ArrowLeft')  { move(-1, 0); e.preventDefault(); }
+                if (k === 'ArrowRight') { move( 1, 0); e.preventDefault(); }
+            }
+            document.addEventListener('keydown', keyHandler);
+
+            renderTabs();
+            newMaze();
+        }
+
+        /* ===== 틀린 그림 찾기 ===== */
+        function initSpotGame() {
+            const $ = id => document.getElementById(id);
+            const DIFF = [
+                { key:'easy',   name:'쉬움',   diffs:3, grid:4, time:60 },
+                { key:'normal', name:'보통',   diffs:5, grid:5, time:55 },
+                { key:'hard',   name:'어려움', diffs:7, grid:6, time:50 },
+                { key:'expert', name:'전문가', diffs:9, grid:7, time:45 }
+            ];
+            // 그림에 쓰일 이모지 팔레트(장면 생성용)
+            const PALETTE = ['🌳','🌲','🌸','🌼','🍄','🐤','🐝','🦋','🐞','🌈','☁️','⭐','🌻','🍎','🎈','🐢','🐟','🌺','🍀','🐧','🦉','🌵','🐙','🦀'];
+            let curDiff = 0, found = 0, total = 0, timeLeft = 0, timer = null, over = false;
+            let sceneA = [], diffSet = new Set();
+
+            function newRound() {
+                const d = DIFF[curDiff];
+                const n = d.grid * d.grid;
+                over = false; found = 0; total = d.diffs; timeLeft = d.time;
+                // A 장면: 각 칸에 랜덤 이모지
+                sceneA = [];
+                for (let i = 0; i < n; i++) sceneA.push(PALETTE[Math.floor(Math.random()*PALETTE.length)]);
+                // 서로 다른 칸 d.diffs개 선택
+                diffSet = new Set();
+                const idxs = [...Array(n).keys()];
+                for (let i = idxs.length - 1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [idxs[i],idxs[j]]=[idxs[j],idxs[i]]; }
+                for (let i = 0; i < d.diffs; i++) diffSet.add(idxs[i]);
+                $('spFound').textContent = '0 / ' + total;
+                $('spMsg').textContent = '두 그림에서 다른 곳 ' + total + '곳을 찾아 오른쪽 그림을 클릭하세요!';
+                $('spMsg').classList.remove('ok','bad');
+                renderBoards();
+                clearInterval(timer); timer = setInterval(tick, 1000); $('spTime').textContent = timeLeft + 's';
+            }
+
+            function emojiFor(i, isB) {
+                if (isB && diffSet.has(i)) {
+                    // A와 다른 이모지로 교체
+                    let e = sceneA[i], guard = 0;
+                    while (e === sceneA[i] && guard++ < 20) e = PALETTE[Math.floor(Math.random()*PALETTE.length)];
+                    // 고정되도록 캐시
+                    sceneA['b'+i] = sceneA['b'+i] || e;
+                    return sceneA['b'+i];
+                }
+                return sceneA[i];
+            }
+
+            function renderBoards() {
+                const d = DIFF[curDiff], n = d.grid*d.grid;
+                function build(isB) {
+                    let h = '<div class="sp-board" style="grid-template-columns:repeat(' + d.grid + ',1fr);">';
+                    for (let i = 0; i < n; i++) {
+                        const cls = isB ? 'sp-cell b" data-i="' + i : 'sp-cell';
+                        h += '<div class="' + cls + '">' + emojiFor(i, isB) + '</div>';
+                    }
+                    return h + '</div>';
+                }
+                $('spA').innerHTML = build(false);
+                $('spB').innerHTML = build(true);
+                $('spB').querySelectorAll('.sp-cell.b').forEach(cell => {
+                    cell.onclick = () => clickCell(cell);
+                });
+            }
+
+            function clickCell(cell) {
+                if (over) return;
+                const i = Number(cell.dataset.i);
+                if (cell.classList.contains('hit') || cell.classList.contains('miss')) return;
+                if (diffSet.has(i)) {
+                    cell.classList.add('hit');
+                    found++;
+                    $('spFound').textContent = found + ' / ' + total;
+                    if (found >= total) win();
+                } else {
+                    cell.classList.add('miss');
+                    timeLeft = Math.max(0, timeLeft - 3);
+                    $('spMsg').textContent = '여긴 같은 그림이에요! (-3초)';
+                    $('spMsg').classList.add('bad'); $('spMsg').classList.remove('ok');
+                    setTimeout(() => cell.classList.remove('miss'), 400);
+                }
+            }
+
+            function win() {
+                over = true; clearInterval(timer);
+                $('spMsg').textContent = '🎉 모두 찾았어요! (' + (DIFF[curDiff].time - timeLeft) + '초)';
+                $('spMsg').classList.add('ok'); $('spMsg').classList.remove('bad');
+            }
+
+            function tick() {
+                timeLeft--; $('spTime').textContent = timeLeft + 's';
+                if (timeLeft <= 0) {
+                    over = true; clearInterval(timer);
+                    $('spMsg').textContent = '⏰ 시간 종료! 다시 도전해 보세요.';
+                    $('spMsg').classList.add('bad'); $('spMsg').classList.remove('ok');
+                    // 못 찾은 곳 표시
+                    $('spB').querySelectorAll('.sp-cell.b').forEach(c => {
+                        if (diffSet.has(Number(c.dataset.i)) && !c.classList.contains('hit')) c.classList.add('reveal-diff');
+                    });
+                }
+            }
+
+            function renderTabs() {
+                $('spTabs').innerHTML = DIFF.map((d, i) =>
+                    '<button class="diff-tab' + (i === curDiff ? ' active' : '') + '" data-i="' + i + '">' + d.name + '</button>'
+                ).join('');
+                $('spTabs').querySelectorAll('.diff-tab').forEach(b => {
+                    b.onclick = () => { curDiff = Number(b.dataset.i); renderTabs(); newRound(); };
+                });
+            }
+
+            $('spRetry').onclick = newRound;
+            renderTabs();
+            newRound();
+        }
+
+        /* ===== 잠자리 잡기 ===== */
+        function initDragonflyGame() {
+            const $ = id => document.getElementById(id);
+            let dist = 100;      // 잠자리까지 거리 (0이면 손이 닿음)
+            let alert = 0;       // 경계심 (100이면 도망)
+            let caught = 0, escaped = 0, round = 1;
+            let alive = true, grabbing = false;
+            let decayTimer = null;
+
+            function updateView() {
+                // 거리에 따라 잠자리 크기/위치
+                const scale = 1 + (100 - dist) / 100 * 1.4;
+                const df = $('dfBug');
+                df.style.transform = 'translate(-50%,-50%) scale(' + scale.toFixed(2) + ')';
+                // 경계심 바
+                $('dfAlertBar').style.width = alert + '%';
+                $('dfAlertBar').style.background = alert > 66 ? '#ff5d6c' : alert > 33 ? '#ffcf4d' : '#5fe07a';
+                $('dfDist').textContent = dist + 'cm';
+                // 잠자리 상태 표정
+                df.textContent = alert > 66 ? '🪰' : '🧚';
+                // 날개 떨림
+                df.classList.toggle('nervous', alert > 50);
+            }
+
+            function setMsg(t, cls) {
+                const m = $('dfMsg'); m.textContent = t;
+                m.className = 'df-msg' + (cls ? ' ' + cls : '');
+            }
+
+            function approach() {
+                if (!alive) return;
+                if (grabbing) return;
+                // 다가가면 거리 줄지만 경계심 상승(랜덤)
+                const step = 12 + Math.floor(Math.random() * 10);
+                dist = Math.max(0, dist - step);
+                alert = Math.min(100, alert + (18 + Math.floor(Math.random() * 18)));
+                if (alert >= 100) return flee();
+                if (dist <= 0) {
+                    setMsg('🎯 바로 앞이에요! 지금 [잡기] 버튼을 누르세요!', 'ok');
+                } else {
+                    setMsg('살금살금... (' + dist + 'cm 남음)');
+                }
+                updateView();
+            }
+
+            function grab() {
+                if (!alive) return;
+                grabbing = true;
+                if (dist <= 15) {
+                    caught++; round++;
+                    $('dfCaught').textContent = caught;
+                    setMsg('🎉 잡았다! 잠자리 포획 성공!', 'ok');
+                    $('dfBug').classList.add('grabbed');
+                    alive = false;
+                    clearInterval(decayTimer);
+                    setTimeout(nextBug, 1200);
+                } else {
+                    // 너무 멀리서 휘두르면 바로 도망
+                    setMsg('🫳 헛손질! 너무 멀어요. 잠자리가 놀랐어요!', 'bad');
+                    alert = Math.min(100, alert + 40);
+                    grabbing = false;
+                    if (alert >= 100) return flee();
+                    updateView();
+                }
+            }
+
+            function flee() {
+                alive = false; escaped++;
+                $('dfEscaped').textContent = escaped;
+                clearInterval(decayTimer);
+                setMsg('💨 들켰다! 잠자리가 날아가 버렸어요.', 'bad');
+                $('dfBug').classList.add('fled');
+                setTimeout(nextBug, 1300);
+            }
+
+            function nextBug() {
+                dist = 90 + Math.floor(Math.random() * 20);
+                alert = 0; alive = true; grabbing = false;
+                $('dfBug').classList.remove('grabbed','fled');
+                $('dfRound').textContent = round;
+                setMsg('새 잠자리가 나타났어요! [다가가기]로 천천히 접근하세요.');
+                updateView();
+                // 가만히 있으면 경계심이 서서히 내려감
+                clearInterval(decayTimer);
+                decayTimer = setInterval(() => {
+                    if (!alive || grabbing) return;
+                    if (alert > 0) { alert = Math.max(0, alert - 4); updateView(); }
+                }, 600);
+            }
+
+            $('dfApproach').onclick = approach;
+            $('dfGrab').onclick = grab;
+            nextBug();
+        }
+
         /* ===== 콘텐츠 선호도 조사: Supabase 저장/조회 ===== */
         (function () {
             // 1) Supabase 프로젝트 설정값 (Supabase 대시보드 → Project Settings → API 에서 복사)
@@ -2613,7 +3165,10 @@
                 ramen:  '라면 가게',
                 potion: '요술 항아리',
                 sudoku: '스도쿠',
-                quizface: '이모지 퀴즈'
+                quizface: '이모지 퀴즈',
+                maze: '미로 찾기',
+                spot: '틀린 그림 찾기',
+                dragonfly: '잠자리 잡기'
             };
 
             const msgEl = document.getElementById('pollMsg');
@@ -2644,14 +3199,15 @@
                     setMessage('결과를 불러오지 못했습니다: ' + error.message, true);
                     return;
                 }
-                const counts = { star: 0, arena: 0, pizza: 0, pacman: 0, ramen: 0, potion: 0, sudoku: 0, quizface: 0 };
+                const counts = { star: 0, arena: 0, pizza: 0, pacman: 0, ramen: 0, potion: 0, sudoku: 0, quizface: 0, maze: 0, spot: 0, dragonfly: 0 };
                 data.forEach(row => { if (counts[row.game] !== undefined) counts[row.game]++; });
                 const total = data.length;
 
-                const ICON = { star:'✦', arena:'⚔️', pizza:'🍕', pacman:'🟡', ramen:'🍜', potion:'🧪', sudoku:'🔢', quizface:'🎬' };
+                const ICON = { star:'✦', arena:'⚔️', pizza:'🍕', pacman:'🟡', ramen:'🍜', potion:'🧪', sudoku:'🔢', quizface:'🎬', maze:'🧭', spot:'🔍', dragonfly:'🧚' };
                 const COLORS = {
                     star:'#5cf4ff', arena:'#ff77c8', pizza:'#ff8a3d', pacman:'#ffe34d',
-                    ramen:'#ffaa50', potion:'#b478ff', sudoku:'#5fe07a', quizface:'#ff5e91'
+                    ramen:'#ffaa50', potion:'#b478ff', sudoku:'#5fe07a', quizface:'#ff5e91',
+                    maze:'#4aa8ff', spot:'#5fe07a', dragonfly:'#a0c8ff'
                 };
                 // 표 많은 순 정렬
                 const ranked = Object.keys(GAMES)
