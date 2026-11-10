@@ -1307,78 +1307,23 @@
     .quiz-result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
     /* ===== MY 페이지 ===== */
-    .my-wrap { max-width: 920px; margin: 0 auto; }
-    /* 로그인(닉네임 입력) 카드 */
-    .my-login {
-        background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px;
-        padding: 40px 28px; text-align: center;
-    }
-    .my-login .my-login-ava { font-size: 72px; line-height: 1; margin-bottom: 10px; }
-    .my-login h3 { font-size: 22px; margin-bottom: 8px; }
-    .my-login p { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
-    .my-login-form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-    .my-input {
-        background: var(--bg-3); border: 1px solid var(--border-strong); border-radius: 10px;
-        color: var(--text); padding: 12px 16px; font: inherit; font-size: 15px; min-width: 200px;
-    }
-    .my-input:focus { outline: none; border-color: var(--orange); }
-
-    /* 프로필 대시보드 */
-    .my-grid { display: grid; grid-template-columns: 300px 1fr; gap: 18px; }
+    .my-wrap { max-width: 720px; margin: 0 auto; }
     .my-card {
         background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px; padding: 22px;
     }
     .my-card h3 { font-size: 15px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-    .my-profile { text-align: center; }
-    .my-avatar-view {
-        width: 150px; height: 150px; margin: 0 auto 14px; border-radius: 50%;
-        display: grid; place-items: center; font-size: 86px; line-height: 1;
-        background: radial-gradient(circle at 50% 40%, var(--orange-soft), var(--bg-3));
-        border: 2px solid var(--border-strong); position: relative; overflow: hidden;
-    }
-    .my-nick { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
-    .my-nick-sub { font-size: 12px; color: var(--dim); font-family: var(--mono); margin-bottom: 16px; }
-    .my-btn-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
 
-    /* 아바타 메이커 */
-    .ava-maker { display: none; }
-    .ava-maker.open { display: block; }
-    .ava-row { margin-bottom: 14px; }
-    .ava-row > label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; font-weight: 700; }
-    .ava-opts { display: flex; gap: 8px; flex-wrap: wrap; }
-    .ava-opt {
-        width: 46px; height: 46px; border-radius: 10px; border: 1px solid var(--border);
-        background: var(--bg-3); font-size: 24px; display: grid; place-items: center; cursor: pointer;
-        transition: all .15s;
-    }
-    .ava-opt.on { border-color: var(--orange); background: var(--orange-soft); transform: translateY(-2px); }
-    .ava-opt.swatch { font-size: 0; }
-
-    /* 최애 게임 */
-    .fav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+    /* 찜한 게임 목록 */
+    .fav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
     .fav-item {
         border: 1px solid var(--border); background: var(--bg-3); border-radius: 12px;
-        padding: 10px 6px; text-align: center; cursor: pointer; transition: all .15s;
+        padding: 14px 8px; text-align: center; cursor: pointer; transition: all .15s;
     }
-    .fav-item .fav-emoji { font-size: 26px; display: block; }
-    .fav-item .fav-name { font-size: 11px; color: var(--muted); margin-top: 4px; display: block; }
-    .fav-item.on { border-color: var(--orange); background: var(--orange-soft); }
-    .fav-item.on .fav-name { color: var(--orange); font-weight: 700; }
-
-    /* 게임 기록 */
-    .rec-list { display: grid; gap: 8px; }
-    .rec-row {
-        display: flex; align-items: center; gap: 12px;
-        background: var(--bg-3); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px;
-    }
-    .rec-row .rec-ico { font-size: 22px; }
-    .rec-row .rec-name { flex: 1; font-weight: 700; font-size: 14px; }
-    .rec-row .rec-val { font-family: var(--mono); font-size: 13px; color: var(--cyan); }
-    .rec-row .rec-val.none { color: var(--dim); }
-
-    @media (max-width: 760px) {
-        .my-grid { grid-template-columns: 1fr; }
-    }
+    .fav-item:hover { transform: translateY(-2px); border-color: var(--border-strong); }
+    .fav-item .fav-emoji { font-size: 28px; display: block; }
+    .fav-item .fav-name { font-size: 12px; color: var(--muted); margin-top: 6px; display: block; }
+    .fav-item.on { border-color: #ff5d6c; background: rgba(255,93,108,0.1); }
+    .fav-item.on .fav-name { color: var(--text); font-weight: 700; }
 </style>
 <!-- Supabase JS 클라이언트 (콘텐츠 선호도 조사 저장/조회용) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1738,8 +1683,8 @@
         <section id="my">
             <div class="section-head reveal">
                 <span class="label">MY PAGE</span>
-                <h2 class="section-title">나의 <span>프로필</span></h2>
-                <p class="section-sub">닉네임과 아바타를 꾸미고, 최애 게임과 나의 기록을 모아 보세요. (이 기기에 저장돼요)</p>
+                <h2 class="section-title">내가 <span>찜한 게임</span></h2>
+                <p class="section-sub">게임 카드의 🤍 하트를 눌러 찜하면 여기에 모여요. (이 기기에 저장돼요)</p>
             </div>
             <div class="my-wrap reveal" id="myWrap"></div>
         </section>
@@ -1822,18 +1767,6 @@
                 localStorage.setItem('playon_theme', next);
             });
         })();
-
-        /* 게임 기록 저장 — 최고값만 갱신 (MY 페이지가 읽어감) */
-        function saveBest(key, value) {
-            const prev = Number(localStorage.getItem(key) || 0);
-            if (value > prev) localStorage.setItem(key, String(value));
-            if (typeof window.renderMyPage === 'function') window.renderMyPage();
-        }
-        function bumpCount(key) {
-            const n = Number(localStorage.getItem(key) || 0) + 1;
-            localStorage.setItem(key, String(n));
-            if (typeof window.renderMyPage === 'function') window.renderMyPage();
-        }
 
         /* 게임 찜(하트) — 카드의 하트 버튼으로 토글, MY 페이지에 반영 */
         const FAVS_KEY = 'playon_favs';
@@ -2328,7 +2261,6 @@
                     const gained = 100;
                     score += gained; served += 1;
                     $('pScore').textContent = score; $('pServed').textContent = served;
-                    saveBest('pizza_best', score);
                     fb.style.color = '#1e8449';
                     fb.textContent = '✅ 완벽해요! 손님 만족 (+'+gained+'점)';
                     $('pCustomer').textContent = '😍';
@@ -2337,7 +2269,6 @@
                     const gained = 30;
                     score += gained; served += 1;
                     $('pScore').textContent = score; $('pServed').textContent = served;
-                    saveBest('pizza_best', score);
                     let msg = '😅 아쉬워요 (+'+gained+'점). ';
                     if(missing.length) msg += '빠진 토핑: '+missing.map(t=>ingById[t].name).join(',')+'. ';
                     if(extra.length) msg += '추가된 토핑: '+extra.map(t=>ingById[t].name).join(',')+'.';
@@ -2578,7 +2509,6 @@
                     const gained = 100;
                     score += gained; served += 1;
                     $('rScore').textContent = score; $('rServed').textContent = served;
-                    saveBest('ramen_best', score);
                     fb.style.color = '#1e8449';
                     fb.textContent = '✅ 완벽해요! 손님 만족 (+'+gained+'점)';
                     $('rCustomer').textContent = '😍';
@@ -2587,7 +2517,6 @@
                     const gained = 30;
                     score += gained; served += 1;
                     $('rScore').textContent = score; $('rServed').textContent = served;
-                    saveBest('ramen_best', score);
                     let msg = '😅 아쉬워요 (+'+gained+'점). ';
                     if(missing.length) msg += '빠진 고명: '+missing.map(t=>ingById[t].name).join(',')+'. ';
                     if(extra.length) msg += '추가된 고명: '+extra.map(t=>ingById[t].name).join(',')+'.';
@@ -3188,7 +3117,6 @@
                 const secs = Math.round((Date.now() - startedAt) / 1000);
                 $('mzMsg').innerHTML = '🎉 <b>도착!</b> ' + moves + '걸음 · ' + secs + '초';
                 $('mzMsg').classList.add('ok');
-                bumpCount('maze_cleared');
             }
 
             function tick() {
@@ -3322,7 +3250,6 @@
                 over = true; clearInterval(timer);
                 $('spMsg').textContent = '🎉 모두 찾았어요! (' + (DIFF[curDiff].time - timeLeft) + '초)';
                 $('spMsg').classList.add('ok'); $('spMsg').classList.remove('bad');
-                bumpCount('spot_cleared');
             }
 
             function tick() {
@@ -3403,7 +3330,6 @@
                 if (dist <= 15) {
                     caught++; round++;
                     $('dfCaught').textContent = caught;
-                    saveBest('dragonfly_best', caught);
                     setMsg('🎉 잡았다! 잠자리 포획 성공!', 'ok');
                     $('dfBug').classList.add('grabbed');
                     alive = false;
@@ -3619,205 +3545,34 @@
                 { key:'dragonfly',icon:'🧚', name:'잠자리 잡기' }
             ];
 
-            function load() {
-                try { return JSON.parse(localStorage.getItem(KEY)); } catch(e) { return null; }
-            }
-            function save(p) { localStorage.setItem(KEY, JSON.stringify(p)); }
 
-            let profile = load();   // null이면 미로그인
-
-            // 각 게임 기록을 localStorage에서 수집
-            function num(k) { return Number(localStorage.getItem(k) || 0); }
-            function getRecords() {
-                const out = {};
-                // 이모지 퀴즈 최고 점수
-                const qf = num('qf_best');
-                out.quizface = qf > 0 ? ('최고 ' + qf + '점') : null;
-                // 스도쿠 난이도별 클리어 레벨
-                try {
-                    const sp = JSON.parse(localStorage.getItem('sudoku_progress') || '{}');
-                    const names = { easy:'쉬움', normal:'보통', hard:'어려움', expert:'전문가' };
-                    const cleared = Object.keys(sp).filter(k => sp[k] > 0)
-                        .map(k => (names[k]||k) + ' Lv.' + sp[k]);
-                    out.sudoku = cleared.length ? cleared.join(' · ') : null;
-                } catch(e) { out.sudoku = null; }
-                // 요술 항아리 발견 수
-                try {
-                    const pf = JSON.parse(localStorage.getItem('potion_found') || '[]');
-                    out.potion = pf.length ? ('도감 ' + pf.length + ' / 8') : null;
-                } catch(e) { out.potion = null; }
-                // 요리 게임: 최고 점수
-                const pz = num('pizza_best'); out.pizza = pz > 0 ? ('최고 ' + pz + '점') : null;
-                const rm = num('ramen_best'); out.ramen = rm > 0 ? ('최고 ' + rm + '점') : null;
-                // 미로: 클리어 횟수
-                const mz = num('maze_cleared'); out.maze = mz > 0 ? (mz + '회 탈출') : null;
-                // 틀린그림: 최고 클리어 라운드
-                const sptc = num('spot_cleared'); out.spot = sptc > 0 ? (sptc + '판 클리어') : null;
-                // 잠자리: 최다 포획
-                const df = num('dragonfly_best'); out.dragonfly = df > 0 ? ('최다 ' + df + '마리') : null;
-                // iframe 게임(별빛/아레나/팩맨)은 자체 기록을 외부에서 못 읽어 생략
-                return out;
-            }
-
-            // ===== 로그인(닉네임 입력) 화면 =====
-            function renderLogin() {
-                wrap.innerHTML =
-                    '<div class="my-login">' +
-                    '<div class="my-login-ava">🦊</div>' +
-                    '<h3>PLAYON에 오신 걸 환영해요!</h3>' +
-                    '<p>닉네임을 정하면 나만의 프로필이 만들어져요. (비밀번호 없이 이 기기에 저장돼요)</p>' +
-                    '<div class="my-login-form">' +
-                    '<input class="my-input" id="myNickInput" maxlength="12" placeholder="닉네임 (최대 12자)">' +
-                    '<button class="btn-primary" id="myStart">시작하기 ▸</button>' +
-                    '</div></div>';
-                const input = document.getElementById('myNickInput');
-                const go = () => {
-                    const nick = input.value.trim();
-                    if (!nick) { input.focus(); input.style.borderColor = '#ff5d6c'; return; }
-                    profile = { nick, face: '🦊', hat: '없음', bg: BGS[0], joined: Date.now() };
-                    save(profile);
-                    renderDashboard();
-                };
-                document.getElementById('myStart').onclick = go;
-                input.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
-                input.focus();
-            }
-
-            // ===== 프로필 대시보드 =====
-            function renderDashboard() {
-                const records = getRecords();
-                const joinedDate = new Date(profile.joined || Date.now());
-                const dateStr = joinedDate.getFullYear() + '.' +
-                    String(joinedDate.getMonth()+1).padStart(2,'0') + '.' +
-                    String(joinedDate.getDate()).padStart(2,'0');
-
+            function render() {
                 const favKeys = getFavs();
                 const favGames = GAMES.filter(g => favKeys.includes(g.key));
 
                 wrap.innerHTML =
-                    '<div class="my-grid">' +
-                        // 좌: 프로필 카드
-                        '<div class="my-card my-profile">' +
-                            '<div class="my-avatar-view" id="myAva" style="background:radial-gradient(circle at 50% 40%, ' + hexSoft(profile.bg) + ', var(--bg-3));">' +
-                                avatarInner(profile) +
-                            '</div>' +
-                            '<div class="my-nick">' + escapeHtml(profile.nick) + '</div>' +
-                            '<div class="my-nick-sub">PLAYER · since ' + dateStr + '</div>' +
-                            '<div class="my-btn-row">' +
-                                '<button class="btn-ghost" id="myEditAva">🎨 아바타 꾸미기</button>' +
-                                '<button class="btn-ghost" id="myLogout">로그아웃</button>' +
-                            '</div>' +
-                            // 아바타 메이커 (접힘)
-                            '<div class="ava-maker" id="avaMaker" style="margin-top:18px; text-align:left;">' +
-                                avaRow('얼굴', 'face', FACES.map(f => optBtn('face', f, f, profile.face===f))) +
-                                avaRow('모자/장식', 'hat', HATS.map(h => optBtn('hat', h, h==='없음'?'∅':h, profile.hat===h))) +
-                                avaRow('배경색', 'bg', BGS.map(c => swatchBtn(c, profile.bg===c))) +
-                            '</div>' +
-                        '</div>' +
-                        // 우: 최애 게임 + 기록
-                        '<div style="display:flex; flex-direction:column; gap:18px;">' +
-                            '<div class="my-card">' +
-                                '<h3>❤️ 찜한 게임 <span style="color:var(--dim); font-weight:500; font-size:12px;">(' + favGames.length + ')</span></h3>' +
-                                (favGames.length
-                                    ? '<div class="fav-grid">' +
-                                        favGames.map(g =>
-                                            '<div class="fav-item on" data-play="'+g.key+'">' +
-                                            '<span class="fav-emoji">'+g.icon+'</span><span class="fav-name">'+g.name+'</span></div>'
-                                        ).join('') +
-                                      '</div>'
-                                    : '<p style="font-size:13px; color:var(--dim); margin:4px 0;">아직 찜한 게임이 없어요. 게임 카드의 🤍 하트를 눌러 추가해 보세요!</p>'
-                                ) +
-                            '</div>' +
-                            '<div class="my-card">' +
-                                '<h3>🏆 나의 게임 기록</h3>' +
-                                '<div class="rec-list">' +
-                                    GAMES.map(g => {
-                                        const v = records[g.key];
-                                        return '<div class="rec-row">' +
-                                            '<span class="rec-ico">'+g.icon+'</span>' +
-                                            '<span class="rec-name">'+g.name+'</span>' +
-                                            '<span class="rec-val'+(v?'':' none')+'">'+(v || '기록 없음')+'</span>' +
-                                            '<button class="btn-ghost" style="padding:5px 10px; font-size:11px;" data-play="'+g.key+'">플레이 ▸</button>' +
-                                            '</div>';
-                                    }).join('') +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
+                    '<div class="my-card" style="max-width:720px; margin:0 auto;">' +
+                        '<h3>❤️ 내가 찜한 게임 <span style="color:var(--dim); font-weight:500; font-size:12px;">(' + favGames.length + ')</span></h3>' +
+                        (favGames.length
+                            ? '<div class="fav-grid">' +
+                                favGames.map(g =>
+                                    '<div class="fav-item on" data-play="'+g.key+'">' +
+                                    '<span class="fav-emoji">'+g.icon+'</span><span class="fav-name">'+g.name+'</span></div>'
+                                ).join('') +
+                              '</div>'
+                            : '<p style="font-size:14px; color:var(--dim); margin:8px 0; line-height:1.7;">아직 찜한 게임이 없어요.<br>게임 카드의 🤍 하트를 눌러 나만의 찜 목록을 만들어 보세요!</p>'
+                        ) +
                     '</div>';
 
-                // --- 이벤트 바인딩 ---
-                document.getElementById('myLogout').onclick = () => {
-                    if (confirm('로그아웃하면 이 기기의 프로필 정보가 사라져요. 계속할까요?')) {
-                        localStorage.removeItem(KEY); profile = null; renderLogin();
-                    }
-                };
-                document.getElementById('myEditAva').onclick = () => {
-                    document.getElementById('avaMaker').classList.toggle('open');
-                };
-                // 아바타 파츠 선택
-                wrap.querySelectorAll('.ava-opt').forEach(btn => {
-                    btn.onclick = () => {
-                        const part = btn.dataset.part, val = btn.dataset.val;
-                        profile[part] = val; save(profile);
-                        document.getElementById('myAva').innerHTML = avatarInner(profile);
-                        document.getElementById('myAva').style.background =
-                            'radial-gradient(circle at 50% 40%, ' + hexSoft(profile.bg) + ', var(--bg-3))';
-                        wrap.querySelectorAll('button.ava-opt[data-part="'+part+'"]').forEach(b =>
-                            b.classList.toggle('on', b.dataset.val === val));
-                    };
-                });
-                // 찜한 게임 아이템 + 기록 행의 플레이 버튼
+                // 찜한 게임 클릭 시 바로 플레이
                 wrap.querySelectorAll('[data-play]').forEach(btn => {
                     btn.onclick = () => { if (typeof openGame === 'function') openGame(btn.dataset.play); };
                 });
             }
 
-            // ---- 헬퍼들 ----
-            // 모자별 위치/크기 보정 (얼굴 정수리에 자연스럽게 얹히도록)
-            const HAT_STYLE = {
-                '🎩': { size: 52, top: -14, rot: -8 },
-                '👑': { size: 46, top: -10, rot: 0 },
-                '🧢': { size: 50, top: -8,  rot: -10 },
-                '🎀': { size: 40, top: -4,  rot: 0 },
-                '🪖': { size: 52, top: -10, rot: 0 },
-                '🎓': { size: 52, top: -14, rot: 0 },
-                '🍄': { size: 44, top: -12, rot: 0 }
-            };
-            function avatarInner(p) {
-                let hat = '';
-                if (p.hat && p.hat !== '없음') {
-                    const s = HAT_STYLE[p.hat] || { size: 44, top: -8, rot: 0 };
-                    hat = '<span style="position:absolute; left:50%; top:' + s.top + 'px; ' +
-                          'transform:translateX(-50%) rotate(' + s.rot + 'deg); ' +
-                          'font-size:' + s.size + 'px; line-height:1; z-index:2; ' +
-                          'text-shadow:0 2px 4px rgba(0,0,0,0.25); pointer-events:none;">' + p.hat + '</span>';
-                }
-                // 얼굴은 아바타 원 안에서 살짝 아래로 내려 모자 공간 확보
-                return '<span style="position:relative; z-index:1; display:block; transform:translateY(8px);">' + p.face + '</span>' + hat;
-            }
-            function avaRow(label, part, optsHtml) {
-                return '<div class="ava-row"><label>'+label+'</label><div class="ava-opts" data-part="'+part+'">'+optsHtml+'</div></div>';
-            }
-            function optBtn(part, val, display, on) {
-                return '<button class="ava-opt'+(on?' on':'')+'" data-part="'+part+'" data-val="'+val+'">'+display+'</button>';
-            }
-            function swatchBtn(color, on) {
-                return '<button class="ava-opt swatch'+(on?' on':'')+'" data-part="bg" data-val="'+color+'" style="background:'+color+';"></button>';
-            }
-            function hexSoft(hex) {
-                // #rrggbb → rgba(.., 0.22)
-                const h = hex.replace('#',''); const r=parseInt(h.substr(0,2),16), g=parseInt(h.substr(2,2),16), b=parseInt(h.substr(4,2),16);
-                return 'rgba('+r+','+g+','+b+',0.22)';
-            }
-            function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
-            // 외부(게임 기록 저장, 하트 토글)에서 MY 페이지를 새로고침할 수 있게 노출
-            window.renderMyPage = function () {
-                profile = load();
-                if (profile && profile.nick) renderDashboard(); else renderLogin();
-            };
-
-            window.renderMyPage();
+            // 외부(하트 토글)에서 MY 페이지를 새로고침할 수 있게 노출
+            window.renderMyPage = render;
+            render();
         })();
     </script>
 </body>
