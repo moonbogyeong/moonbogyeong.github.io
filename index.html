@@ -497,6 +497,18 @@
     .card-icon.maze { box-shadow: inset 0 0 20px rgba(92, 244, 255, 0.15); }
     .card-icon.spot { box-shadow: inset 0 0 20px rgba(95, 224, 122, 0.15); }
     .card-icon.dragonfly { box-shadow: inset 0 0 20px rgba(160, 200, 255, 0.18); }
+    /* 카드 하트(찜) 버튼 — card-meta 자리(옛 별점 위치) */
+    .fav-heart {
+        display: inline-flex; align-items: center; gap: 6px;
+        padding: 5px 12px; border-radius: 999px; font-size: 14px; line-height: 1;
+        background: var(--bg-3); border: 1px solid var(--border); color: var(--muted);
+        cursor: pointer; transition: transform .15s, background .15s, border-color .15s, color .15s;
+        font-family: var(--sans); font-weight: 700;
+    }
+    .fav-heart .fav-heart-label { font-size: 12px; }
+    .fav-heart:hover { border-color: #ff5d6c; color: var(--text); }
+    .fav-heart.on { border-color: #ff5d6c; background: rgba(255,93,108,0.14); color: #ff8a9a; }
+    .fav-heart:active { transform: scale(0.94); }
     .card-id {
         font-family: var(--mono);
         font-size: 14px;
@@ -533,7 +545,7 @@
         overflow: hidden;
         min-height: 37px;
     }
-    /* 난이도 + 별점 메타 줄 */
+    /* 난이도 + 찜 하트 메타 줄 */
     .card-meta {
         display: flex;
         align-items: center;
@@ -551,14 +563,6 @@
     .card-diff.easy   { color: var(--green); background: rgba(95,224,122,0.12); }
     .card-diff.normal { color: var(--cyan);  background: var(--cyan-soft); }
     .card-diff.hard   { color: var(--orange); background: var(--orange-soft); }
-    .card-rating {
-        font-family: var(--mono);
-        color: var(--dim);
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-    }
-    .card-rating .stars { color: #ffcf4d; letter-spacing: 1px; }
     .card-foot {
         display: flex;
         align-items: center;
@@ -907,27 +911,6 @@
     .df-tip { font-size:12px; color:var(--dim); margin-top:14px; }
 
     /* 별점 입력 오버레이 */
-    #rateOverlay {
-        display: none;
-        position: absolute;
-        inset: 0;
-        z-index: 10;
-        background: rgba(8, 9, 14, 0.9);
-        backdrop-filter: blur(6px);
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        border-radius: 16px;
-    }
-    #rateOverlay.show { display: flex; }
-    .rate-box { text-align: center; max-width: 340px; }
-    .rate-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
-    .rate-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
-    .rate-stars { font-size: 42px; letter-spacing: 6px; margin-bottom: 24px; cursor: pointer; }
-    .rate-stars span { color: var(--bg-3); transition: color .12s; }
-    .rate-stars span.on { color: #ffcf4d; }
-    .rate-actions { display: flex; gap: 10px; justify-content: center; }
-
     /* 스크롤 등장 애니메이션 */
     .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.in { opacity: 1; transform: translateY(0); }
@@ -958,6 +941,17 @@
     .order-box strong { color:#b85a00; }
     .action-row { display:flex; gap:8px; margin-top:12px; }
     .action-row button { flex:1; border:0; border-radius:10px; padding:11px; font-weight:800; cursor:pointer; }
+
+    /* 주문 체크리스트 (피자/공통) */
+    .pchk-title { font-size:12px; font-weight:800; color:#a0522d; margin-bottom:6px; }
+    .pchk-row { display:flex; align-items:center; gap:6px; font-size:13px; font-weight:700; padding:3px 0; color:#9a6a2a; }
+    .pchk-row span { width:18px; text-align:center; font-weight:900; }
+    .pchk-row.done { color:#1e8449; }
+    .pchk-row.todo { color:#b0b0b0; }
+    .pchk-row.bad { color:#c0392b; }
+    .pchk-row.bad small { font-size:10px; font-weight:600; }
+    .pchk-status { margin-top:8px; font-size:12px; font-weight:800; color:#b9770e; border-top:1px dashed #ffe8c2; padding-top:7px; }
+    .pchk-status.ready { color:#1e8449; }
 
     @media(max-width:780px) {
         .nav-links { display: none; }
@@ -1311,6 +1305,80 @@
         margin: 0 auto 24px;
     }
     .quiz-result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* ===== MY 페이지 ===== */
+    .my-wrap { max-width: 920px; margin: 0 auto; }
+    /* 로그인(닉네임 입력) 카드 */
+    .my-login {
+        background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px;
+        padding: 40px 28px; text-align: center;
+    }
+    .my-login .my-login-ava { font-size: 72px; line-height: 1; margin-bottom: 10px; }
+    .my-login h3 { font-size: 22px; margin-bottom: 8px; }
+    .my-login p { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+    .my-login-form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .my-input {
+        background: var(--bg-3); border: 1px solid var(--border-strong); border-radius: 10px;
+        color: var(--text); padding: 12px 16px; font: inherit; font-size: 15px; min-width: 200px;
+    }
+    .my-input:focus { outline: none; border-color: var(--orange); }
+
+    /* 프로필 대시보드 */
+    .my-grid { display: grid; grid-template-columns: 300px 1fr; gap: 18px; }
+    .my-card {
+        background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px; padding: 22px;
+    }
+    .my-card h3 { font-size: 15px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .my-profile { text-align: center; }
+    .my-avatar-view {
+        width: 150px; height: 150px; margin: 0 auto 14px; border-radius: 50%;
+        display: grid; place-items: center; font-size: 86px; line-height: 1;
+        background: radial-gradient(circle at 50% 40%, var(--orange-soft), var(--bg-3));
+        border: 2px solid var(--border-strong); position: relative; overflow: hidden;
+    }
+    .my-nick { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+    .my-nick-sub { font-size: 12px; color: var(--dim); font-family: var(--mono); margin-bottom: 16px; }
+    .my-btn-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+
+    /* 아바타 메이커 */
+    .ava-maker { display: none; }
+    .ava-maker.open { display: block; }
+    .ava-row { margin-bottom: 14px; }
+    .ava-row > label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; font-weight: 700; }
+    .ava-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+    .ava-opt {
+        width: 46px; height: 46px; border-radius: 10px; border: 1px solid var(--border);
+        background: var(--bg-3); font-size: 24px; display: grid; place-items: center; cursor: pointer;
+        transition: all .15s;
+    }
+    .ava-opt.on { border-color: var(--orange); background: var(--orange-soft); transform: translateY(-2px); }
+    .ava-opt.swatch { font-size: 0; }
+
+    /* 최애 게임 */
+    .fav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+    .fav-item {
+        border: 1px solid var(--border); background: var(--bg-3); border-radius: 12px;
+        padding: 10px 6px; text-align: center; cursor: pointer; transition: all .15s;
+    }
+    .fav-item .fav-emoji { font-size: 26px; display: block; }
+    .fav-item .fav-name { font-size: 11px; color: var(--muted); margin-top: 4px; display: block; }
+    .fav-item.on { border-color: var(--orange); background: var(--orange-soft); }
+    .fav-item.on .fav-name { color: var(--orange); font-weight: 700; }
+
+    /* 게임 기록 */
+    .rec-list { display: grid; gap: 8px; }
+    .rec-row {
+        display: flex; align-items: center; gap: 12px;
+        background: var(--bg-3); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px;
+    }
+    .rec-row .rec-ico { font-size: 22px; }
+    .rec-row .rec-name { flex: 1; font-weight: 700; font-size: 14px; }
+    .rec-row .rec-val { font-family: var(--mono); font-size: 13px; color: var(--cyan); }
+    .rec-row .rec-val.none { color: var(--dim); }
+
+    @media (max-width: 760px) {
+        .my-grid { grid-template-columns: 1fr; }
+    }
 </style>
 <!-- Supabase JS 클라이언트 (콘텐츠 선호도 조사 저장/조회용) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1331,10 +1399,11 @@
                 <a href="#news">NEWS</a>
                 <a href="#quiz">QUIZ</a>
                 <a href="#poll">POLL</a>
+                <a href="#my">MY</a>
                 <a href="#about">ABOUT</a>
             </div>
             <button class="theme-toggle" id="themeToggle" type="button" aria-label="테마 전환"><span id="themeIcon">🌙</span><span id="themeLabel">다크모드</span></button>
-            <a href="#games" class="nav-cta">PLAY NOW</a>
+            <a href="#my" class="nav-cta" id="navMyCta">MY</a>
         </div>
     </nav>
 
@@ -1393,7 +1462,7 @@
                     <div class="card-desc">별을 모으고 운석을 피해 최고 기록에 도전.</div>
                     <div class="card-meta">
                         <span class="card-diff normal">보통</span>
-                        <span class="card-rating"><span class="stars">★★★★☆</span>4.2</span>
+                        <button class="fav-heart" data-fav="star" type="button" aria-label="별빛 수집가 찜하기" onclick="event.stopPropagation()">🤍<span class="fav-heart-label">찜하기</span></button>
                     </div>
                     <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">1P · SCORE</span><span class="play-link">PLAY ▸</span></div>
                 </div>
@@ -1407,7 +1476,7 @@
                     <div class="card-desc">몰려오는 적을 물리치며 웨이브를 돌파.</div>
                     <div class="card-meta">
                         <span class="card-diff hard">어려움</span>
-                        <span class="card-rating"><span class="stars">★★★★★</span>4.6</span>
+                        <button class="fav-heart" data-fav="arena" type="button" aria-label="네온 아레나 찜하기" onclick="event.stopPropagation()">🤍<span class="fav-heart-label">찜하기</span></button>
                     </div>
                     <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">WAVE · 12+</span><span class="play-link">PLAY ▸</span></div>
                 </div>
@@ -1421,7 +1490,7 @@
                     <div class="card-desc">미로 속 점을 먹고 유령을 피하세요.</div>
                     <div class="card-meta">
                         <span class="card-diff normal">보통</span>
-                        <span class="card-rating"><span class="stars">★★★★☆</span>4.4</span>
+                        <button class="fav-heart" data-fav="pacman" type="button" aria-label="팩맨 찜하기" onclick="event.stopPropagation()">🤍<span class="fav-heart-label">찜하기</span></button>
                     </div>
                     <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">MAZE · ALL</span><span class="play-link">PLAY ▸</span></div>
                 </div>
@@ -1435,7 +1504,7 @@
                     <div class="card-desc">주문에 맞춰 토핑을 올려 피자 완성.</div>
                     <div class="card-meta">
                         <span class="card-diff easy">쉬움</span>
-                        <span class="card-rating"><span class="stars">★★★★☆</span>4.3</span>
+                        <button class="fav-heart" data-fav="pizza" type="button" aria-label="피자 공방 찜하기" onclick="event.stopPropagation()">🤍<span class="fav-heart-label">찜하기</span></button>
                     </div>
                     <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">ORDER · ALL</span><span class="play-link">PLAY ▸</span></div>
                 </div>
@@ -1449,7 +1518,7 @@
                     <div class="card-desc">면과 고명을 올려 주문대로 라면 완성.</div>
                     <div class="card-meta">
                         <span class="card-diff easy">쉬움</span>
-                        <span class="card-rating"><span class="stars">★★★★☆</span>4.1</span>
+                        <button class="fav-heart" data-fav="ramen" type="button" aria-label="라면 가게 찜하기" onclick="event.stopPropagation()">🤍<span class="fav-heart-label">찜하기</span></button>
                     </div>
                     <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">ORDER · ALL</span><span class="play-link">PLAY ▸</span></div>
                 </div>
@@ -1463,7 +1532,7 @@
                     <div class="card-desc">목숨 3개로 도전하는 4단계 숫자 퍼즐.</div>
                     <div class="card-meta">
                         <span class="card-diff hard">어려움</span>
-                        <span class="card-rating"><span class="stars">★★★★☆</span>4.5</span>
+                        <button class="fav-heart" data-fav="sudoku" type="button" aria-label="스도쿠 찜하기" onclick="event.stopPropagation()">🤍<span class="fav-heart-label">찜하기</span></button>
                     </div>
                     <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">LOGIC · LEVEL</span><span class="play-link">PLAY ▸</span></div>
                 </div>
@@ -1477,7 +1546,7 @@
                     <div class="card-desc">물약을 섞어 캐릭터를 소환·수집.</div>
                     <div class="card-meta">
                         <span class="card-diff easy">쉬움</span>
-                        <span class="card-rating"><span class="stars">★★★★★</span>4.7</span>
+                        <button class="fav-heart" data-fav="potion" type="button" aria-label="요술 항아리 찜하기" onclick="event.stopPropagation()">🤍<span class="fav-heart-label">찜하기</span></button>
                     </div>
                     <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">CRAFT · ALL</span><span class="play-link">PLAY ▸</span></div>
                 </div>
@@ -1491,7 +1560,7 @@
                     <div class="card-desc">이모지를 보고 영화 제목 맞히기.</div>
                     <div class="card-meta">
                         <span class="card-diff normal">보통</span>
-                        <span class="card-rating"><span class="stars">★★★★★</span>4.8</span>
+                        <button class="fav-heart" data-fav="quizface" type="button" aria-label="이모지 퀴즈 찜하기" onclick="event.stopPropagation()">🤍<span class="fav-heart-label">찜하기</span></button>
                     </div>
                     <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">MOVIE · REWARD</span><span class="play-link">PLAY ▸</span></div>
                 </div>
@@ -1505,7 +1574,7 @@
                     <div class="card-desc">4단계 난이도의 미로를 빠져나가기.</div>
                     <div class="card-meta">
                         <span class="card-diff normal">보통</span>
-                        <span class="card-rating"><span class="stars">★★★★☆</span>4.4</span>
+                        <button class="fav-heart" data-fav="maze" type="button" aria-label="미로 찾기 찜하기" onclick="event.stopPropagation()">🤍<span class="fav-heart-label">찜하기</span></button>
                     </div>
                     <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">MAZE · LEVEL</span><span class="play-link">PLAY ▸</span></div>
                 </div>
@@ -1519,7 +1588,7 @@
                     <div class="card-desc">제한 시간 안에 다른 곳을 찾아내기.</div>
                     <div class="card-meta">
                         <span class="card-diff hard">어려움</span>
-                        <span class="card-rating"><span class="stars">★★★★☆</span>4.3</span>
+                        <button class="fav-heart" data-fav="spot" type="button" aria-label="틀린 그림 찾기 찜하기" onclick="event.stopPropagation()">🤍<span class="fav-heart-label">찜하기</span></button>
                     </div>
                     <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">FIND · TIMED</span><span class="play-link">PLAY ▸</span></div>
                 </div>
@@ -1533,7 +1602,7 @@
                     <div class="card-desc">살금살금 다가가 잠자리를 포획하기.</div>
                     <div class="card-meta">
                         <span class="card-diff normal">보통</span>
-                        <span class="card-rating"><span class="stars">★★★★☆</span>4.2</span>
+                        <button class="fav-heart" data-fav="dragonfly" type="button" aria-label="잠자리 잡기 찜하기" onclick="event.stopPropagation()">🤍<span class="fav-heart-label">찜하기</span></button>
                     </div>
                     <div class="card-foot"><span style="font-size:11px;color:var(--dim);font-family:var(--mono);">CATCH · SNEAK</span><span class="play-link">PLAY ▸</span></div>
                 </div>
@@ -1544,8 +1613,8 @@
         <section id="top10">
             <div class="section-head reveal">
                 <span class="label">HIGH SCORES</span>
-                <h2 class="section-title">오늘의 <span>랭킹</span></h2>
-                <p class="section-sub">오늘 가장 많이 플레이된 게임 순위입니다.</p>
+                <h2 class="section-title">인기 <span>게임</span></h2>
+                <p class="section-sub">많이 사랑받는 대표 게임들을 모았어요. (실시간 투표 결과는 아래 설문에서 확인하세요!)</p>
             </div>
             <div class="rank-board reveal">
                 <div class="rank-row top1" onclick="openGame('star')">
@@ -1587,19 +1656,19 @@
             </div>
             <div class="news-grid">
                 <div class="news-card reveal">
-                    <div class="news-head"><span class="news-icon">▸</span><span class="news-date">2026.11.02</span></div>
-                    <h4>신작 '라면 가게' 추가</h4>
-                    <p>손님 주문에 맞춰 면과 국물, 고명을 올려 라면을 완성하는 요리 게임이 새로 들어왔어요.</p>
+                    <div class="news-head"><span class="news-icon">▸</span><span class="news-date">2026.11.10</span></div>
+                    <h4>라면·피자 공방 리뉴얼</h4>
+                    <p>버튼만 누르면 재료가 자동으로 올라가고, 주문 체크리스트로 제대로 만들었는지 한눈에! 라면은 일본 라멘 스타일로 더 먹음직스럽게 바뀌었어요.</p>
                 </div>
                 <div class="news-card reveal">
-                    <div class="news-head"><span class="news-icon">▸</span><span class="news-date">2026.11.02</span></div>
-                    <h4>피자 공방 주문 시스템 개편</h4>
-                    <p>이제 손님이 메뉴를 주문하면 그대로 만들어 서빙하고 점수를 받는 방식으로 바뀌었어요.</p>
+                    <div class="news-head"><span class="news-icon">▸</span><span class="news-date">2026.11.08</span></div>
+                    <h4>신작 3종 + MBTI 추천 추가</h4>
+                    <p>미로 찾기, 틀린 그림 찾기, 잠자리 잡기가 새로 들어와 총 11개! MBTI 유형으로 어울리는 게임을 추천받아 보세요.</p>
                 </div>
                 <div class="news-card reveal">
-                    <div class="news-head"><span class="news-icon">▸</span><span class="news-date">2026.09.20</span></div>
-                    <h4>별빛 수집가 최고기록 저장</h4>
-                    <p>최고 점수가 브라우저에 저장됩니다. 친구들과 점수 자랑을 겨루어 보세요.</p>
+                    <div class="news-head"><span class="news-icon">▸</span><span class="news-date">2026.11.05</span></div>
+                    <h4>스도쿠·이모지 퀴즈·요술 항아리 합류</h4>
+                    <p>4단계 난이도 스도쿠, 영화 이모지 퀴즈, 물약을 섞어 캐릭터를 모으는 요술 항아리까지. 투표 결과는 원 그래프로 확인하세요.</p>
                 </div>
             </div>
         </section>
@@ -1664,6 +1733,16 @@
                 </div>
             </div>
         </section>
+
+        <!-- MY -->
+        <section id="my">
+            <div class="section-head reveal">
+                <span class="label">MY PAGE</span>
+                <h2 class="section-title">나의 <span>프로필</span></h2>
+                <p class="section-sub">닉네임과 아바타를 꾸미고, 최애 게임과 나의 기록을 모아 보세요. (이 기기에 저장돼요)</p>
+            </div>
+            <div class="my-wrap reveal" id="myWrap"></div>
+        </section>
     </main>
 
     <!-- 푸터 -->
@@ -1701,20 +1780,6 @@
         <div class="modal-content">
             <button class="close-btn" onclick="closeGame()" aria-label="닫기">✕</button>
             <div id="gameContainer"></div>
-        </div>
-        <!-- 별점 입력 오버레이 -->
-        <div id="rateOverlay">
-            <div class="rate-box">
-                <div class="rate-title">이 게임 재미있었나요?</div>
-                <div class="rate-sub">별점을 남기면 다른 사람에게 큰 도움이 돼요.</div>
-                <div class="rate-stars" id="rateStars">
-                    <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
-                </div>
-                <div class="rate-actions">
-                    <button class="btn-ghost" id="rateSkip">건너뛰기</button>
-                    <button class="btn-primary" id="rateSubmit" disabled>별점 남기기</button>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -1758,11 +1823,62 @@
             });
         })();
 
+        /* 게임 기록 저장 — 최고값만 갱신 (MY 페이지가 읽어감) */
+        function saveBest(key, value) {
+            const prev = Number(localStorage.getItem(key) || 0);
+            if (value > prev) localStorage.setItem(key, String(value));
+            if (typeof window.renderMyPage === 'function') window.renderMyPage();
+        }
+        function bumpCount(key) {
+            const n = Number(localStorage.getItem(key) || 0) + 1;
+            localStorage.setItem(key, String(n));
+            if (typeof window.renderMyPage === 'function') window.renderMyPage();
+        }
+
+        /* 게임 찜(하트) — 카드의 하트 버튼으로 토글, MY 페이지에 반영 */
+        const FAVS_KEY = 'playon_favs';
+        function getFavs() { try { return JSON.parse(localStorage.getItem(FAVS_KEY) || '[]'); } catch(e) { return []; } }
+        function setFavs(a) { localStorage.setItem(FAVS_KEY, JSON.stringify(a)); }
+        function syncHearts() {
+            const favs = getFavs();
+            document.querySelectorAll('.fav-heart').forEach(h => {
+                const on = favs.includes(h.dataset.fav);
+                h.classList.toggle('on', on);
+                h.innerHTML = (on ? '❤️' : '🤍') + '<span class="fav-heart-label">' + (on ? '찜함' : '찜하기') + '</span>';
+            });
+        }
+        (function initHearts() {
+            document.querySelectorAll('.fav-heart').forEach(h => {
+                h.addEventListener('click', (e) => {
+                    e.stopPropagation();          // 카드 클릭(게임 실행) 방지
+                    const key = h.dataset.fav;
+                    const favs = getFavs();
+                    const i = favs.indexOf(key);
+                    if (i >= 0) favs.splice(i, 1); else favs.push(key);
+                    setFavs(favs);
+                    syncHearts();
+                    // MY 페이지가 열려 있으면 갱신
+                    if (typeof window.renderMyPage === 'function') window.renderMyPage();
+                });
+            });
+            syncHearts();
+        })();
+
         /* 게임 모달 */
         const modal = document.getElementById('modal');
         const container = document.getElementById('gameContainer');
 
+        /* 게임 타이머 레지스트리 — 모달을 닫으면 모두 정리해 누수 방지 */
+        const gameTimers = [];
+        function gInterval(fn, ms) { const id = setInterval(fn, ms); gameTimers.push({ id, type: 'i' }); return id; }
+        function gTimeout(fn, ms)  { const id = setTimeout(fn, ms);  gameTimers.push({ id, type: 't' }); return id; }
+        function clearGameTimers() {
+            gameTimers.forEach(t => t.type === 'i' ? clearInterval(t.id) : clearTimeout(t.id));
+            gameTimers.length = 0;
+        }
+
         function openGame(type) {
+            clearGameTimers();
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
             if (type === 'pizza') {
@@ -1785,7 +1901,7 @@
                             <div class="p-card">
                                 <h3 style="color:#b85a00;">나만의 피자 만들기</h3>
                                 <div class="pizza-stage"><canvas id="pizzaCanvas" width="400" height="400"></canvas></div>
-                                <p style="font-size:11px; color:#a07000; margin-top:8px; text-align:center;">재료 선택 후 피자 위를 클릭하세요!</p>
+                                <p style="font-size:11px; color:#a07000; margin-top:8px; text-align:center;">토핑 버튼을 누르면 자동으로 피자에 올라가요!</p>
                             </div>
                             <div class="p-card">
                                 <div class="order-box">
@@ -1956,6 +2072,9 @@
                                     <button id="mzRight">▶</button>
                                 </div>
                             </div>
+                            <div class="action-row" style="justify-content:center; max-width:220px; margin:4px auto 0;">
+                                <button class="btn-ghost" id="mzRetry">새 미로 ↻</button>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -2015,6 +2134,7 @@
         }
 
         function closeGame() {
+            clearGameTimers();
             modal.style.display = 'none';
             document.body.style.overflow = '';
             container.innerHTML = '';
@@ -2024,136 +2144,207 @@
 
         function initPizzaGame() {
             const canvas = document.getElementById('pizzaCanvas'), ctx = canvas.getContext('2d');
-            // 재료 정의 (색상 포함)
+            const $ = id => document.getElementById(id);
+
+            // 토핑 — 도우+소스+치즈는 항상 기본. 버튼을 누르면 자동으로 올라가요(토글)
             const ingredients = [
-                {id:'dough',emoji:'🫓',name:'도우',color:null},
-                {id:'sauce',emoji:'🍅',name:'토마토소스',color:'#d94839'},
-                {id:'cheese',emoji:'🧀',name:'모차렐라',color:'#ffe9a6'},
-                {id:'pepperoni',emoji:'🍕',name:'페퍼로니',color:'#8f252e'},
-                {id:'mushroom',emoji:'🍄',name:'버섯',color:'#c9a07a'},
-                {id:'olive',emoji:'🫒',name:'올리브',color:'#3b4a1e'},
-                {id:'basil',emoji:'🌿',name:'바질',color:'#3a7d2c'}
+                {id:'pepperoni', emoji:'🍕', name:'페퍼로니'},
+                {id:'mushroom',  emoji:'🍄', name:'버섯'},
+                {id:'olive',     emoji:'🫒', name:'올리브'},
+                {id:'basil',     emoji:'🌿', name:'바질'},
+                {id:'pineapple', emoji:'🍍', name:'파인애플'},
+                {id:'pepper',    emoji:'🫑', name:'피망'}
             ];
             const ingById = Object.fromEntries(ingredients.map(i => [i.id, i]));
 
-            // 손님 주문 메뉴 (base = 도우+소스+치즈는 공통, toppings = 필요한 토핑 집합)
+            // 손님 주문 메뉴 (도우+소스+치즈 공통, toppings = 필요한 토핑 집합)
             const MENU = [
-                {name:'마르게리타', icon:'🍕', toppings:['basil'], tip:'바질 한 가지만!'},
-                {name:'페퍼로니 피자', icon:'🍕', toppings:['pepperoni'], tip:'페퍼로니 듬뿍'},
-                {name:'치즈 폭탄 피자', icon:'🧀', toppings:[], tip:'토핑 없이 치즈만'},
-                {name:'버섯 피자', icon:'🍄', toppings:['mushroom'], tip:'버섯만 올려요'},
-                {name:'콤비네이션', icon:'🍕', toppings:['pepperoni','mushroom','olive'], tip:'페퍼로니+버섯+올리브'},
-                {name:'베지 피자', icon:'🥗', toppings:['mushroom','olive','basil'], tip:'버섯+올리브+바질'}
+                {name:'마르게리타',    icon:'🍅', toppings:['basil'],                       tip:'바질 한 가지만!'},
+                {name:'페퍼로니 피자', icon:'🍕', toppings:['pepperoni'],                   tip:'페퍼로니 듬뿍'},
+                {name:'치즈 피자',     icon:'🧀', toppings:[],                              tip:'토핑 없이 치즈만'},
+                {name:'버섯 피자',     icon:'🍄', toppings:['mushroom','basil'],            tip:'버섯+바질'},
+                {name:'콤비네이션',    icon:'🍕', toppings:['pepperoni','mushroom','olive'],tip:'페퍼로니+버섯+올리브'},
+                {name:'하와이안',      icon:'🍍', toppings:['pineapple','pepperoni'],       tip:'파인애플+페퍼로니'},
+                {name:'베지 피자',     icon:'🥗', toppings:['mushroom','olive','pepper'],   tip:'버섯+올리브+피망'}
             ];
-            const BASE = ['dough','sauce','cheese']; // 모든 피자 공통 베이스
 
-            let selected='dough', placed=[], order=null;
-            let score=0, served=0;
-            const $ = id => document.getElementById(id);
+            let toppings = new Set();   // 현재 올라간 토핑
+            let order = null;
+            let score = 0, served = 0;
 
             function newOrder() {
                 order = MENU[Math.floor(Math.random()*MENU.length)];
-                placed = []; selected = 'dough';
+                toppings = new Set();
                 $('pCustomer').textContent = '🙂';
                 $('pOrderName').textContent = order.name;
                 $('pOrderIcon').textContent = order.icon;
-                const needTop = order.toppings.length ? order.toppings.map(t=>ingById[t].emoji+ingById[t].name).join(', ') : '없음';
-                $('pOrderNeeds').innerHTML = '필요: 도우+소스+치즈(기본) + <b>토핑: '+needTop+'</b><br><span style="color:#a07000;">'+order.tip+'</span>';
                 $('pFeedback').textContent = '';
-                buildBtns(); draw();
+                buildBtns(); renderChecklist(); draw();
+            }
+
+            // 주문 체크리스트: 필요한 토핑마다 ✓/○, 불필요한 토핑 경고
+            function renderChecklist() {
+                const need = order.toppings;
+                let rows = '';
+                if (need.length === 0) {
+                    const ok = toppings.size === 0;
+                    rows += '<div class="pchk-row ' + (ok?'done':'todo') + '"><span>' + (ok?'✓':'○') + '</span> 토핑 없이 치즈만</div>';
+                } else {
+                    need.forEach(t => {
+                        const on = toppings.has(t);
+                        rows += '<div class="pchk-row ' + (on?'done':'todo') + '"><span>' + (on?'✓':'○') + '</span> ' + ingById[t].emoji + ' ' + ingById[t].name + '</div>';
+                    });
+                }
+                // 주문에 없는데 올린 토핑(빼야 함)
+                const extras = [...toppings].filter(t => !need.includes(t));
+                extras.forEach(t => {
+                    rows += '<div class="pchk-row bad"><span>✕</span> ' + ingById[t].emoji + ' ' + ingById[t].name + ' <small>빼주세요</small></div>';
+                });
+                const allDone = need.every(t => toppings.has(t)) && extras.length === 0;
+                $('pOrderNeeds').innerHTML =
+                    '<div class="pchk-title">' + order.tip + '</div>' + rows +
+                    '<div class="pchk-status ' + (allDone?'ready':'') + '">' +
+                    (allDone ? '✅ 주문대로 완성! 서빙하세요' : '🧑‍🍳 주문대로 토핑을 맞춰 주세요') + '</div>';
             }
 
             function draw() {
                 ctx.clearRect(0,0,400,400);
-                // 접시
-                ctx.fillStyle='#efe7d8'; ctx.beginPath(); ctx.arc(200,200,180,0,Math.PI*2); ctx.fill();
-                const hasDough = placed.some(p=>p.id==='dough');
-                if(hasDough){
-                    ctx.fillStyle='#bd7a40'; ctx.beginPath(); ctx.arc(200,200,165,0,Math.PI*2); ctx.fill();
-                    ctx.fillStyle='#f5d18b'; ctx.beginPath(); ctx.arc(200,200,150,0,Math.PI*2); ctx.fill();
-                }
-                if(placed.some(p=>p.id==='sauce')){ ctx.fillStyle='#d94839'; ctx.beginPath(); ctx.arc(200,200,135,0,Math.PI*2); ctx.fill(); }
-                if(placed.some(p=>p.id==='cheese')){ ctx.fillStyle='#ffe9a6'; ctx.beginPath(); ctx.arc(200,200,130,0,Math.PI*2); ctx.fill(); }
-                // 토핑 그리기
-                placed.filter(p=>!BASE.includes(p.id)).forEach(p=>{
-                    const ing = ingById[p.id];
-                    ctx.fillStyle = ing.color || '#8f252e';
-                    ctx.beginPath(); ctx.arc(p.x,p.y, p.id==='basil'?8:12, 0, Math.PI*2); ctx.fill();
+                const cx=200, cy=200;
+
+                // 그림자
+                ctx.fillStyle='rgba(0,0,0,0.12)'; ctx.beginPath(); ctx.arc(cx, cy+6, 168, 0, Math.PI*2); ctx.fill();
+
+                // 크러스트(구운 테두리) — 바깥 진한 갈색 → 안쪽 노릇
+                const crust = ctx.createRadialGradient(cx, cy, 120, cx, cy, 168);
+                crust.addColorStop(0, '#e8a94e');
+                crust.addColorStop(1, '#c47a2c');
+                ctx.fillStyle = crust; ctx.beginPath(); ctx.arc(cx, cy, 168, 0, Math.PI*2); ctx.fill();
+                // 크러스트 구움 자국(점점이)
+                ctx.fillStyle='rgba(120,70,20,0.35)';
+                for(let a=0;a<Math.PI*2;a+=0.5){ const r=158; ctx.beginPath(); ctx.arc(cx+Math.cos(a)*r, cy+Math.sin(a)*r, 5, 0, Math.PI*2); ctx.fill(); }
+
+                // 토마토 소스
+                ctx.fillStyle='#d6412e'; ctx.beginPath(); ctx.arc(cx, cy, 150, 0, Math.PI*2); ctx.fill();
+
+                // 녹은 모차렐라 치즈 (노릇한 베이스 + 얼룩)
+                const cheese = ctx.createRadialGradient(cx-30, cy-30, 20, cx, cy, 150);
+                cheese.addColorStop(0, '#fff0b8');
+                cheese.addColorStop(1, '#f6cf6e');
+                ctx.fillStyle = cheese; ctx.beginPath(); ctx.arc(cx, cy, 145, 0, Math.PI*2); ctx.fill();
+                // 치즈 구움 얼룩
+                ctx.fillStyle='rgba(197,120,40,0.4)';
+                [[150,140,10],[250,160,8],[220,250,11],[160,250,7],[270,230,6],[180,190,5],[240,200,6]].forEach(([x,y,r])=>{
+                    ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
                 });
-                if(!placed.length){ ctx.fillStyle='#8c573b'; ctx.font='bold 15px sans-serif'; ctx.textAlign='center'; ctx.fillText('클릭하여 도우부터 올려보세요!',200,205); }
+
+                // === 토핑 (고정 위치, 입체적으로) ===
+                const draws = {
+                    pepperoni: () => {
+                        const pts=[[150,150],[250,150],[200,210],[150,250],[250,250],[200,120]];
+                        pts.forEach(([x,y])=>{
+                            ctx.fillStyle='#7a1f26'; ctx.beginPath(); ctx.arc(x+1,y+1,15,0,Math.PI*2); ctx.fill();
+                            ctx.fillStyle='#c33b36'; ctx.beginPath(); ctx.arc(x,y,14,0,Math.PI*2); ctx.fill();
+                            // 기름 반짝 + 점
+                            ctx.fillStyle='#9e2b2b';
+                            [[-4,-3],[5,2],[-2,5]].forEach(([dx,dy])=>{ ctx.beginPath(); ctx.arc(x+dx,y+dy,2,0,Math.PI*2); ctx.fill(); });
+                            ctx.fillStyle='rgba(255,255,255,0.3)'; ctx.beginPath(); ctx.arc(x-5,y-5,3,0,Math.PI*2); ctx.fill();
+                        });
+                    },
+                    mushroom: () => {
+                        const pts=[[175,175],[235,185],[200,245],[165,225]];
+                        pts.forEach(([x,y])=>{
+                            ctx.fillStyle='#8a6a4a'; ctx.beginPath(); ctx.ellipse(x,y,13,10,0,0,Math.PI*2); ctx.fill();
+                            ctx.fillStyle='#d9c3a3'; ctx.beginPath(); ctx.ellipse(x,y-1,9,6,0,0,Math.PI*2); ctx.fill();
+                            ctx.fillStyle='#b89c78'; ctx.fillRect(x-2,y,4,8);
+                        });
+                    },
+                    olive: () => {
+                        const pts=[[160,200],[240,160],[210,240],[180,150],[255,220]];
+                        pts.forEach(([x,y])=>{
+                            ctx.fillStyle='#2b2b2b'; ctx.beginPath(); ctx.arc(x,y,8,0,Math.PI*2); ctx.fill();
+                            ctx.fillStyle='#8a2b2b'; ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fill();
+                        });
+                    },
+                    basil: () => {
+                        const pts=[[185,165],[245,205],[175,235],[225,165]];
+                        pts.forEach(([x,y])=>{
+                            ctx.save(); ctx.translate(x,y); ctx.rotate(Math.random()*0.6-0.3);
+                            ctx.fillStyle='#2f7d32'; ctx.beginPath(); ctx.ellipse(0,0,8,13,0,0,Math.PI*2); ctx.fill();
+                            ctx.strokeStyle='#1b5e20'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(0,-11); ctx.lineTo(0,11); ctx.stroke();
+                            ctx.restore();
+                        });
+                    },
+                    pineapple: () => {
+                        const pts=[[170,160],[240,175],[200,235],[160,215]];
+                        pts.forEach(([x,y])=>{
+                            ctx.fillStyle='#f4c430'; ctx.beginPath(); ctx.arc(x,y,10,0,Math.PI*2); ctx.fill();
+                            ctx.fillStyle='#ffe08a'; ctx.beginPath(); ctx.arc(x,y,5,0,Math.PI*2); ctx.fill();
+                        });
+                    },
+                    pepper: () => {
+                        // 피망 링(초록 도넛 모양)
+                        const pts=[[185,185],[235,210],[200,250]];
+                        pts.forEach(([x,y])=>{
+                            ctx.strokeStyle='#3a8d3a'; ctx.lineWidth=6; ctx.beginPath(); ctx.arc(x,y,12,0,Math.PI*2); ctx.stroke();
+                            ctx.strokeStyle='#6abf4b'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(x,y,12,0,Math.PI*2); ctx.stroke();
+                        });
+                    }
+                };
+                ['pineapple','pepper','olive','mushroom','pepperoni','basil'].forEach(id=>{ if(toppings.has(id) && draws[id]) draws[id](); });
             }
 
             function buildBtns() {
                 const root = $('pIngredients');
                 root.innerHTML = '';
                 ingredients.forEach(it=>{
+                    const on = toppings.has(it.id);
                     const b = document.createElement('button');
-                    b.className = 'ing-btn' + (selected === it.id ? ' active' : '');
-                    b.innerHTML = '<span style="font-size:20px">'+it.emoji+'</span><span><b>'+it.name+'</b></span>';
-                    b.onclick = () => { selected = it.id; buildBtns(); };
+                    b.className = 'ing-btn' + (on ? ' active' : '');
+                    b.innerHTML = '<span style="font-size:20px">'+it.emoji+'</span><span><b>'+it.name+'</b>'+(on?' ✓':'')+'</span>';
+                    b.onclick = () => {
+                        if(toppings.has(it.id)) toppings.delete(it.id); else toppings.add(it.id);
+                        buildBtns(); renderChecklist(); draw();
+                    };
                     root.appendChild(b);
                 });
             }
 
-            canvas.onclick = (e) => {
-                if(!selected) return;
-                const rect = canvas.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / rect.width * 400;
-                const y = (e.clientY - rect.top) / rect.height * 400;
-                if(Math.hypot(x-200, y-200) > 140) return;
-                if(selected==='dough') {
-                    if(!placed.some(p=>p.id==='dough')) placed.push({id:'dough',x:200,y:200});
-                    selected='sauce';
-                } else {
-                    placed.push({id:selected,x,y});
-                }
-                buildBtns(); draw();
-            };
-
-            // 주문 채점: 베이스 다 있고, 토핑 집합이 정확히 일치하는지
             function evaluate() {
-                const placedToppings = [...new Set(placed.filter(p=>!BASE.includes(p.id)).map(p=>p.id))];
+                const placedToppings = [...toppings];
                 const needToppings = order.toppings;
-                const hasAllBase = BASE.every(b => placed.some(p=>p.id===b));
                 const missing = needToppings.filter(t => !placedToppings.includes(t));
                 const extra = placedToppings.filter(t => !needToppings.includes(t));
-                return { hasAllBase, missing, extra };
+                return { missing, extra };
             }
 
-            $('pClear').onclick = () => { placed=[]; selected='dough'; buildBtns(); draw(); };
+            $('pClear').onclick = () => { toppings = new Set(); buildBtns(); renderChecklist(); draw(); };
 
             $('pServe').onclick = () => {
                 if(!order) return;
-                const { hasAllBase, missing, extra } = evaluate();
+                const { missing, extra } = evaluate();
                 const fb = $('pFeedback');
 
-                if(!hasAllBase){
-                    fb.style.color = '#c0392b';
-                    fb.textContent = '❌ 기본(도우+소스+치즈)이 빠졌어요!';
-                    $('pCustomer').textContent = '😠';
-                    return;
-                }
                 if(missing.length===0 && extra.length===0){
-                    // 완벽
                     const gained = 100;
                     score += gained; served += 1;
                     $('pScore').textContent = score; $('pServed').textContent = served;
+                    saveBest('pizza_best', score);
                     fb.style.color = '#1e8449';
                     fb.textContent = '✅ 완벽해요! 손님 만족 (+'+gained+'점)';
                     $('pCustomer').textContent = '😍';
-                    setTimeout(newOrder, 1400);
+                    gTimeout(newOrder, 1400);
                 } else {
-                    // 아쉬움 — 부분 점수
                     const gained = 30;
                     score += gained; served += 1;
                     $('pScore').textContent = score; $('pServed').textContent = served;
+                    saveBest('pizza_best', score);
                     let msg = '😅 아쉬워요 (+'+gained+'점). ';
                     if(missing.length) msg += '빠진 토핑: '+missing.map(t=>ingById[t].name).join(',')+'. ';
                     if(extra.length) msg += '추가된 토핑: '+extra.map(t=>ingById[t].name).join(',')+'.';
                     fb.style.color = '#b9770e';
                     fb.textContent = msg;
                     $('pCustomer').textContent = '😐';
-                    setTimeout(newOrder, 1800);
+                    gTimeout(newOrder, 1800);
                 }
             };
 
@@ -2387,21 +2578,23 @@
                     const gained = 100;
                     score += gained; served += 1;
                     $('rScore').textContent = score; $('rServed').textContent = served;
+                    saveBest('ramen_best', score);
                     fb.style.color = '#1e8449';
                     fb.textContent = '✅ 완벽해요! 손님 만족 (+'+gained+'점)';
                     $('rCustomer').textContent = '😍';
-                    setTimeout(newOrder, 1400);
+                    gTimeout(newOrder, 1400);
                 } else {
                     const gained = 30;
                     score += gained; served += 1;
                     $('rScore').textContent = score; $('rServed').textContent = served;
+                    saveBest('ramen_best', score);
                     let msg = '😅 아쉬워요 (+'+gained+'점). ';
                     if(missing.length) msg += '빠진 고명: '+missing.map(t=>ingById[t].name).join(',')+'. ';
                     if(extra.length) msg += '추가된 고명: '+extra.map(t=>ingById[t].name).join(',')+'.';
                     fb.style.color = '#b9770e';
                     fb.textContent = msg;
                     $('rCustomer').textContent = '😐';
-                    setTimeout(newOrder, 1800);
+                    gTimeout(newOrder, 1800);
                 }
             };
 
@@ -2516,10 +2709,10 @@
                 selected.forEach(i => { d+=POTIONS[i].dark; l+=POTIONS[i].light; p+=POTIONS[i].power; m+=POTIONS[i].magic; });
                 // 휘젓는 연출
                 $('potStage').innerHTML = '<div class="cauldron shake">🫙</div>';
-                setTimeout(() => {
+                gTimeout(() => {
                     $('potStage').innerHTML = '<div class="cauldron">💥</div>';
                 }, 450);
-                setTimeout(() => {
+                gTimeout(() => {
                     const key = judge(d, l, p, m);
                     const c = CREATURES[key];
                     $('potStage').innerHTML =
@@ -2669,7 +2862,7 @@
                     $('sdMsg').textContent = '🏆 ' + d.name + ' 전 레벨 클리어! 다음 난이도에 도전하세요.';
                 } else {
                     $('sdMsg').textContent = '✅ 레벨 ' + progress[d.key] + ' 클리어! 3초 후 다음 판...';
-                    setTimeout(newPuzzle, 2500);
+                    gTimeout(newPuzzle, 2500);
                 }
             }
 
@@ -2995,6 +3188,7 @@
                 const secs = Math.round((Date.now() - startedAt) / 1000);
                 $('mzMsg').innerHTML = '🎉 <b>도착!</b> ' + moves + '걸음 · ' + secs + '초';
                 $('mzMsg').classList.add('ok');
+                bumpCount('maze_cleared');
             }
 
             function tick() {
@@ -3010,7 +3204,7 @@
                 $('mzMoves').textContent = '0';
                 $('mzMsg').textContent = '🦊 를 🚩 까지 데려가세요. 방향키 또는 버튼으로 이동!';
                 $('mzMsg').classList.remove('ok');
-                clearInterval(timer); timer = setInterval(tick, 500);
+                clearInterval(timer); timer = gInterval(tick, 500);
                 render();
             }
 
@@ -3038,6 +3232,8 @@
             }
             document.addEventListener('keydown', keyHandler);
 
+            const retryBtn = $('mzRetry');
+            if (retryBtn) retryBtn.onclick = newMaze;
             renderTabs();
             newMaze();
         }
@@ -3072,7 +3268,7 @@
                 $('spMsg').textContent = '두 그림에서 다른 곳 ' + total + '곳을 찾아 오른쪽 그림을 클릭하세요!';
                 $('spMsg').classList.remove('ok','bad');
                 renderBoards();
-                clearInterval(timer); timer = setInterval(tick, 1000); $('spTime').textContent = timeLeft + 's';
+                clearInterval(timer); timer = gInterval(tick, 1000); $('spTime').textContent = timeLeft + 's';
             }
 
             function emojiFor(i, isB) {
@@ -3126,6 +3322,7 @@
                 over = true; clearInterval(timer);
                 $('spMsg').textContent = '🎉 모두 찾았어요! (' + (DIFF[curDiff].time - timeLeft) + '초)';
                 $('spMsg').classList.add('ok'); $('spMsg').classList.remove('bad');
+                bumpCount('spot_cleared');
             }
 
             function tick() {
@@ -3206,11 +3403,12 @@
                 if (dist <= 15) {
                     caught++; round++;
                     $('dfCaught').textContent = caught;
+                    saveBest('dragonfly_best', caught);
                     setMsg('🎉 잡았다! 잠자리 포획 성공!', 'ok');
                     $('dfBug').classList.add('grabbed');
                     alive = false;
                     clearInterval(decayTimer);
-                    setTimeout(nextBug, 1200);
+                    gTimeout(nextBug, 1200);
                 } else {
                     // 너무 멀리서 휘두르면 바로 도망
                     setMsg('🫳 헛손질! 너무 멀어요. 잠자리가 놀랐어요!', 'bad');
@@ -3227,7 +3425,7 @@
                 clearInterval(decayTimer);
                 setMsg('💨 들켰다! 잠자리가 날아가 버렸어요.', 'bad');
                 $('dfBug').classList.add('fled');
-                setTimeout(nextBug, 1300);
+                gTimeout(nextBug, 1300);
             }
 
             function nextBug() {
@@ -3239,7 +3437,7 @@
                 updateView();
                 // 가만히 있으면 경계심이 서서히 내려감
                 clearInterval(decayTimer);
-                decayTimer = setInterval(() => {
+                decayTimer = gInterval(() => {
                     if (!alive || grabbing) return;
                     if (alert > 0) { alert = Math.max(0, alert - 4); updateView(); }
                 }, 600);
@@ -3393,6 +3591,233 @@
             if (already) markVotedChoice(already);
 
             loadResults();
+        })();
+
+        /* ===== MY 페이지 (닉네임 + 아바타 메이커 + 최애 게임 + 기록) ===== */
+        (function () {
+            const wrap = document.getElementById('myWrap');
+            if (!wrap) return;
+
+            const KEY = 'playon_profile';
+            // 아바타 파츠 옵션
+            const FACES = ['🦊','🐱','🐶','🐻','🐰','🐼','🐸','🐯','🐨','🦁','🐵','🐥'];
+            const HATS  = ['없음','🎩','👑','🧢','🎀','🪖','🎓','🍄'];
+            const BGS   = ['#ff8a3d','#5cf4ff','#ff77c8','#5fe07a','#b478ff','#ffe34d'];
+
+            // 게임 목록 (최애 선택 + 기록 표시용)
+            const GAMES = [
+                { key:'star',     icon:'✦',  name:'별빛 수집가' },
+                { key:'arena',    icon:'⚔️', name:'네온 아레나' },
+                { key:'pacman',   icon:'🟡', name:'팩맨' },
+                { key:'pizza',    icon:'🍕', name:'피자 공방' },
+                { key:'ramen',    icon:'🍜', name:'라면 가게' },
+                { key:'potion',   icon:'🧪', name:'요술 항아리' },
+                { key:'sudoku',   icon:'🔢', name:'스도쿠' },
+                { key:'quizface', icon:'🎬', name:'이모지 퀴즈' },
+                { key:'maze',     icon:'🧭', name:'미로 찾기' },
+                { key:'spot',     icon:'🔍', name:'틀린 그림 찾기' },
+                { key:'dragonfly',icon:'🧚', name:'잠자리 잡기' }
+            ];
+
+            function load() {
+                try { return JSON.parse(localStorage.getItem(KEY)); } catch(e) { return null; }
+            }
+            function save(p) { localStorage.setItem(KEY, JSON.stringify(p)); }
+
+            let profile = load();   // null이면 미로그인
+
+            // 각 게임 기록을 localStorage에서 수집
+            function num(k) { return Number(localStorage.getItem(k) || 0); }
+            function getRecords() {
+                const out = {};
+                // 이모지 퀴즈 최고 점수
+                const qf = num('qf_best');
+                out.quizface = qf > 0 ? ('최고 ' + qf + '점') : null;
+                // 스도쿠 난이도별 클리어 레벨
+                try {
+                    const sp = JSON.parse(localStorage.getItem('sudoku_progress') || '{}');
+                    const names = { easy:'쉬움', normal:'보통', hard:'어려움', expert:'전문가' };
+                    const cleared = Object.keys(sp).filter(k => sp[k] > 0)
+                        .map(k => (names[k]||k) + ' Lv.' + sp[k]);
+                    out.sudoku = cleared.length ? cleared.join(' · ') : null;
+                } catch(e) { out.sudoku = null; }
+                // 요술 항아리 발견 수
+                try {
+                    const pf = JSON.parse(localStorage.getItem('potion_found') || '[]');
+                    out.potion = pf.length ? ('도감 ' + pf.length + ' / 8') : null;
+                } catch(e) { out.potion = null; }
+                // 요리 게임: 최고 점수
+                const pz = num('pizza_best'); out.pizza = pz > 0 ? ('최고 ' + pz + '점') : null;
+                const rm = num('ramen_best'); out.ramen = rm > 0 ? ('최고 ' + rm + '점') : null;
+                // 미로: 클리어 횟수
+                const mz = num('maze_cleared'); out.maze = mz > 0 ? (mz + '회 탈출') : null;
+                // 틀린그림: 최고 클리어 라운드
+                const sptc = num('spot_cleared'); out.spot = sptc > 0 ? (sptc + '판 클리어') : null;
+                // 잠자리: 최다 포획
+                const df = num('dragonfly_best'); out.dragonfly = df > 0 ? ('최다 ' + df + '마리') : null;
+                // iframe 게임(별빛/아레나/팩맨)은 자체 기록을 외부에서 못 읽어 생략
+                return out;
+            }
+
+            // ===== 로그인(닉네임 입력) 화면 =====
+            function renderLogin() {
+                wrap.innerHTML =
+                    '<div class="my-login">' +
+                    '<div class="my-login-ava">🦊</div>' +
+                    '<h3>PLAYON에 오신 걸 환영해요!</h3>' +
+                    '<p>닉네임을 정하면 나만의 프로필이 만들어져요. (비밀번호 없이 이 기기에 저장돼요)</p>' +
+                    '<div class="my-login-form">' +
+                    '<input class="my-input" id="myNickInput" maxlength="12" placeholder="닉네임 (최대 12자)">' +
+                    '<button class="btn-primary" id="myStart">시작하기 ▸</button>' +
+                    '</div></div>';
+                const input = document.getElementById('myNickInput');
+                const go = () => {
+                    const nick = input.value.trim();
+                    if (!nick) { input.focus(); input.style.borderColor = '#ff5d6c'; return; }
+                    profile = { nick, face: '🦊', hat: '없음', bg: BGS[0], joined: Date.now() };
+                    save(profile);
+                    renderDashboard();
+                };
+                document.getElementById('myStart').onclick = go;
+                input.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+                input.focus();
+            }
+
+            // ===== 프로필 대시보드 =====
+            function renderDashboard() {
+                const records = getRecords();
+                const joinedDate = new Date(profile.joined || Date.now());
+                const dateStr = joinedDate.getFullYear() + '.' +
+                    String(joinedDate.getMonth()+1).padStart(2,'0') + '.' +
+                    String(joinedDate.getDate()).padStart(2,'0');
+
+                const favKeys = getFavs();
+                const favGames = GAMES.filter(g => favKeys.includes(g.key));
+
+                wrap.innerHTML =
+                    '<div class="my-grid">' +
+                        // 좌: 프로필 카드
+                        '<div class="my-card my-profile">' +
+                            '<div class="my-avatar-view" id="myAva" style="background:radial-gradient(circle at 50% 40%, ' + hexSoft(profile.bg) + ', var(--bg-3));">' +
+                                avatarInner(profile) +
+                            '</div>' +
+                            '<div class="my-nick">' + escapeHtml(profile.nick) + '</div>' +
+                            '<div class="my-nick-sub">PLAYER · since ' + dateStr + '</div>' +
+                            '<div class="my-btn-row">' +
+                                '<button class="btn-ghost" id="myEditAva">🎨 아바타 꾸미기</button>' +
+                                '<button class="btn-ghost" id="myLogout">로그아웃</button>' +
+                            '</div>' +
+                            // 아바타 메이커 (접힘)
+                            '<div class="ava-maker" id="avaMaker" style="margin-top:18px; text-align:left;">' +
+                                avaRow('얼굴', 'face', FACES.map(f => optBtn('face', f, f, profile.face===f))) +
+                                avaRow('모자/장식', 'hat', HATS.map(h => optBtn('hat', h, h==='없음'?'∅':h, profile.hat===h))) +
+                                avaRow('배경색', 'bg', BGS.map(c => swatchBtn(c, profile.bg===c))) +
+                            '</div>' +
+                        '</div>' +
+                        // 우: 최애 게임 + 기록
+                        '<div style="display:flex; flex-direction:column; gap:18px;">' +
+                            '<div class="my-card">' +
+                                '<h3>❤️ 찜한 게임 <span style="color:var(--dim); font-weight:500; font-size:12px;">(' + favGames.length + ')</span></h3>' +
+                                (favGames.length
+                                    ? '<div class="fav-grid">' +
+                                        favGames.map(g =>
+                                            '<div class="fav-item on" data-play="'+g.key+'">' +
+                                            '<span class="fav-emoji">'+g.icon+'</span><span class="fav-name">'+g.name+'</span></div>'
+                                        ).join('') +
+                                      '</div>'
+                                    : '<p style="font-size:13px; color:var(--dim); margin:4px 0;">아직 찜한 게임이 없어요. 게임 카드의 🤍 하트를 눌러 추가해 보세요!</p>'
+                                ) +
+                            '</div>' +
+                            '<div class="my-card">' +
+                                '<h3>🏆 나의 게임 기록</h3>' +
+                                '<div class="rec-list">' +
+                                    GAMES.map(g => {
+                                        const v = records[g.key];
+                                        return '<div class="rec-row">' +
+                                            '<span class="rec-ico">'+g.icon+'</span>' +
+                                            '<span class="rec-name">'+g.name+'</span>' +
+                                            '<span class="rec-val'+(v?'':' none')+'">'+(v || '기록 없음')+'</span>' +
+                                            '<button class="btn-ghost" style="padding:5px 10px; font-size:11px;" data-play="'+g.key+'">플레이 ▸</button>' +
+                                            '</div>';
+                                    }).join('') +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+
+                // --- 이벤트 바인딩 ---
+                document.getElementById('myLogout').onclick = () => {
+                    if (confirm('로그아웃하면 이 기기의 프로필 정보가 사라져요. 계속할까요?')) {
+                        localStorage.removeItem(KEY); profile = null; renderLogin();
+                    }
+                };
+                document.getElementById('myEditAva').onclick = () => {
+                    document.getElementById('avaMaker').classList.toggle('open');
+                };
+                // 아바타 파츠 선택
+                wrap.querySelectorAll('.ava-opt').forEach(btn => {
+                    btn.onclick = () => {
+                        const part = btn.dataset.part, val = btn.dataset.val;
+                        profile[part] = val; save(profile);
+                        document.getElementById('myAva').innerHTML = avatarInner(profile);
+                        document.getElementById('myAva').style.background =
+                            'radial-gradient(circle at 50% 40%, ' + hexSoft(profile.bg) + ', var(--bg-3))';
+                        wrap.querySelectorAll('button.ava-opt[data-part="'+part+'"]').forEach(b =>
+                            b.classList.toggle('on', b.dataset.val === val));
+                    };
+                });
+                // 찜한 게임 아이템 + 기록 행의 플레이 버튼
+                wrap.querySelectorAll('[data-play]').forEach(btn => {
+                    btn.onclick = () => { if (typeof openGame === 'function') openGame(btn.dataset.play); };
+                });
+            }
+
+            // ---- 헬퍼들 ----
+            // 모자별 위치/크기 보정 (얼굴 정수리에 자연스럽게 얹히도록)
+            const HAT_STYLE = {
+                '🎩': { size: 52, top: -14, rot: -8 },
+                '👑': { size: 46, top: -10, rot: 0 },
+                '🧢': { size: 50, top: -8,  rot: -10 },
+                '🎀': { size: 40, top: -4,  rot: 0 },
+                '🪖': { size: 52, top: -10, rot: 0 },
+                '🎓': { size: 52, top: -14, rot: 0 },
+                '🍄': { size: 44, top: -12, rot: 0 }
+            };
+            function avatarInner(p) {
+                let hat = '';
+                if (p.hat && p.hat !== '없음') {
+                    const s = HAT_STYLE[p.hat] || { size: 44, top: -8, rot: 0 };
+                    hat = '<span style="position:absolute; left:50%; top:' + s.top + 'px; ' +
+                          'transform:translateX(-50%) rotate(' + s.rot + 'deg); ' +
+                          'font-size:' + s.size + 'px; line-height:1; z-index:2; ' +
+                          'text-shadow:0 2px 4px rgba(0,0,0,0.25); pointer-events:none;">' + p.hat + '</span>';
+                }
+                // 얼굴은 아바타 원 안에서 살짝 아래로 내려 모자 공간 확보
+                return '<span style="position:relative; z-index:1; display:block; transform:translateY(8px);">' + p.face + '</span>' + hat;
+            }
+            function avaRow(label, part, optsHtml) {
+                return '<div class="ava-row"><label>'+label+'</label><div class="ava-opts" data-part="'+part+'">'+optsHtml+'</div></div>';
+            }
+            function optBtn(part, val, display, on) {
+                return '<button class="ava-opt'+(on?' on':'')+'" data-part="'+part+'" data-val="'+val+'">'+display+'</button>';
+            }
+            function swatchBtn(color, on) {
+                return '<button class="ava-opt swatch'+(on?' on':'')+'" data-part="bg" data-val="'+color+'" style="background:'+color+';"></button>';
+            }
+            function hexSoft(hex) {
+                // #rrggbb → rgba(.., 0.22)
+                const h = hex.replace('#',''); const r=parseInt(h.substr(0,2),16), g=parseInt(h.substr(2,2),16), b=parseInt(h.substr(4,2),16);
+                return 'rgba('+r+','+g+','+b+',0.22)';
+            }
+            function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+            // 외부(게임 기록 저장, 하트 토글)에서 MY 페이지를 새로고침할 수 있게 노출
+            window.renderMyPage = function () {
+                profile = load();
+                if (profile && profile.nick) renderDashboard(); else renderLogin();
+            };
+
+            window.renderMyPage();
         })();
     </script>
 </body>
