@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PLAYON · 미니게임 아케이드</title>
-<meta name="description" content="설치 없이 브라우저에서 바로 즐기는 레트로 감성 미니게임 아케이드. 별빛 수집가, 네온 아레나, 피자 공방, 팩맨, 라면 가게를 무료로 플레이하세요.">
-<meta name="keywords" content="미니게임, 브라우저 게임, 무료 게임, 아케이드, 레트로 게임, PLAYON, 팩맨, 라면 게임, 피자 게임">
+<meta name="description" content="설치 없이 브라우저에서 바로 즐기는 레트로 감성 미니게임 아케이드. 별빛 수집가, 네온 아레나, 팩맨, 피자 공방, 라면 가게, 요술 항아리, 스도쿠, 이모지 퀴즈, 미로 찾기, 틀린 그림 찾기, 잠자리 잡기까지 11종을 무료로 플레이하세요.">
+<meta name="keywords" content="미니게임, 브라우저 게임, 무료 게임, 아케이드, 레트로 게임, PLAYON, 팩맨, 스도쿠, 미로 찾기, 틀린 그림 찾기, 잠자리 잡기, 라면 게임, 피자 게임, 이모지 퀴즈, MBTI 게임 추천">
 <meta name="theme-color" content="#ff8a3d">
 <link rel="canonical" href="https://moonbogyeong.github.io/">
 
@@ -37,9 +37,15 @@
   "hasPart": [
     { "@type": "VideoGame", "name": "별빛 수집가", "genre": "아케이드", "playMode": "SinglePlayer" },
     { "@type": "VideoGame", "name": "네온 아레나", "genre": "액션", "playMode": "SinglePlayer" },
-    { "@type": "VideoGame", "name": "피자 공방", "genre": "퍼즐", "playMode": "SinglePlayer" },
     { "@type": "VideoGame", "name": "팩맨", "genre": "아케이드", "playMode": "SinglePlayer" },
-    { "@type": "VideoGame", "name": "라면 가게", "genre": "퍼즐", "playMode": "SinglePlayer" }
+    { "@type": "VideoGame", "name": "피자 공방", "genre": "요리", "playMode": "SinglePlayer" },
+    { "@type": "VideoGame", "name": "라면 가게", "genre": "요리", "playMode": "SinglePlayer" },
+    { "@type": "VideoGame", "name": "요술 항아리", "genre": "매직", "playMode": "SinglePlayer" },
+    { "@type": "VideoGame", "name": "스도쿠", "genre": "퍼즐", "playMode": "SinglePlayer" },
+    { "@type": "VideoGame", "name": "이모지 퀴즈", "genre": "퀴즈", "playMode": "SinglePlayer" },
+    { "@type": "VideoGame", "name": "미로 찾기", "genre": "퍼즐", "playMode": "SinglePlayer" },
+    { "@type": "VideoGame", "name": "틀린 그림 찾기", "genre": "퍼즐", "playMode": "SinglePlayer" },
+    { "@type": "VideoGame", "name": "잠자리 잡기", "genre": "아케이드", "playMode": "SinglePlayer" }
   ]
 }
 </script>
@@ -926,6 +932,17 @@
     .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.in { opacity: 1; transform: translateY(0); }
 
+    /* 모션 최소화 선호 사용자 배려 */
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.001ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.001ms !important;
+            scroll-behavior: auto !important;
+        }
+        .reveal { opacity: 1; transform: none; }
+    }
+
     /* 피자 게임 스타일 (밝은 톤 유지) */
     .pizza-app { --cream:#fff1ce; --gold:#ffd56b; width:100%; color:#3a2c1a; }
     .pizza-layout { display:grid; grid-template-columns:1.1fr .9fr; gap:14px; }
@@ -1364,7 +1381,7 @@
             <div class="section-head reveal">
                 <span class="label">SELECT GAME</span>
                 <h2 class="section-title">지금 플레이 <span>가능</span></h2>
-                <p class="section-sub">카드를 선택해 바로 시작하세요. 총 8개의 게임이 브라우저에서 즉시 실행됩니다.</p>
+                <p class="section-sub">카드를 선택해 바로 시작하세요. 총 11개의 게임이 브라우저에서 즉시 실행됩니다.</p>
             </div>
             <div class="game-grid">
                 <div class="game-card reveal" onclick="openGame('star')">
@@ -1662,10 +1679,10 @@
             <div class="footer-cols">
                 <div class="footer-col">
                     <h5>// GAMES</h5>
-                    <a href="#" onclick="openGame('pizza'); return false;">피자 공방</a>
                     <a href="#" onclick="openGame('star'); return false;">별빛 수집가</a>
-                    <a href="#" onclick="openGame('arena'); return false;">네온 아레나</a>
-                    <a href="#" onclick="openGame('pacman'); return false;">팩맨</a>
+                    <a href="#" onclick="openGame('ramen'); return false;">라면 가게</a>
+                    <a href="#" onclick="openGame('sudoku'); return false;">스도쿠</a>
+                    <a href="#" onclick="openGame('dragonfly'); return false;">잠자리 잡기</a>
                 </div>
                 <div class="footer-col">
                     <h5>// LINKS</h5>
@@ -1791,21 +1808,21 @@
                 container.innerHTML = `
                     <div style="text-align:center; padding:10px;">
                         <h2 style="color:#5cf4ff; margin-bottom:10px; font-family:'VT323',monospace; font-size:28px; letter-spacing:2px;">✦ STAR COLLECTOR</h2>
-                        <iframe src="star.html" style="width:100%; max-width:480px; height:560px; border:none; border-radius:12px;"></iframe>
+                        <iframe src="star.html" title="별빛 수집가 게임" style="width:100%; max-width:480px; height:560px; border:none; border-radius:12px;"></iframe>
                     </div>
                 `;
             } else if (type === 'arena') {
                 container.innerHTML = `
                     <div style="text-align:center; padding:10px;">
                         <h2 style="color:#ff77c8; margin-bottom:10px; font-family:'VT323',monospace; font-size:28px; letter-spacing:2px;">⚔ NEON ARENA</h2>
-                        <iframe src="arena.html" style="width:100%; max-width:760px; height:520px; border:none; border-radius:12px;"></iframe>
+                        <iframe src="arena.html" title="네온 아레나 게임" style="width:100%; max-width:760px; height:520px; border:none; border-radius:12px;"></iframe>
                     </div>
                 `;
             } else if (type === 'pacman') {
                 container.innerHTML = `
                     <div style="text-align:center; padding:10px;">
                         <h2 style="color:#ffe34d; margin-bottom:10px; font-family:'VT323',monospace; font-size:28px; letter-spacing:2px;">🟡 PAC-MAN</h2>
-                        <iframe src="pacman.html" style="width:100%; max-width:480px; height:620px; border:none; border-radius:12px;"></iframe>
+                        <iframe src="pacman.html" title="팩맨 게임" style="width:100%; max-width:480px; height:620px; border:none; border-radius:12px;"></iframe>
                     </div>
                 `;
             } else if (type === 'ramen') {
@@ -1826,9 +1843,9 @@
                         </div>
                         <div class="ramen-layout">
                             <div class="r-card">
-                                <h3>나만의 라면 끓이기</h3>
+                                <h3>나만의 라멘 만들기</h3>
                                 <div class="ramen-stage"><canvas id="ramenCanvas" width="400" height="400"></canvas></div>
-                                <p style="font-size:11px; color:#a0522d; margin-top:8px; text-align:center;">재료 선택 후 그릇을 클릭하세요!</p>
+                                <p style="font-size:11px; color:#a0522d; margin-top:8px; text-align:center;">고명 버튼을 누르면 자동으로 그릇에 올라가요!</p>
                             </div>
                             <div class="r-card">
                                 <div class="order-box" style="background:#fff3e0; border-color:#ffe0b2;">
@@ -2147,160 +2164,225 @@
             const canvas = document.getElementById('ramenCanvas'), ctx = canvas.getContext('2d');
             const $ = id => document.getElementById(id);
 
-            // 재료: 면/국물은 베이스, 나머지는 고명(토핑)
+            // 고명(토핑) — 면/국물은 항상 기본으로 깔림. 버튼을 누르면 자동으로 그릇에 올라가요(토글)
             const ingredients = [
-                {id:'noodle',emoji:'🍜',name:'면',color:'#f5deb3'},
-                {id:'broth',emoji:'🥣',name:'국물',color:'#c0392b'},
-                {id:'egg',emoji:'🥚',name:'계란',color:'#fff4c2'},
-                {id:'green',emoji:'🧅',name:'파',color:'#4caf50'},
-                {id:'meat',emoji:'🥩',name:'고기',color:'#8d5524'},
-                {id:'kimchi',emoji:'🌶️',name:'김치',color:'#e74c3c'},
-                {id:'seaweed',emoji:'🟩',name:'김',color:'#2d3b1e'}
+                {id:'chashu',  emoji:'🍖', name:'차슈'},
+                {id:'egg',     emoji:'🥚', name:'반숙계란'},
+                {id:'naruto',  emoji:'🍥', name:'나루토'},
+                {id:'green',   emoji:'🌿', name:'쪽파'},
+                {id:'menma',   emoji:'🎋', name:'멘마'},
+                {id:'nori',    emoji:'🟩', name:'김'},
+                {id:'corn',    emoji:'🌽', name:'옥수수'}
             ];
             const ingById = Object.fromEntries(ingredients.map(i => [i.id, i]));
 
-            // 손님 주문 메뉴 (면+국물은 공통, toppings = 필요한 고명)
+            // 손님 주문 메뉴 — toppings = 필요한 고명 집합
             const MENU = [
-                {name:'기본 라면', icon:'🍜', toppings:['egg','green'], tip:'계란+파'},
-                {name:'김치 라면', icon:'🌶️', toppings:['kimchi','green'], tip:'김치+파'},
-                {name:'고기 라면', icon:'🥩', toppings:['meat','egg'], tip:'고기+계란'},
-                {name:'해물 라면', icon:'🟩', toppings:['seaweed','green'], tip:'김+파'},
-                {name:'스페셜 라면', icon:'⭐', toppings:['egg','meat','green','seaweed'], tip:'계란+고기+파+김'},
-                {name:'담백 라면', icon:'🍥', toppings:[], tip:'고명 없이 면과 국물만'}
+                {name:'쇼유 라멘',   icon:'🍜', toppings:['chashu','egg','green'],        tip:'차슈+반숙계란+쪽파'},
+                {name:'돈코츠 라멘', icon:'🍖', toppings:['chashu','naruto','nori'],       tip:'차슈+나루토+김'},
+                {name:'미소 라멘',   icon:'🌽', toppings:['corn','green','menma'],         tip:'옥수수+쪽파+멘마'},
+                {name:'차슈멘',      icon:'🍖', toppings:['chashu','egg','menma','green'], tip:'차슈+반숙계란+멘마+쪽파'},
+                {name:'스페셜 라멘', icon:'⭐', toppings:['chashu','egg','naruto','green','nori'], tip:'차슈+계란+나루토+쪽파+김'},
+                {name:'심플 라멘',   icon:'🍥', toppings:['naruto','green'],               tip:'나루토+쪽파'}
             ];
-            const BASE = ['noodle','broth']; // 공통 베이스
 
-            let selected='noodle', placed=[], order=null;
-            let score=0, served=0;
+            let toppings = new Set();   // 현재 그릇에 올라간 고명들
+            let order = null;
+            let score = 0, served = 0;
 
             function newOrder() {
                 order = MENU[Math.floor(Math.random()*MENU.length)];
-                placed = []; selected = 'noodle';
+                toppings = new Set();
                 $('rCustomer').textContent = '🙂';
                 $('rOrderName').textContent = order.name;
                 $('rOrderIcon').textContent = order.icon;
                 const needTop = order.toppings.length ? order.toppings.map(t=>ingById[t].emoji+ingById[t].name).join(', ') : '없음';
-                $('rOrderNeeds').innerHTML = '필요: 면+국물(기본) + <b>고명: '+needTop+'</b><br><span style="color:#a0522d;">'+order.tip+'</span>';
+                $('rOrderNeeds').innerHTML = '기본 면+국물은 준비 완료! <b>고명: '+needTop+'</b><br><span style="color:#a0522d;">'+order.tip+' 를 올려 주세요</span>';
                 $('rFeedback').textContent = '';
                 buildBtns(); draw();
             }
 
+            // 둥근 사각형 헬퍼
+            function roundRect(x, y, w, h, r) {
+                ctx.beginPath();
+                ctx.moveTo(x+r, y);
+                ctx.arcTo(x+w, y,   x+w, y+h, r);
+                ctx.arcTo(x+w, y+h, x,   y+h, r);
+                ctx.arcTo(x,   y+h, x,   y,   r);
+                ctx.arcTo(x,   y,   x+w, y,   r);
+                ctx.closePath();
+            }
+
             function draw() {
                 ctx.clearRect(0,0,400,400);
-                // 그릇
-                ctx.fillStyle='#ffe0b2'; ctx.beginPath(); ctx.arc(200,200,180,0,Math.PI*2); ctx.fill();
-                ctx.fillStyle='#e0e0e0'; ctx.beginPath(); ctx.arc(200,200,170,0,Math.PI*2); ctx.fill();
-                const hasBroth = placed.some(p=>p.id==='broth');
-                const hasNoodle = placed.some(p=>p.id==='noodle');
-                if(hasBroth){ ctx.fillStyle='#c0392b'; ctx.beginPath(); ctx.arc(200,200,155,0,Math.PI*2); ctx.fill(); }
-                else { ctx.fillStyle='#fff8e1'; ctx.beginPath(); ctx.arc(200,200,155,0,Math.PI*2); ctx.fill(); }
-                if(hasNoodle){
-                    // 면발 (곡선 여러 개)
-                    ctx.strokeStyle='#f5deb3'; ctx.lineWidth=5;
-                    for(let i=0;i<7;i++){
-                        ctx.beginPath();
-                        const oy = 170 + i*10;
-                        ctx.moveTo(120, oy);
-                        ctx.bezierCurveTo(160, oy-15, 240, oy+15, 280, oy);
-                        ctx.stroke();
-                    }
-                }
-                // 고명 그리기 (재료별 모양)
-                placed.filter(p=>!BASE.includes(p.id)).forEach(p=>{
-                    const ing = ingById[p.id];
-                    ctx.save();
-                    if(p.id==='egg'){
-                        // 반숙 계란: 흰자 + 노른자
-                        ctx.fillStyle='#fff4c2'; ctx.beginPath(); ctx.arc(p.x,p.y,15,0,Math.PI*2); ctx.fill();
-                        ctx.fillStyle='#ffb300'; ctx.beginPath(); ctx.arc(p.x,p.y,6,0,Math.PI*2); ctx.fill();
-                    } else if(p.id==='meat'){
-                        // 차슈: 분홍 속살 + 갈색 테두리 (동그란 고기 슬라이스)
-                        ctx.fillStyle='#8d5524'; ctx.beginPath(); ctx.arc(p.x,p.y,16,0,Math.PI*2); ctx.fill();
-                        ctx.fillStyle='#e8a3a3'; ctx.beginPath(); ctx.arc(p.x,p.y,12,0,Math.PI*2); ctx.fill();
-                        ctx.fillStyle='#c97b7b'; ctx.beginPath(); ctx.arc(p.x,p.y,5,0,Math.PI*2); ctx.fill();
-                    } else if(p.id==='seaweed'){
-                        // 김: 네모난 검은 조각 + 약간의 광택
-                        ctx.fillStyle='#1f2a14';
-                        ctx.fillRect(p.x-14, p.y-18, 28, 36);
-                        ctx.strokeStyle='#3a4a24'; ctx.lineWidth=2;
-                        ctx.strokeRect(p.x-14, p.y-18, 28, 36);
-                    } else if(p.id==='green'){
-                        // 파: 작은 초록 원 여러 개 느낌
-                        ctx.fillStyle='#4caf50';
-                        ctx.beginPath(); ctx.arc(p.x,p.y,5,0,Math.PI*2); ctx.fill();
-                        ctx.fillStyle='#a5d6a7'; ctx.beginPath(); ctx.arc(p.x,p.y,2,0,Math.PI*2); ctx.fill();
-                    } else if(p.id==='kimchi'){
-                        // 김치: 불규칙한 빨강 조각
-                        ctx.fillStyle='#e74c3c';
-                        ctx.beginPath();
-                        ctx.moveTo(p.x-10, p.y-6);
-                        ctx.lineTo(p.x+8, p.y-10);
-                        ctx.lineTo(p.x+12, p.y+6);
-                        ctx.lineTo(p.x-4, p.y+11);
-                        ctx.lineTo(p.x-12, p.y+2);
-                        ctx.closePath(); ctx.fill();
-                        ctx.fillStyle='#c0392b'; ctx.fillRect(p.x-2, p.y-4, 6, 8);
-                    } else {
-                        ctx.fillStyle = ing.color || '#8d5524';
-                        ctx.beginPath(); ctx.arc(p.x,p.y,12,0,Math.PI*2); ctx.fill();
-                    }
-                    ctx.restore();
+
+                // === 그릇 바깥 테두리 (흰 그릇 + 붉은 라인) ===
+                ctx.fillStyle='#f3efe7'; ctx.beginPath(); ctx.arc(200,205,185,0,Math.PI*2); ctx.fill();
+                ctx.strokeStyle='#c0392b'; ctx.lineWidth=10; ctx.beginPath(); ctx.arc(200,205,170,0,Math.PI*2); ctx.stroke();
+                // 그릇 안쪽 (뇌문/번개 무늬 느낌의 포인트 링)
+                ctx.strokeStyle='#e4b84a'; ctx.lineWidth=3; ctx.beginPath(); ctx.arc(200,205,158,0,Math.PI*2); ctx.stroke();
+
+                // === 국물 (돈코츠 베이지 → 쇼유 갈색 그라데이션) ===
+                const g = ctx.createRadialGradient(200,195,30, 200,205,150);
+                g.addColorStop(0, '#e9c98a');
+                g.addColorStop(0.6, '#d9a85c');
+                g.addColorStop(1, '#b9792f');
+                ctx.fillStyle = g; ctx.beginPath(); ctx.arc(200,205,150,0,Math.PI*2); ctx.fill();
+
+                // 기름방울 (국물 위 반짝임)
+                ctx.fillStyle='rgba(255,230,160,0.55)';
+                [[150,150,7],[250,165,5],[220,250,6],[160,255,4],[270,230,4]].forEach(([x,y,r])=>{
+                    ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
                 });
-                if(!placed.length){ ctx.fillStyle='#a0522d'; ctx.font='bold 15px sans-serif'; ctx.textAlign='center'; ctx.fillText('클릭하여 면부터 넣어보세요!',200,205); }
+
+                // === 면발 (촘촘한 웨이브) ===
+                ctx.save();
+                ctx.beginPath(); ctx.arc(200,205,148,0,Math.PI*2); ctx.clip();
+                ctx.strokeStyle='#f2d58a'; ctx.lineWidth=4; ctx.lineCap='round';
+                for(let i=0;i<10;i++){
+                    const oy = 120 + i*18;
+                    ctx.beginPath();
+                    ctx.moveTo(80, oy);
+                    ctx.bezierCurveTo(140, oy-22, 200, oy+22, 260, oy-10);
+                    ctx.bezierCurveTo(300, oy-24, 320, oy+6, 340, oy);
+                    ctx.stroke();
+                }
+                ctx.strokeStyle='rgba(224,180,90,0.5)'; ctx.lineWidth=2;
+                for(let i=0;i<10;i++){
+                    const oy = 129 + i*18;
+                    ctx.beginPath();
+                    ctx.moveTo(80, oy);
+                    ctx.bezierCurveTo(150, oy-18, 210, oy+18, 270, oy-8);
+                    ctx.stroke();
+                }
+                ctx.restore();
+
+                // === 고명 그리기 (일본 라멘 스타일, 고정 위치) ===
+                const draws = {
+                    chashu: () => {
+                        // 차슈: 큼직한 직사각형 두 장 (돼지고기 로스트, 겉 테두리 + 비계 띠)
+                        const slabs = [ {x:120, y:150, a:-0.18}, {x:150, y:205, a:0.12} ];
+                        slabs.forEach(s=>{
+                            ctx.save();
+                            ctx.translate(s.x, s.y); ctx.rotate(s.a);
+                            const w=96, h=58;
+                            // 그림자
+                            ctx.fillStyle='rgba(90,50,20,0.25)'; roundRect(-w/2+3, -h/2+4, w, h, 10); ctx.fill();
+                            // 겉면(구운 갈색 테두리)
+                            ctx.fillStyle='#7a4a24'; roundRect(-w/2, -h/2, w, h, 10); ctx.fill();
+                            // 속살(분홍빛 로스)
+                            ctx.fillStyle='#d98f7a'; roundRect(-w/2+6, -h/2+6, w-12, h-12, 7); ctx.fill();
+                            // 결 무늬
+                            ctx.strokeStyle='rgba(150,80,60,0.5)'; ctx.lineWidth=2;
+                            for(let k=-1;k<=1;k++){ ctx.beginPath(); ctx.moveTo(-w/2+10, k*12); ctx.lineTo(w/2-10, k*12); ctx.stroke(); }
+                            // 비계 띠 (가장자리 지방)
+                            ctx.fillStyle='#f3e0cf'; roundRect(-w/2+6, h/2-14, w-12, 8, 4); ctx.fill();
+                            ctx.restore();
+                        });
+                    },
+                    egg: () => {
+                        // 반숙 계란(아지타마): 흰자 반쪽 + 주황 노른자 + 윤기
+                        const x=268, y=160;
+                        ctx.fillStyle='rgba(0,0,0,0.12)'; ctx.beginPath(); ctx.ellipse(x+2, y+3, 36, 44, 0, 0, Math.PI*2); ctx.fill();
+                        ctx.fillStyle='#fffaf0'; ctx.beginPath(); ctx.ellipse(x, y, 34, 42, 0, 0, Math.PI*2); ctx.fill();
+                        const yolk = ctx.createRadialGradient(x-6, y-8, 4, x, y, 24);
+                        yolk.addColorStop(0,'#ffcf5a'); yolk.addColorStop(1,'#ef8a1e');
+                        ctx.fillStyle=yolk; ctx.beginPath(); ctx.ellipse(x, y+2, 21, 24, 0, 0, Math.PI*2); ctx.fill();
+                        ctx.fillStyle='rgba(255,255,255,0.6)'; ctx.beginPath(); ctx.ellipse(x-8, y-6, 5, 7, -0.5, 0, Math.PI*2); ctx.fill();
+                    },
+                    naruto: () => {
+                        // 나루토(어묵): 흰 원 + 분홍 소용돌이
+                        const x=210, y=120, R=26;
+                        ctx.fillStyle='rgba(0,0,0,0.12)'; ctx.beginPath(); ctx.arc(x+2,y+3,R,0,Math.PI*2); ctx.fill();
+                        ctx.fillStyle='#fdfdfd'; ctx.beginPath(); ctx.arc(x,y,R,0,Math.PI*2); ctx.fill();
+                        ctx.strokeStyle='#f06292'; ctx.lineWidth=5; ctx.lineCap='round';
+                        ctx.beginPath();
+                        for(let a=0; a<Math.PI*3.2; a+=0.1){ const rr=3+a*2.4; const px=x+Math.cos(a)*rr, py=y+Math.sin(a)*rr; a===0?ctx.moveTo(px,py):ctx.lineTo(px,py); }
+                        ctx.stroke();
+                        ctx.strokeStyle='#e0e0e0'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(x,y,R,0,Math.PI*2); ctx.stroke();
+                    },
+                    green: () => {
+                        // 쪽파: 작은 초록 링 여러 개 흩뿌림
+                        const pts=[[175,250],[200,265],[230,245],[150,195],[255,210],[205,235],[180,160]];
+                        pts.forEach(([px,py])=>{
+                            ctx.fillStyle='#3fa34d'; ctx.beginPath(); ctx.arc(px,py,6,0,Math.PI*2); ctx.fill();
+                            ctx.fillStyle='#e8f5e9'; ctx.beginPath(); ctx.arc(px,py,2.2,0,Math.PI*2); ctx.fill();
+                        });
+                    },
+                    menma: () => {
+                        // 멘마(죽순): 연노랑 길쭉한 조각 몇 개
+                        const bars=[[250,255,0.5],[268,242,0.7],[238,270,0.3]];
+                        bars.forEach(([x,y,a])=>{
+                            ctx.save(); ctx.translate(x,y); ctx.rotate(a);
+                            ctx.fillStyle='#e7cf7a'; roundRect(-6,-22,12,44,4); ctx.fill();
+                            ctx.strokeStyle='#c9ad55'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(0,-18); ctx.lineTo(0,18); ctx.stroke();
+                            ctx.restore();
+                        });
+                    },
+                    nori: () => {
+                        // 김: 큰 직사각형 한 장, 그릇 가장자리에 꽂은 느낌
+                        ctx.save();
+                        ctx.translate(120, 250); ctx.rotate(-0.12);
+                        ctx.fillStyle='rgba(0,0,0,0.2)'; ctx.fillRect(-30+3, -48+3, 60, 96);
+                        const ng = ctx.createLinearGradient(-30,0,30,0);
+                        ng.addColorStop(0,'#10200f'); ng.addColorStop(0.5,'#243a1a'); ng.addColorStop(1,'#16280f');
+                        ctx.fillStyle=ng; ctx.fillRect(-30, -48, 60, 96);
+                        ctx.strokeStyle='rgba(120,160,90,0.4)'; ctx.lineWidth=1.5;
+                        for(let k=-28;k<=28;k+=10){ ctx.beginPath(); ctx.moveTo(k,-46); ctx.lineTo(k,46); ctx.stroke(); }
+                        ctx.restore();
+                    },
+                    corn: () => {
+                        // 옥수수 알갱이 무더기
+                        const pts=[[235,180],[248,188],[228,192],[242,200],[256,196],[233,205],[250,210]];
+                        pts.forEach(([px,py])=>{
+                            ctx.fillStyle='#ffca28'; ctx.beginPath(); ctx.arc(px,py,5,0,Math.PI*2); ctx.fill();
+                            ctx.fillStyle='#ffe082'; ctx.beginPath(); ctx.arc(px-1,py-1,2,0,Math.PI*2); ctx.fill();
+                        });
+                    }
+                };
+                // 올라간 순서와 무관하게 보기 좋은 레이어 순서로 그림
+                ['nori','chashu','menma','corn','naruto','egg','green'].forEach(id=>{ if(toppings.has(id) && draws[id]) draws[id](); });
+
+                // 모락모락 김 (상단)
+                ctx.strokeStyle='rgba(255,255,255,0.3)'; ctx.lineWidth=3; ctx.lineCap='round';
+                [160,210,255].forEach((x,i)=>{
+                    ctx.beginPath(); ctx.moveTo(x,70);
+                    ctx.bezierCurveTo(x-12,50, x+12,35, x-6,14);
+                    ctx.stroke();
+                });
             }
 
             function buildBtns() {
                 const root = $('rIngredients');
                 root.innerHTML = '';
                 ingredients.forEach(it=>{
+                    const on = toppings.has(it.id);
                     const b = document.createElement('button');
-                    b.className = 'ing-btn' + (selected === it.id ? ' active' : '');
-                    b.innerHTML = '<span style="font-size:20px">'+it.emoji+'</span><span><b>'+it.name+'</b></span>';
-                    b.onclick = () => { selected = it.id; buildBtns(); };
+                    b.className = 'ing-btn' + (on ? ' active' : '');
+                    b.innerHTML = '<span style="font-size:20px">'+it.emoji+'</span><span><b>'+it.name+'</b>'+(on?' ✓':'')+'</span>';
+                    b.onclick = () => {
+                        if(toppings.has(it.id)) toppings.delete(it.id); else toppings.add(it.id);
+                        buildBtns(); draw();
+                    };
                     root.appendChild(b);
                 });
             }
 
-            canvas.onclick = (e) => {
-                if(!selected) return;
-                const rect = canvas.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / rect.width * 400;
-                const y = (e.clientY - rect.top) / rect.height * 400;
-                if(Math.hypot(x-200, y-200) > 150) return;
-                if(selected==='noodle') {
-                    if(!placed.some(p=>p.id==='noodle')) placed.push({id:'noodle',x:200,y:200});
-                    selected='broth';
-                } else if(selected==='broth') {
-                    if(!placed.some(p=>p.id==='broth')) placed.push({id:'broth',x:200,y:200});
-                    selected='egg';
-                } else {
-                    placed.push({id:selected,x,y});
-                }
-                buildBtns(); draw();
-            };
-
             function evaluate() {
-                const placedToppings = [...new Set(placed.filter(p=>!BASE.includes(p.id)).map(p=>p.id))];
+                const placedToppings = [...toppings];
                 const needToppings = order.toppings;
-                const hasAllBase = BASE.every(b => placed.some(p=>p.id===b));
                 const missing = needToppings.filter(t => !placedToppings.includes(t));
                 const extra = placedToppings.filter(t => !needToppings.includes(t));
-                return { hasAllBase, missing, extra };
+                return { missing, extra };
             }
 
-            $('rClear').onclick = () => { placed=[]; selected='noodle'; buildBtns(); draw(); };
+            $('rClear').onclick = () => { toppings = new Set(); buildBtns(); draw(); };
 
             $('rServe').onclick = () => {
                 if(!order) return;
-                const { hasAllBase, missing, extra } = evaluate();
+                const { missing, extra } = evaluate();
                 const fb = $('rFeedback');
 
-                if(!hasAllBase){
-                    fb.style.color = '#c0392b';
-                    fb.textContent = '❌ 기본(면+국물)이 빠졌어요!';
-                    $('rCustomer').textContent = '😠';
-                    return;
-                }
                 if(missing.length===0 && extra.length===0){
                     const gained = 100;
                     score += gained; served += 1;
