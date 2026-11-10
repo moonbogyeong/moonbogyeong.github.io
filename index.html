@@ -1249,12 +1249,27 @@
         font-weight: 600;
         transition: all .18s ease;
     }
+    .quiz-opt { cursor: pointer; }
     .quiz-opt .q-emoji { font-size: 24px; }
+    .quiz-opt .q-key {
+        flex: 0 0 auto;
+        width: 40px; height: 40px;
+        display: grid; place-items: center;
+        border-radius: 10px;
+        background: var(--orange-soft);
+        color: var(--orange);
+        font-family: var(--mono);
+        font-size: 20px; font-weight: 800;
+    }
+    .quiz-opt .q-main { display: flex; flex-direction: column; gap: 2px; }
+    .quiz-opt .q-main b { font-size: 15px; font-weight: 700; }
+    .quiz-opt .q-main small { font-size: 12px; color: var(--muted); font-weight: 500; }
     .quiz-opt:hover {
         border-color: var(--orange);
         background: var(--orange-soft);
         transform: translateX(4px);
     }
+    .quiz-opt:hover .q-key { background: var(--orange); color: #2a1500; }
     .quiz-result { text-align: center; }
     .quiz-result .result-eyebrow {
         font-family: var(--mono);
@@ -1337,9 +1352,9 @@
         <!-- 게임 추천 퀴즈 -->
         <section id="quiz">
             <div class="section-head reveal">
-                <span class="label">FIND YOUR GAME</span>
-                <h2 class="section-title">나에게 어울리는 <span>게임은?</span></h2>
-                <p class="section-sub">5개의 질문에 답하면 8개 게임 중 당신에게 딱 맞는 게임을 추천해 드려요.</p>
+                <span class="label">MBTI GAME TEST</span>
+                <h2 class="section-title">내 MBTI에 맞는 <span>게임은?</span></h2>
+                <p class="section-sub">4개의 질문에 답하면 당신의 MBTI 유형과 딱 어울리는 게임을 추천해 드려요.</p>
             </div>
             <div class="quiz-box reveal" id="quizBox"></div>
         </section>
@@ -2676,87 +2691,90 @@
             nextQuestion();
         }
 
-        /* ===== 게임 추천 퀴즈 ===== */
+        /* ===== MBTI 게임 추천 ===== */
         (function () {
             const box = document.getElementById('quizBox');
             if (!box) return;
 
-            // 각 선택지는 게임별 점수를 더함
+            // MBTI 4축 질문 (각 선택지가 한 글자씩 결정)
             const QUESTIONS = [
                 {
-                    q: 'Q1. 짧은 휴식 시간, 당신의 선택은?',
+                    q: 'Q1. 게임하고 싶을 때 나는?',
                     options: [
-                        { emoji: '✦', text: '10초 안에 짜릿하게 몰입하고 싶어', scores: { star: 3 } },
-                        { emoji: '�', text: '여유롭게 손맛을 즐기고 싶어', scores: { ramen: 3 } },
-                        { emoji: '🎲', text: '예상 못 한 깜짝 재미가 좋아', scores: { potion: 3 } },
-                        { emoji: '🎬', text: '머리 식히며 맞히는 퀴즈가 좋아', scores: { quizface: 3 } }
+                        { key: 'E', title: '친구들과 왁자지껄', desc: '사람들과 어울리며 에너지 충전' },
+                        { key: 'I', title: '혼자 조용히 몰입', desc: '나만의 시간에 푹 빠지는 게 최고' }
                     ]
                 },
                 {
-                    q: 'Q2. 손가락과 머리, 어느 쪽을 더 쓰고 싶나요?',
+                    q: 'Q2. 새 게임을 시작할 때 나는?',
                     options: [
-                        { emoji: '�', text: '빠른 반응속도 — 미로를 질주하며 피하기', scores: { pacman: 3 } },
-                        { emoji: '🔢', text: '논리와 계산 — 숫자로 머리 쓰기', scores: { sudoku: 3 } },
-                        { emoji: '�', text: '순서와 조합 — 레시피처럼 맞춰가기', scores: { pizza: 3 } },
-                        { emoji: '�', text: '관찰과 눈썰미 — 숨은 차이 찾기', scores: { spot: 3 } }
+                        { key: 'S', title: '규칙부터 차근차근', desc: '지금 눈앞의 정보에 충실하게' },
+                        { key: 'N', title: '일단 상상하며 질러본다', desc: '큰 그림과 가능성이 먼저 보여' }
                     ]
                 },
                 {
-                    q: 'Q3. 게임의 "목표"로 가장 끌리는 건?',
+                    q: 'Q3. 게임이 잘 안 풀릴 때 나는?',
                     options: [
-                        { emoji: '🗺️', text: '길을 찾아 출구로 빠져나가기', scores: { maze: 3 } },
-                        { emoji: '�️', text: '살금살금 다가가 포획하기', scores: { dragonfly: 3 } },
-                        { emoji: '⚔️', text: '몰려오는 적을 물리치기', scores: { arena: 3 } },
-                        { emoji: '🏆', text: '기록 깨기 & 손맛의 정점 찍기', scores: { star: 3, ramen: 3 } }
+                        { key: 'T', title: '원인을 분석한다', desc: '논리적으로 뭐가 틀렸는지 따진다' },
+                        { key: 'F', title: '기분 전환이 먼저', desc: '즐거움과 분위기가 더 중요해' }
                     ]
                 },
                 {
-                    q: 'Q4. 분위기는 어떤 쪽이 좋아요?',
+                    q: 'Q4. 내가 좋아하는 플레이는?',
                     options: [
-                        { emoji: '🔮', text: '신비롭고 마법 같은', scores: { potion: 3 } },
-                        { emoji: '�', text: '머리 식는 유쾌한 퀴즈', scores: { quizface: 3 } },
-                        { emoji: '🌿', text: '여름밤처럼 아기자기하고 따뜻한', scores: { dragonfly: 3 } },
-                        { emoji: '�', text: '치열하고 긴장감 넘치는', scores: { arena: 3 } }
-                    ]
-                },
-                {
-                    q: 'Q5. 지면/실패했을 때 당신은?',
-                    options: [
-                        { emoji: '🤔', text: '어디서 틀렸나 논리로 복기', scores: { sudoku: 3 } },
-                        { emoji: '�', text: '다른 점을 끝까지 찾아낸다', scores: { spot: 3 } },
-                        { emoji: '�', text: '바로 재도전! 손이 바빠야 직성이 풀려', scores: { pacman: 3, pizza: 3 } },
-                        { emoji: '🗺️', text: '길을 되짚으며 차분히 다시', scores: { maze: 3 } }
+                        { key: 'J', title: '계획대로 착착', desc: '목표를 정하고 단계별로 클리어' },
+                        { key: 'P', title: '그때그때 즉흥적으로', desc: '흐름 따라 자유롭게 즐긴다' }
                     ]
                 }
             ];
 
-            const RESULT = {
-                star:     { icon: '✦', name: '별빛 수집가', desc: '반사신경과 집중력이 뛰어난 당신! 우주를 누비며 별을 모으고 최고 기록에 도전해 보세요.' },
-                arena:    { icon: '⚔️', name: '네온 아레나', desc: '도전과 전투를 즐기는 당신! 몰려오는 적을 물리치며 웨이브를 돌파하세요.' },
-                pizza:    { icon: '🍕', name: '피자 공방', desc: '꼼꼼하고 센스 있는 당신! 주문에 맞춰 완벽한 피자를 만들어 손님을 만족시켜 보세요.' },
-                pacman:   { icon: '🟡', name: '팩맨', desc: '복고 감성과 전략을 좋아하는 당신! 미로를 누비며 점을 모으고 유령을 피하세요.' },
-                ramen:    { icon: '🍜', name: '라면 가게', desc: '차분하고 손맛 좋은 당신! 주문에 맞춰 면과 고명을 올려 최고의 라면을 끓여 보세요.' },
-                sudoku:   { icon: '🔢', name: '스도쿠', desc: '논리적이고 끈기 있는 당신! 목숨 3개로 4단계 난이도의 숫자 퍼즐에 도전해 보세요.' },
-                potion:   { icon: '🧪', name: '요술 항아리', desc: '호기심 많고 창의적인 당신! 물약을 섞어 어떤 캐릭터가 나올지 수집해 보세요.' },
-                quizface: { icon: '🎬', name: '이모지 퀴즈', desc: '눈치 빠르고 영화를 좋아하는 당신! 이모지를 보고 어떤 작품인지 맞혀 등급을 올려 보세요.' },
-                maze:     { icon: '🧭', name: '미로 찾기', desc: '길 찾기와 공간 감각이 뛰어난 당신! 4단계 난이도의 미로를 최단 걸음으로 빠져나가 보세요.' },
-                spot:     { icon: '🔍', name: '틀린 그림 찾기', desc: '관찰력이 남다른 당신! 제한 시간 안에 두 그림의 다른 곳을 모두 찾아내 보세요.' },
-                dragonfly:{ icon: '🧚', name: '잠자리 잡기', desc: '침착하고 타이밍 감각이 좋은 당신! 살금살금 다가가 잠자리가 눈치채기 전에 잡아 보세요.' }
+            // 게임 정보
+            const GAME = {
+                star:     { icon: '✦', name: '별빛 수집가' },
+                arena:    { icon: '⚔️', name: '네온 아레나' },
+                pizza:    { icon: '🍕', name: '피자 공방' },
+                pacman:   { icon: '🟡', name: '팩맨' },
+                ramen:    { icon: '🍜', name: '라면 가게' },
+                sudoku:   { icon: '🔢', name: '스도쿠' },
+                potion:   { icon: '🧪', name: '요술 항아리' },
+                quizface: { icon: '🎬', name: '이모지 퀴즈' },
+                maze:     { icon: '🧭', name: '미로 찾기' },
+                spot:     { icon: '🔍', name: '틀린 그림 찾기' },
+                dragonfly:{ icon: '🧚', name: '잠자리 잡기' }
             };
 
-            const EMPTY = { star: 0, arena: 0, pizza: 0, pacman: 0, ramen: 0, sudoku: 0, potion: 0, quizface: 0, maze: 0, spot: 0, dragonfly: 0 };
+            // 16유형 → {별명, 게임, 설명}
+            const TYPE = {
+                ISTJ: { nick: '빈틈없는 전략가',   game: 'sudoku',   desc: '규칙과 논리를 꽉 잡는 당신, 숫자 퍼즐 스도쿠로 완벽을 증명하세요.' },
+                ISFJ: { nick: '다정한 살림꾼',     game: 'ramen',    desc: '차분하고 손맛 좋은 당신, 라면 가게에서 손님을 정성껏 챙겨 보세요.' },
+                INFJ: { nick: '신비로운 몽상가',   game: 'potion',   desc: '깊이 있고 상상력 풍부한 당신, 요술 항아리로 숨은 캐릭터를 수집하세요.' },
+                INTJ: { nick: '치밀한 설계자',     game: 'maze',     desc: '큰 그림을 그리는 전략가인 당신, 미로의 최적 경로를 설계해 보세요.' },
+                ISTP: { nick: '냉철한 관찰자',     game: 'spot',     desc: '예리한 눈썰미의 당신, 틀린 그림 찾기로 숨은 차이를 모조리 잡아내세요.' },
+                ISFP: { nick: '감성 힐링러',       game: 'dragonfly',desc: '조용하고 섬세한 당신, 여름밤 잠자리 잡기로 힐링 타임을 즐기세요.' },
+                INFP: { nick: '상상 속 예술가',     game: 'potion',   desc: '엉뚱하고 창의적인 당신, 요술 항아리에서 뜻밖의 조합을 발견해 보세요.' },
+                INTP: { nick: '호기심 탐구자',     game: 'maze',     desc: '길을 파헤치는 걸 즐기는 당신, 복잡한 미로를 머리로 정복하세요.' },
+                ESTP: { nick: '순발력 승부사',     game: 'pacman',   desc: '빠른 반응의 액션파 당신, 팩맨 미로를 질주하며 유령을 따돌리세요.' },
+                ESFP: { nick: '반짝이는 분위기메이커', game: 'star',  desc: '밝고 에너지 넘치는 당신, 별빛 수집가로 화려한 최고 기록을 노리세요.' },
+                ENFP: { nick: '자유로운 모험가',   game: 'star',     desc: '즉흥적이고 열정적인 당신, 별빛을 모으며 신나게 질주해 보세요.' },
+                ENTP: { nick: '재치 만점 승부사',   game: 'quizface', desc: '눈치 빠르고 번뜩이는 당신, 이모지 퀴즈로 재치를 뽐내 보세요.' },
+                ESTJ: { nick: '추진력 리더',       game: 'arena',    desc: '목표 지향 승부사인 당신, 네온 아레나에서 웨이브를 돌파하세요.' },
+                ESFJ: { nick: '센스 있는 호스트',   game: 'pizza',    desc: '꼼꼼하고 따뜻한 당신, 피자 공방에서 손님 주문을 완벽히 맞춰 보세요.' },
+                ENFJ: { nick: '다정한 조율가',     game: 'dragonfly',desc: '배려심 깊고 섬세한 당신, 잠자리 잡기로 침착한 타이밍을 즐기세요.' },
+                ENTJ: { nick: '카리스마 지휘관',   game: 'arena',    desc: '강한 승부욕의 당신, 네온 아레나에서 전장을 지휘하세요.' }
+            };
+
             let step = 0;
-            let scores = Object.assign({}, EMPTY);
+            let mbti = ['', '', '', ''];
 
             function renderIntro() {
                 step = 0;
-                scores = Object.assign({}, EMPTY);
+                mbti = ['', '', '', ''];
                 box.innerHTML =
                     '<div class="quiz-result">' +
-                    '<div class="result-eyebrow">GAME MATCH TEST</div>' +
+                    '<div class="result-eyebrow">MBTI GAME TEST</div>' +
                     '<span class="result-icon">🎮</span>' +
-                    '<div class="result-name">어떤 게임이 <span>나에게</span> 맞을까?</div>' +
-                    '<p class="result-desc">5개의 질문에 답하면 8개 게임 중 당신에게 가장 어울리는 하나를 추천해 드려요.</p>' +
+                    '<div class="result-name">내 <span>MBTI</span>에 맞는 게임은?</div>' +
+                    '<p class="result-desc">4개의 질문에 답하면 당신의 MBTI 유형과 딱 어울리는 게임을 추천해 드려요.</p>' +
                     '<div class="quiz-result-actions"><button class="btn-primary" id="quizStart">테스트 시작 ▸</button></div>' +
                     '</div>';
                 document.getElementById('quizStart').onclick = renderQuestion;
@@ -2768,14 +2786,17 @@
                 html += '<div class="quiz-q">' + item.q + '</div>';
                 html += '<div class="quiz-options">';
                 item.options.forEach(function (opt, i) {
-                    html += '<button class="quiz-opt" data-i="' + i + '"><span class="q-emoji">' + opt.emoji + '</span><span>' + opt.text + '</span></button>';
+                    html += '<button class="quiz-opt" data-i="' + i + '">' +
+                        '<span class="q-key">' + opt.key + '</span>' +
+                        '<span class="q-main"><b>' + opt.title + '</b><small>' + opt.desc + '</small></span>' +
+                        '</button>';
                 });
                 html += '</div>';
                 box.innerHTML = html;
                 box.querySelectorAll('.quiz-opt').forEach(function (btn) {
                     btn.onclick = function () {
                         const opt = item.options[Number(btn.dataset.i)];
-                        for (const g in opt.scores) { scores[g] += opt.scores[g]; }
+                        mbti[step] = opt.key;
                         step++;
                         if (step < QUESTIONS.length) renderQuestion();
                         else renderResult();
@@ -2784,24 +2805,20 @@
             }
 
             function renderResult() {
-                // 최고 점수 게임 선택 (동점이면 그중에서 무작위로 하나)
-                const ALL_GAMES = ['star', 'arena', 'pizza', 'pacman', 'ramen', 'sudoku', 'potion', 'quizface', 'maze', 'spot', 'dragonfly'];
-                let bestScore = -1;
-                ALL_GAMES.forEach(function (g) { if (scores[g] > bestScore) bestScore = scores[g]; });
-                const tied = ALL_GAMES.filter(function (g) { return scores[g] === bestScore; });
-                const best = tied[Math.floor(Math.random() * tied.length)];
-                const r = RESULT[best];
+                const type = mbti.join('');
+                const t = TYPE[type];
+                const g = GAME[t.game];
                 box.innerHTML =
                     '<div class="quiz-result">' +
-                    '<div class="result-eyebrow">YOUR GAME</div>' +
-                    '<span class="result-icon">' + r.icon + '</span>' +
-                    '<div class="result-name">당신에게 어울리는 게임은<br><span>' + r.name + '</span></div>' +
-                    '<p class="result-desc">' + r.desc + '</p>' +
+                    '<div class="result-eyebrow">' + type + ' · ' + t.nick + '</div>' +
+                    '<span class="result-icon">' + g.icon + '</span>' +
+                    '<div class="result-name">' + type + ' 에게 어울리는 게임은<br><span>' + g.name + '</span></div>' +
+                    '<p class="result-desc">' + t.desc + '</p>' +
                     '<div class="quiz-result-actions">' +
                     '<button class="btn-primary" id="quizPlay">지금 플레이 ▸</button>' +
                     '<button class="btn-ghost" id="quizRetry">다시 하기</button>' +
                     '</div></div>';
-                document.getElementById('quizPlay').onclick = function () { openGame(best); };
+                document.getElementById('quizPlay').onclick = function () { openGame(t.game); };
                 document.getElementById('quizRetry').onclick = renderIntro;
             }
 
