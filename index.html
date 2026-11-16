@@ -879,10 +879,11 @@
     .df-stat { font-family: var(--mono); font-size:13px; color:var(--dim); }
     .df-stat b { color: var(--orange); }
     .df-field {
-        position:relative; height:280px; border-radius:16px; overflow:hidden;
-        background: radial-gradient(circle at 50% 30%, rgba(160,200,255,0.12), var(--bg-2));
+        position:relative; border-radius:16px; overflow:hidden;
         border:1px solid var(--border); margin-bottom:14px;
+        display:flex; align-items:center; justify-content:center;
     }
+    .df-field canvas { display:block; width:100%; height:auto; max-height:46vh; aspect-ratio:64/30; }
     .df-bug {
         position:absolute; left:50%; top:42%; transform: translate(-50%,-50%) scale(1);
         font-size:52px; transition: transform .35s ease; will-change: transform;
@@ -2124,8 +2125,7 @@
                             </div>
                         </div>
                         <div class="df-field">
-                            <div class="df-bug" id="dfBug">🧚</div>
-                            <div class="df-hand">🖐️</div>
+                            <canvas id="dfCanvas" width="640" height="300"></canvas>
                         </div>
                         <div class="df-alert">
                             <span class="df-alert-label">경계심</span>
@@ -3499,25 +3499,136 @@
         /* ===== 잠자리 잡기 ===== */
         function initDragonflyGame() {
             const $ = id => document.getElementById(id);
+            const canvas = $('dfCanvas'), ctx = canvas.getContext('2d');
             let dist = 100;      // 잠자리까지 거리 (0이면 손이 닿음)
             let alert = 0;       // 경계심 (100이면 도망)
             let caught = 0, escaped = 0, round = 1;
             let alive = true, grabbing = false;
             let decayTimer = null;
+            let color = 'green';          // 'green'(실잠자리) | 'red'(고추잠자리)
+            let wingPhase = 0;            // 날개 퍼덕임 위상
+            let state = 'idle';           // idle | grabbed | fled
+            let handY = 1;                // 손 접근(1=멀리, 0=닿음)
+            let flyOff = 0;               // 도망 진행도(0~1)
+            let animTimer = null;
+
+            const PALETTE = {
+                green: { body:'#6abf3e', body2:'#3f8d2a', tail:'#2bb6c8', eye:'#2f6b1e' },
+                red:   { body:'#d6342e', body2:'#9e1f1b', tail:'#e8601f', eye:'#5a1210' }
+            };
+
+            // ===== 사실적 잠자리 그리기 =====
+            function drawDragonfly() {
+                const W = 640, H = 300;
+                ctx.clearRect(0, 0, W, H);
+
+                // 배경: 흐린 초록 풀밭 + 보케
+                const bg = ctx.createLinearGradient(0, 0, 0, H);
+                bg.addColorStop(0, '#9fd27a'); bg.addColorStop(0.55, '#7bbf5a'); bg.addColorStop(1, '#5a9e42');
+                ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+                // 보케(흐린 빛망울)
+                [[90,60,34],[540,80,46],[300,40,26],[470,220,40],[140,230,30],[600,180,24]].forEach(([x,y,r],i)=>{
+                    ctx.fillStyle = 'rgba(255,255,255,' + (0.06 + (i%3)*0.03) + ')';
+                    ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+                });
+
+                // 잠자리가 앉은 갈대 끝(도망 전까지)
+                if (state !== 'fled') {
+                    ctx.strokeStyle = '#4a7a2e'; ctx.lineWidth = 8; ctx.lineCap = 'round';
+                    ctx.beginPath(); ctx.moveTo(W/2, H); ctx.quadraticCurveTo(W/2-14, H*0.7, W/2-4, H*0.5); ctx.stroke();
+                }
+
+                // 거리(dist 0~100)에 따라 크기. 가까울수록 큼 (멀 때도 또렷하게 크게)
+                const scale = 1.0 + (100 - dist) / 100 * 1.3;
+                let cx = W/2, cy = H*0.46;
+                if (state === 'fled') { cx += flyOff * 260; cy -= flyOff * 200; }
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.scale(scale, scale);
+                ctx.globalAlpha = state === 'fled' ? Math.max(0, 1 - flyOff) : 1;
+                // 잠자리를 가로로 눕힘(머리 왼쪽, 꼬리 오른쪽)
+                const c = PALETTE[color];
+                const nervous = alert > 50 && state === 'idle';
+                const flap = Math.sin(wingPhase) * (nervous ? 0.45 : 0.15);
+
+                // ── 날개 1장 그리기: 몸 중심(0,0)에서 바깥으로 뻗음. len>0 고정, 방향은 각도로 ──
+                function wing(ang, len, wid) {
+                    ctx.save();
+                    ctx.rotate(ang);
+                    const grad = ctx.createLinearGradient(0, 0, len, 0);
+                    grad.addColorStop(0, 'rgba(235,248,255,0.6)');
+                    grad.addColorStop(1, 'rgba(205,228,242,0.25)');
+                    ctx.fillStyle = grad;
+                    ctx.strokeStyle = 'rgba(120,150,170,0.5)'; ctx.lineWidth = 0.8;
+                    ctx.beginPath(); ctx.ellipse(len/2, 0, len/2, wid, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+                    ctx.strokeStyle = 'rgba(110,140,160,0.35)'; ctx.lineWidth = 0.6;
+                    for (let k = -2; k <= 2; k++) { ctx.beginPath(); ctx.moveTo(6, k*wid*0.25); ctx.lineTo(len-6, k*wid*0.12); ctx.stroke(); }
+                    ctx.fillStyle = color === 'red' ? 'rgba(180,40,30,0.45)' : 'rgba(80,120,40,0.4)';
+                    ctx.beginPath(); ctx.ellipse(len-10, 0, 6, wid*0.4, 0, 0, Math.PI*2); ctx.fill();
+                    ctx.restore();
+                }
+                // 네 장: 위-뒤, 아래-뒤, 위-앞, 아래-앞 (모두 양수 len, 각도로 방향)
+                ctx.save(); ctx.translate(2, 0);
+                wing(-1.05 - flap, 66, 13);   // 위-뒤(오른쪽 위)
+                wing( 1.05 + flap, 66, 13);   // 아래-뒤(오른쪽 아래)
+                wing(-2.09 + flap, 62, 12);   // 위-앞(왼쪽 위)
+                wing( 2.09 - flap, 62, 12);   // 아래-앞(왼쪽 아래)
+                ctx.restore();
+
+                // ── 꼬리(오른쪽으로 긴 분절 배) ──
+                for (let s = 0; s < 10; s++) {
+                    const t = s / 10;
+                    const bx = 14 + s * 15;
+                    const bw = 8 - t * 4.5;
+                    ctx.fillStyle = s % 2 === 0 ? c.tail : c.body2;
+                    ctx.beginPath(); ctx.ellipse(bx, 0, 9, bw, 0, 0, Math.PI*2); ctx.fill();
+                    ctx.strokeStyle = 'rgba(0,0,0,0.16)'; ctx.lineWidth = 1;
+                    ctx.beginPath(); ctx.ellipse(bx, 0, 9, bw, 0, 0, Math.PI*2); ctx.stroke();
+                }
+
+                // ── 가슴(흉부) ──
+                const th = ctx.createRadialGradient(2, -4, 2, 4, 0, 18);
+                th.addColorStop(0, c.body); th.addColorStop(1, c.body2);
+                ctx.fillStyle = th; ctx.beginPath(); ctx.ellipse(6, 0, 16, 12, 0, 0, Math.PI*2); ctx.fill();
+
+                // ── 머리 + 큰 겹눈 (왼쪽) ──
+                ctx.fillStyle = c.body2; ctx.beginPath(); ctx.arc(-14, 0, 10, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = c.eye;
+                ctx.beginPath(); ctx.arc(-18, -6, 7, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(-18,  6, 7, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = 'rgba(255,255,255,0.65)';
+                ctx.beginPath(); ctx.arc(-20, -7, 2.4, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(-20,  5, 2.4, 0, Math.PI*2); ctx.fill();
+
+                ctx.restore();
+
+                // ── 다가오는 손 (아래에서 올라옴) ──
+                if (state === 'idle') {
+                    const hy = H + 30 - (1 - dist/100) * (H*0.6);
+                    ctx.font = (70 + (100-dist)*0.4) + 'px serif';
+                    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                    ctx.fillText('🖐️', W/2 + 40, hy);
+                } else if (state === 'grabbed') {
+                    ctx.font = '90px serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+                    ctx.fillText('✊', cx, cy + 6);
+                }
+            }
+
+            // 애니메이션 루프(날개 퍼덕임 등 연속 연출)
+            function startAnim() {
+                clearInterval(animTimer);
+                animTimer = gInterval(() => {
+                    wingPhase += alert > 50 ? 0.9 : 0.35;
+                    if (state === 'fled' && flyOff < 1) flyOff = Math.min(1, flyOff + 0.05);
+                    drawDragonfly();
+                }, 40);
+            }
 
             function updateView() {
-                // 거리에 따라 잠자리 크기/위치
-                const scale = 1 + (100 - dist) / 100 * 1.4;
-                const df = $('dfBug');
-                df.style.transform = 'translate(-50%,-50%) scale(' + scale.toFixed(2) + ')';
-                // 경계심 바
                 $('dfAlertBar').style.width = alert + '%';
                 $('dfAlertBar').style.background = alert > 66 ? '#ff5d6c' : alert > 33 ? '#ffcf4d' : '#5fe07a';
                 $('dfDist').textContent = dist + 'cm';
-                // 잠자리 상태 표정
-                df.textContent = alert > 66 ? '🪰' : '🧚';
-                // 날개 떨림
-                df.classList.toggle('nervous', alert > 50);
+                drawDragonfly();
             }
 
             function setMsg(t, cls) {
@@ -3529,9 +3640,9 @@
                 if (!alive) return;
                 if (grabbing) return;
                 // 다가가면 거리 줄지만 경계심 상승(랜덤)
-                const step = 12 + Math.floor(Math.random() * 10);
+                const step = 18 + Math.floor(Math.random() * 10);   // 한 번에 18~27cm 접근
                 dist = Math.max(0, dist - step);
-                alert = Math.min(100, alert + (18 + Math.floor(Math.random() * 18)));
+                alert = Math.min(100, alert + (10 + Math.floor(Math.random() * 10)));  // 경계심 10~19만 상승
                 if (alert >= 100) return flee();
                 if (dist <= 0) {
                     setMsg('🎯 바로 앞이에요! 지금 [잡기] 버튼을 누르세요!', 'ok');
@@ -3544,18 +3655,19 @@
             function grab() {
                 if (!alive) return;
                 grabbing = true;
-                if (dist <= 15) {
+                if (dist <= 22) {
                     caught++; round++;
                     $('dfCaught').textContent = caught;
                     setMsg('🎉 잡았다! 잠자리 포획 성공!', 'ok');
-                    $('dfBug').classList.add('grabbed');
+                    state = 'grabbed';
                     alive = false;
                     clearInterval(decayTimer);
-                    gTimeout(nextBug, 1200);
+                    drawDragonfly();
+                    gTimeout(nextBug, 1300);
                 } else {
                     // 너무 멀리서 휘두르면 바로 도망
                     setMsg('🫳 헛손질! 너무 멀어요. 잠자리가 놀랐어요!', 'bad');
-                    alert = Math.min(100, alert + 40);
+                    alert = Math.min(100, alert + 30);
                     grabbing = false;
                     if (alert >= 100) return flee();
                     updateView();
@@ -3567,27 +3679,29 @@
                 $('dfEscaped').textContent = escaped;
                 clearInterval(decayTimer);
                 setMsg('💨 들켰다! 잠자리가 날아가 버렸어요.', 'bad');
-                $('dfBug').classList.add('fled');
-                gTimeout(nextBug, 1300);
+                state = 'fled'; flyOff = 0;
+                gTimeout(nextBug, 1500);
             }
 
             function nextBug() {
                 dist = 90 + Math.floor(Math.random() * 20);
                 alert = 0; alive = true; grabbing = false;
-                $('dfBug').classList.remove('grabbed','fled');
+                state = 'idle'; flyOff = 0;
+                color = Math.random() < 0.5 ? 'green' : 'red';   // 실잠자리/고추잠자리 랜덤
                 $('dfRound').textContent = round;
-                setMsg('새 잠자리가 나타났어요! [다가가기]로 천천히 접근하세요.');
+                setMsg('새 ' + (color==='red'?'고추':'실') + '잠자리가 나타났어요! [다가가기]로 천천히 접근하세요.');
                 updateView();
                 // 가만히 있으면 경계심이 서서히 내려감
                 clearInterval(decayTimer);
                 decayTimer = gInterval(() => {
                     if (!alive || grabbing) return;
-                    if (alert > 0) { alert = Math.max(0, alert - 4); updateView(); }
+                    if (alert > 0) { alert = Math.max(0, alert - 6); updateView(); }
                 }, 600);
             }
 
             $('dfApproach').onclick = approach;
             $('dfGrab').onclick = grab;
+            startAnim();
             nextBug();
         }
 
