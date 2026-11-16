@@ -926,6 +926,86 @@
         .reveal { opacity: 1; transform: none; }
     }
 
+    /* ===== 공통 조리 게임(피자/라멘) — 가로 레이아웃 + 재료 바 + 영수증 ===== */
+    .cook-app { width:100%; color:#3a2c1a; }
+    .cook-top { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+    .cook-stats { display:flex; gap:8px; }
+    .cook-stat { background:#fff5e6; border:2px solid #ffe8c2; border-radius:10px; padding:4px 14px; text-align:center; }
+    .cook-stat small { color:#a07000; display:block; font-size:10px; }
+    .cook-stat strong { color:#b85a00; font-size:18px; }
+    .ramen-theme .cook-stat { background:#fff3e0; border-color:#ffe0b2; }
+    .ramen-theme .cook-stat small { color:#a0522d; }
+    .ramen-theme .cook-stat strong { color:#c0392b; }
+
+    /* 재료 바 (조리대 위, 가로 배치) */
+    .ingredients-bar {
+        display:flex; gap:8px; flex-wrap:wrap; justify-content:center;
+        background:#fffaf0; border:2px solid #ffe8c2; border-radius:14px; padding:10px; margin-bottom:12px;
+    }
+    .ramen-theme .ingredients-bar { background:#fffaf0; border-color:#ffe0b2; }
+    .ingredients-bar .ing-btn { flex:0 1 auto; flex-direction:column; gap:2px; min-width:72px; padding:8px 10px; justify-content:center; }
+    .ingredients-bar .ing-btn span:last-child { font-size:11px; }
+
+    /* 조리대 (가로로 긴 직사각형) */
+    .cook-stage {
+        position:relative; border-radius:16px; overflow:hidden;
+        background:radial-gradient(ellipse at 50% 40%, #fff1ce, #ffd9a8 70%, #ffb86b);
+        border:2px solid #ffe8c2;
+        display:flex; align-items:center; justify-content:center;
+    }
+    .ramen-theme .cook-stage { background:radial-gradient(ellipse at 50% 40%, #fff3e0, #ffe0b2 70%, #ffcc80); border-color:#ffe0b2; }
+    .cook-stage canvas { display:block; width:auto; max-width:100%; height:auto; aspect-ratio:16/9; max-height:42vh; margin:0 auto; touch-action:manipulation; }
+
+    /* 조리 게임 전체를 한 화면에 — 스크롤 없이 */
+    .cook-app { display:flex; flex-direction:column; max-height:84vh; }
+    .cook-stage { flex:0 0 auto; }
+
+    /* 영수증(커닝) 창 — 조리대 위 우상단 정사각형 */
+    .receipt-peek { position:absolute; top:10px; right:10px; z-index:5; }
+    .receipt-btn {
+        background:#fffdf5; border:2px solid #d9b98a; border-radius:10px; color:#7a4500;
+        font:inherit; font-weight:800; font-size:12px; padding:8px 10px; cursor:pointer; line-height:1.2;
+        box-shadow:0 3px 8px rgba(0,0,0,0.15); display:flex; flex-direction:column; align-items:center;
+    }
+    .receipt-btn small { color:#c0392b; font-size:10px; font-weight:700; }
+    .receipt-btn:hover { background:#fff8e8; }
+    .receipt-pop {
+        display:none; position:absolute; top:0; right:0;
+        width:200px; height:200px; background:#fffdf5; border:2px dashed #c9a06a; border-radius:8px;
+        padding:14px; box-shadow:0 8px 24px rgba(0,0,0,0.25); font-size:13px; color:#5a3a12; z-index:6;
+    }
+    .receipt-pop.show { display:block; }
+    .receipt-pop h4 { margin:0 0 8px; font-size:14px; color:#b85a00; border-bottom:1px dashed #d9b98a; padding-bottom:6px; }
+    .receipt-pop .r-line { padding:2px 0; }
+
+    /* 5초 주문서 오버레이 (조리대 전체를 덮어 크게 보여줌) */
+    .order-flash {
+        display:none; position:absolute; inset:0; z-index:10;
+        background:rgba(40,25,5,0.82); backdrop-filter:blur(3px);
+        flex-direction:column; align-items:center; justify-content:center; text-align:center; color:#fff; padding:20px;
+    }
+    .order-flash.show { display:flex; }
+    .order-flash .of-badge { font-size:13px; letter-spacing:2px; color:#ffd56b; font-weight:800; margin-bottom:10px; }
+    .order-flash .of-icon { font-size:64px; line-height:1; margin-bottom:8px; }
+    .order-flash .of-name { font-size:30px; font-weight:900; margin-bottom:12px; }
+    .order-flash .of-needs { font-size:20px; font-weight:800; color:#ffe9a6; line-height:1.5; }
+    .order-flash .of-count { margin-top:18px; font-size:40px; font-weight:900; color:#fff; }
+    .order-flash .of-hint { margin-top:6px; font-size:13px; color:#ffd9a8; }
+
+    /* 손 집어오기 연출 */
+    .cook-hand {
+        position:absolute; z-index:8; font-size:40px; pointer-events:none;
+        transition:left .35s cubic-bezier(.4,1.3,.6,1), top .35s cubic-bezier(.4,1.3,.6,1), opacity .2s;
+    }
+
+    .cook-feedback { min-height:24px; margin:12px 0; font-size:14px; font-weight:800; text-align:center; }
+    .cook-actions { display:flex; gap:10px; }
+    .cook-btn-ghost { flex:1; border:2px solid #ffe8c2; background:#fff5e6; color:#b85a00; border-radius:10px; padding:12px; font:inherit; font-weight:800; cursor:pointer; }
+    .cook-btn-main { flex:1; border:0; border-radius:10px; padding:12px; font:inherit; font-weight:800; cursor:pointer; color:#fff; background:linear-gradient(100deg,#ffd56b,#ff9a3d); }
+    .ramen-theme .cook-btn-ghost { border-color:#ffe0b2; background:#fff3e0; color:#c0392b; }
+    .ramen-theme .cook-btn-main { background:linear-gradient(100deg,#ff9a3d,#e74c3c); }
+    @media(max-width:560px){ .receipt-pop{ width:150px; height:150px; font-size:11px; } .order-flash .of-name{ font-size:22px; } }
+
     /* 피자 게임 스타일 (밝은 톤 유지) */
     .pizza-app { --cream:#fff1ce; --gold:#ffd56b; width:100%; color:#3a2c1a; }
     .pizza-layout { display:grid; grid-template-columns:1.1fr .9fr; gap:14px; }
@@ -1125,6 +1205,12 @@
     }
     .vote-btn:disabled { opacity: .55; cursor: not-allowed; }
     .vote-btn.voted-choice { border-color: var(--orange); box-shadow: inset 0 0 0 1px var(--orange); }
+    .vote-btn.pending-choice { border-color: var(--cyan); box-shadow: inset 0 0 0 2px var(--cyan); background: var(--cyan-soft); }
+
+    /* 투표하기 / 재투표하기 버튼 */
+    .vote-action { margin-top: 14px; display: flex; }
+    .vote-action button { width: 100%; padding: 12px; font-size: 15px; font-weight: 800; }
+    .vote-action .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
     .poll-msg {
         margin-top: 16px;
         font-family: var(--mono);
@@ -1652,7 +1738,7 @@
             <div class="poll-wrap reveal">
                 <div class="poll-card">
                     <h3>투표하기</h3>
-                    <p class="poll-note">한 게임을 선택하면 바로 반영됩니다.</p>
+                    <p class="poll-note">게임을 고른 뒤 아래 <b>투표하기</b> 버튼을 누르면 반영됩니다.</p>
                     <div class="vote-options" id="voteOptions">
                         <button class="vote-btn" data-game="star"><span class="v-emoji">✦</span><span>별빛 수집가</span></button>
                         <button class="vote-btn" data-game="arena"><span class="v-emoji">⚔️</span><span>네온 아레나</span></button>
@@ -1665,6 +1751,10 @@
                         <button class="vote-btn" data-game="maze"><span class="v-emoji">🧭</span><span>미로 찾기</span></button>
                         <button class="vote-btn" data-game="spot"><span class="v-emoji">🔍</span><span>틀린 그림 찾기</span></button>
                         <button class="vote-btn" data-game="dragonfly"><span class="v-emoji">🧚</span><span>잠자리 잡기</span></button>
+                    </div>
+                    <div class="vote-action">
+                        <button class="btn-primary" id="voteSubmit" disabled>투표하기</button>
+                        <button class="btn-ghost" id="voteAgain" style="display:none;">재투표하기 ↻</button>
                     </div>
                     <div class="poll-msg" id="pollMsg">투표 결과를 불러오는 중...</div>
                 </div>
@@ -1816,39 +1906,34 @@
             document.body.style.overflow = 'hidden';
             if (type === 'pizza') {
                 container.innerHTML = `
-                    <div class="pizza-app">
-                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+                    <div class="pizza-app cook-app">
+                        <div class="cook-top">
                             <h2 style="color:#b85a00; margin:0;">🍕 피자 공방</h2>
-                            <div style="display:flex; gap:8px;">
-                                <div style="background:#fff5e6; border:2px solid #ffe8c2; border-radius:10px; padding:4px 12px; text-align:center;">
-                                    <small style="color:#a07000; display:block; font-size:10px;">점수</small>
-                                    <strong style="color:#b85a00;" id="pScore">0</strong>
-                                </div>
-                                <div style="background:#fff5e6; border:2px solid #ffe8c2; border-radius:10px; padding:4px 12px; text-align:center;">
-                                    <small style="color:#a07000; display:block; font-size:10px;">완성</small>
-                                    <strong style="color:#b85a00;" id="pServed">0</strong>
-                                </div>
+                            <div class="cook-stats">
+                                <div class="cook-stat"><small>점수</small><strong id="pScore">0</strong></div>
+                                <div class="cook-stat"><small>완성</small><strong id="pServed">0</strong></div>
                             </div>
                         </div>
-                        <div class="pizza-layout">
-                            <div class="p-card">
-                                <h3 style="color:#b85a00;">나만의 피자 만들기</h3>
-                                <div class="pizza-stage"><canvas id="pizzaCanvas" width="400" height="400"></canvas></div>
-                                <p style="font-size:11px; color:#a07000; margin-top:8px; text-align:center;">토핑 버튼을 누르면 자동으로 피자에 올라가요!</p>
+
+                        <!-- 재료 바 (조리대 위) -->
+                        <div class="ingredients-bar" id="pIngredients"></div>
+
+                        <!-- 조리대 (가로로 긴 직사각형) -->
+                        <div class="cook-stage" id="pStageWrap">
+                            <canvas id="pizzaCanvas" width="640" height="360"></canvas>
+                            <!-- 영수증(커닝) 창 -->
+                            <div class="receipt-peek">
+                                <button class="receipt-btn" id="pReceiptBtn" type="button">🧾 주문서 보기<small>(-5점)</small></button>
+                                <div class="receipt-pop" id="pReceiptPop"></div>
                             </div>
-                            <div class="p-card">
-                                <div class="order-box">
-                                    <div><small>손님 주문 <span id="pCustomer">🙂</span></small><br><strong id="pOrderName">주문 준비 중...</strong></div>
-                                    <span style="font-size:26px" id="pOrderIcon">🍕</span>
-                                </div>
-                                <div id="pOrderNeeds" style="font-size:12px; color:#7a4500; background:#fff; border:2px solid #ffe8c2; border-radius:10px; padding:8px 10px; margin-bottom:10px;"></div>
-                                <div class="ingredients-grid" id="pIngredients"></div>
-                                <div id="pFeedback" style="min-height:22px; margin-top:10px; font-size:13px; font-weight:700; text-align:center;"></div>
-                                <div class="action-row">
-                                    <button style="background:#fff5e6; color:#b85a00; border:2px solid #ffe8c2;" id="pClear">다시 만들기</button>
-                                    <button style="background:linear-gradient(100deg,#ffd56b,#ff9a3d); color:#fff;" id="pServe">서빙하기 ✨</button>
-                                </div>
-                            </div>
+                            <!-- 5초 주문서 오버레이 -->
+                            <div class="order-flash" id="pOrderFlash"></div>
+                        </div>
+
+                        <div id="pFeedback" class="cook-feedback"></div>
+                        <div class="action-row cook-actions">
+                            <button class="cook-btn-ghost" id="pClear">다시 만들기</button>
+                            <button class="cook-btn-main" id="pServe">서빙하기 ✨</button>
                         </div>
                     </div>
                 `;
@@ -1876,39 +1961,32 @@
                 `;
             } else if (type === 'ramen') {
                 container.innerHTML = `
-                    <div class="ramen-app">
-                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
-                            <h2 style="margin:0;">🍜 라면 가게</h2>
-                            <div style="display:flex; gap:8px;">
-                                <div style="background:#fff3e0; border:2px solid #ffe0b2; border-radius:10px; padding:4px 12px; text-align:center;">
-                                    <small style="color:#a0522d; display:block; font-size:10px;">점수</small>
-                                    <strong style="color:#c0392b;" id="rScore">0</strong>
-                                </div>
-                                <div style="background:#fff3e0; border:2px solid #ffe0b2; border-radius:10px; padding:4px 12px; text-align:center;">
-                                    <small style="color:#a0522d; display:block; font-size:10px;">완성</small>
-                                    <strong style="color:#c0392b;" id="rServed">0</strong>
-                                </div>
+                    <div class="ramen-app cook-app ramen-theme">
+                        <div class="cook-top">
+                            <h2 style="color:#c0392b; margin:0;">🍜 라면 가게</h2>
+                            <div class="cook-stats">
+                                <div class="cook-stat"><small>점수</small><strong id="rScore">0</strong></div>
+                                <div class="cook-stat"><small>완성</small><strong id="rServed">0</strong></div>
                             </div>
                         </div>
-                        <div class="ramen-layout">
-                            <div class="r-card">
-                                <h3>나만의 라멘 만들기</h3>
-                                <div class="ramen-stage"><canvas id="ramenCanvas" width="400" height="400"></canvas></div>
-                                <p style="font-size:11px; color:#a0522d; margin-top:8px; text-align:center;">고명 버튼을 누르면 자동으로 그릇에 올라가요!</p>
+
+                        <!-- 고명 바 (조리대 위) -->
+                        <div class="ingredients-bar" id="rIngredients"></div>
+
+                        <!-- 조리대 (가로로 긴 직사각형) -->
+                        <div class="cook-stage" id="rStageWrap">
+                            <canvas id="ramenCanvas" width="640" height="360"></canvas>
+                            <div class="receipt-peek">
+                                <button class="receipt-btn" id="rReceiptBtn" type="button">🧾 주문서 보기<small>(-5점)</small></button>
+                                <div class="receipt-pop" id="rReceiptPop"></div>
                             </div>
-                            <div class="r-card">
-                                <div class="order-box" style="background:#fff3e0; border-color:#ffe0b2;">
-                                    <div><small style="color:#a0522d;">손님 주문 <span id="rCustomer">🙂</span></small><br><strong style="color:#c0392b;" id="rOrderName">주문 준비 중...</strong></div>
-                                    <span style="font-size:26px" id="rOrderIcon">🍜</span>
-                                </div>
-                                <div id="rOrderNeeds" style="font-size:12px; color:#7a4500; background:#fff; border:2px solid #ffe0b2; border-radius:10px; padding:8px 10px; margin-bottom:10px;"></div>
-                                <div class="ingredients-grid" id="rIngredients"></div>
-                                <div id="rFeedback" style="min-height:22px; margin-top:10px; font-size:13px; font-weight:700; text-align:center;"></div>
-                                <div class="action-row">
-                                    <button style="background:#fff3e0; color:#c0392b; border:2px solid #ffe0b2;" id="rClear">다시 끓이기</button>
-                                    <button style="background:linear-gradient(100deg,#ff9a3d,#e74c3c); color:#fff;" id="rServe">서빙하기 ✨</button>
-                                </div>
-                            </div>
+                            <div class="order-flash" id="rOrderFlash"></div>
+                        </div>
+
+                        <div id="rFeedback" class="cook-feedback"></div>
+                        <div class="action-row cook-actions">
+                            <button class="cook-btn-ghost" id="rClear">다시 끓이기</button>
+                            <button class="cook-btn-main" id="rServe">서빙하기 ✨</button>
                         </div>
                     </div>
                 `;
@@ -2078,6 +2156,7 @@
         function initPizzaGame() {
             const canvas = document.getElementById('pizzaCanvas'), ctx = canvas.getContext('2d');
             const $ = id => document.getElementById(id);
+            const CX = 320, CY = 180;   // 가로형 캔버스(640x360) 중앙
 
             // 토핑 — 도우+소스+치즈는 항상 기본. 버튼을 누르면 자동으로 올라가요(토글)
             const ingredients = [
@@ -2104,44 +2183,68 @@
             let toppings = new Set();   // 현재 올라간 토핑
             let order = null;
             let score = 0, served = 0;
+            let penalty = 0;            // 이번 주문에서 영수증을 본 만큼 깎일 점수
+            let memorizing = false;     // 5초 주문서 암기 중이면 true
 
             function newOrder() {
                 order = MENU[Math.floor(Math.random()*MENU.length)];
                 toppings = new Set();
-                $('pCustomer').textContent = '🙂';
-                $('pOrderName').textContent = order.name;
-                $('pOrderIcon').textContent = order.icon;
+                penalty = 0;
                 $('pFeedback').textContent = '';
-                buildBtns(); renderChecklist(); draw();
+                hideReceipt();
+                buildBtns(); draw();
+                flashOrder();   // 5초간 주문서 크게 보여주고 → 제작 시작
             }
 
-            // 주문 체크리스트: 필요한 토핑마다 ✓/○, 불필요한 토핑 경고
-            function renderChecklist() {
-                const need = order.toppings;
-                let rows = '';
-                if (need.length === 0) {
-                    const ok = toppings.size === 0;
-                    rows += '<div class="pchk-row ' + (ok?'done':'todo') + '"><span>' + (ok?'✓':'○') + '</span> 토핑 없이 치즈만</div>';
-                } else {
-                    need.forEach(t => {
-                        const on = toppings.has(t);
-                        rows += '<div class="pchk-row ' + (on?'done':'todo') + '"><span>' + (on?'✓':'○') + '</span> ' + ingById[t].emoji + ' ' + ingById[t].name + '</div>';
-                    });
-                }
-                // 주문에 없는데 올린 토핑(빼야 함)
-                const extras = [...toppings].filter(t => !need.includes(t));
-                extras.forEach(t => {
-                    rows += '<div class="pchk-row bad"><span>✕</span> ' + ingById[t].emoji + ' ' + ingById[t].name + ' <small>빼주세요</small></div>';
-                });
-                const allDone = need.every(t => toppings.has(t)) && extras.length === 0;
-                $('pOrderNeeds').innerHTML =
-                    '<div class="pchk-title">' + order.tip + '</div>' + rows +
-                    '<div class="pchk-status ' + (allDone?'ready':'') + '">' +
-                    (allDone ? '✅ 주문대로 완성! 서빙하세요' : '🧑‍🍳 주문대로 토핑을 맞춰 주세요') + '</div>';
+            // 5초 주문서 암기 오버레이
+            function flashOrder() {
+                memorizing = true;
+                const flash = $('pOrderFlash');
+                const needTxt = order.toppings.length
+                    ? order.toppings.map(t => ingById[t].emoji + ' ' + ingById[t].name).join('  +  ')
+                    : '토핑 없이 치즈만!';
+                let n = 5;
+                const render = () => {
+                    flash.innerHTML =
+                        '<div class="of-badge">📋 손님 주문 — 외우세요!</div>' +
+                        '<div class="of-icon">' + order.icon + '</div>' +
+                        '<div class="of-name">' + order.name + '</div>' +
+                        '<div class="of-needs">' + needTxt + '</div>' +
+                        '<div class="of-count">' + n + '</div>' +
+                        '<div class="of-hint">잠시 후 사라져요. 못 외우면 🧾 주문서 보기(-5점)</div>';
+                };
+                flash.classList.add('show'); render();
+                const iv = gInterval(() => {
+                    n--;
+                    if (n <= 0) { clearInterval(iv); flash.classList.remove('show'); memorizing = false; }
+                    else render();
+                }, 1000);
             }
+
+            // 영수증(커닝) 창
+            function receiptHTML() {
+                const needTxt = order.toppings.length
+                    ? order.toppings.map(t => '<div class="r-line">' + ingById[t].emoji + ' ' + ingById[t].name + '</div>').join('')
+                    : '<div class="r-line">토핑 없이 치즈만</div>';
+                return '<h4>🧾 ' + order.name + '</h4>' + needTxt;
+            }
+            function showReceipt() {
+                if (memorizing || !order) return;
+                penalty += 5;
+                $('pReceiptPop').innerHTML = receiptHTML();
+                $('pReceiptPop').classList.add('show');
+                const fb = $('pFeedback');
+                fb.style.color = '#c0392b';
+                fb.textContent = '🧾 주문서 확인 (누적 -' + penalty + '점)';
+            }
+            function hideReceipt() { $('pReceiptPop').classList.remove('show'); }
 
             function draw() {
-                ctx.clearRect(0,0,400,400);
+                ctx.clearRect(0,0,640,360);
+                ctx.save();
+                // 피자 반지름을 가로형에 맞게 축소(168→150)하고 중앙(320,180)으로 이동.
+                // 아래 토핑 좌표는 기존 200,200 기준이므로 (-200,-200) 보정 후 스케일.
+                ctx.translate(CX, CY); ctx.scale(0.86, 0.86); ctx.translate(-200, -200);
                 const cx=200, cy=200;
 
                 // 그림자
@@ -2224,8 +2327,10 @@
                     }
                 };
                 ['pineapple','pepper','olive','mushroom','pepperoni','basil'].forEach(id=>{ if(toppings.has(id) && draws[id]) draws[id](); });
+                ctx.restore();
             }
 
+            // 재료 바: 버튼 클릭 → 손이 집어와 뿌리는 연출 + 토글
             function buildBtns() {
                 const root = $('pIngredients');
                 root.innerHTML = '';
@@ -2233,13 +2338,37 @@
                     const on = toppings.has(it.id);
                     const b = document.createElement('button');
                     b.className = 'ing-btn' + (on ? ' active' : '');
-                    b.innerHTML = '<span style="font-size:20px">'+it.emoji+'</span><span><b>'+it.name+'</b>'+(on?' ✓':'')+'</span>';
+                    b.innerHTML = '<span style="font-size:22px">'+it.emoji+'</span><span><b>'+it.name+'</b>'+(on?' ✓':'')+'</span>';
                     b.onclick = () => {
-                        if(toppings.has(it.id)) toppings.delete(it.id); else toppings.add(it.id);
-                        buildBtns(); renderChecklist(); draw();
+                        const adding = !toppings.has(it.id);
+                        if(adding) { toppings.add(it.id); handToss(b, it.emoji); }
+                        else toppings.delete(it.id);
+                        buildBtns(); draw();
                     };
                     root.appendChild(b);
                 });
+            }
+
+            // 주인장 손이 재료 버튼 → 피자로 이동하며 뿌리는 연출
+            function handToss(btn, emoji) {
+                const wrap = $('pStageWrap');
+                if (!wrap) return;
+                const wrapRect = wrap.getBoundingClientRect();
+                const bRect = btn.getBoundingClientRect();
+                const hand = document.createElement('div');
+                hand.className = 'cook-hand';
+                hand.textContent = '🖐️' + emoji;
+                hand.style.left = (bRect.left - wrapRect.left + bRect.width/2 - 20) + 'px';
+                hand.style.top  = (bRect.top  - wrapRect.top) + 'px';
+                hand.style.opacity = '1';
+                wrap.appendChild(hand);
+                // 다음 프레임에 피자 중앙으로 이동
+                requestAnimationFrame(() => {
+                    hand.style.left = (wrap.clientWidth/2 - 20) + 'px';
+                    hand.style.top  = (wrap.clientHeight/2 - 30) + 'px';
+                });
+                gTimeout(() => { hand.style.opacity = '0'; }, 420);
+                gTimeout(() => { hand.remove(); }, 650);
             }
 
             function evaluate() {
@@ -2250,32 +2379,42 @@
                 return { missing, extra };
             }
 
-            $('pClear').onclick = () => { toppings = new Set(); buildBtns(); renderChecklist(); draw(); };
+            $('pReceiptBtn').onclick = showReceipt;
+            $('pClear').onclick = () => { toppings = new Set(); buildBtns(); draw(); };
+
+            // 결과를 주문서처럼 조리대 전체에 크게 보여주고 → 다음 주문
+            function flashResult(ok, gained, detailLines) {
+                memorizing = true;   // 결과 보는 동안 입력 잠금
+                const flash = $('pOrderFlash');
+                flash.innerHTML =
+                    '<div class="of-badge">' + (ok ? '🎉 서빙 결과' : '😅 서빙 결과') + '</div>' +
+                    '<div class="of-icon">' + (ok ? '😍' : '😐') + '</div>' +
+                    '<div class="of-name">' + (ok ? '완벽해요!' : '아쉬워요') + '</div>' +
+                    '<div class="of-needs">+' + gained + '점' + (penalty ? '  (커닝 -' + penalty + ')' : '') + '</div>' +
+                    (detailLines ? '<div class="of-hint">' + detailLines + '</div>' : '') +
+                    '<div class="of-hint">잠시 후 다음 주문…</div>';
+                flash.classList.add('show');
+                gTimeout(() => { flash.classList.remove('show'); memorizing = false; newOrder(); }, 2200);
+            }
 
             $('pServe').onclick = () => {
-                if(!order) return;
+                if(!order || memorizing) return;
+                hideReceipt();
                 const { missing, extra } = evaluate();
-                const fb = $('pFeedback');
 
                 if(missing.length===0 && extra.length===0){
-                    const gained = 100;
+                    const gained = Math.max(0, 100 - penalty);
                     score += gained; served += 1;
                     $('pScore').textContent = score; $('pServed').textContent = served;
-                    fb.style.color = '#1e8449';
-                    fb.textContent = '✅ 완벽해요! 손님 만족 (+'+gained+'점)';
-                    $('pCustomer').textContent = '😍';
-                    gTimeout(newOrder, 1400);
+                    flashResult(true, gained, null);
                 } else {
-                    const gained = 30;
+                    const gained = Math.max(0, 30 - penalty);
                     score += gained; served += 1;
                     $('pScore').textContent = score; $('pServed').textContent = served;
-                    let msg = '😅 아쉬워요 (+'+gained+'점). ';
-                    if(missing.length) msg += '빠진 토핑: '+missing.map(t=>ingById[t].name).join(',')+'. ';
-                    if(extra.length) msg += '추가된 토핑: '+extra.map(t=>ingById[t].name).join(',')+'.';
-                    fb.style.color = '#b9770e';
-                    fb.textContent = msg;
-                    $('pCustomer').textContent = '😐';
-                    gTimeout(newOrder, 1800);
+                    let detail = '';
+                    if(missing.length) detail += '빠짐: '+missing.map(t=>ingById[t].name).join(', ')+' ';
+                    if(extra.length) detail += '추가됨: '+extra.map(t=>ingById[t].name).join(', ');
+                    flashResult(false, gained, detail);
                 }
             };
 
@@ -2311,18 +2450,60 @@
             let toppings = new Set();   // 현재 그릇에 올라간 고명들
             let order = null;
             let score = 0, served = 0;
+            let penalty = 0;            // 이번 주문에서 영수증을 본 만큼 깎일 점수
+            let memorizing = false;
 
             function newOrder() {
                 order = MENU[Math.floor(Math.random()*MENU.length)];
                 toppings = new Set();
-                $('rCustomer').textContent = '🙂';
-                $('rOrderName').textContent = order.name;
-                $('rOrderIcon').textContent = order.icon;
-                const needTop = order.toppings.length ? order.toppings.map(t=>ingById[t].emoji+ingById[t].name).join(', ') : '없음';
-                $('rOrderNeeds').innerHTML = '기본 면+국물은 준비 완료! <b>고명: '+needTop+'</b><br><span style="color:#a0522d;">'+order.tip+' 를 올려 주세요</span>';
+                penalty = 0;
                 $('rFeedback').textContent = '';
+                hideReceipt();
                 buildBtns(); draw();
+                flashOrder();
             }
+
+            // 5초 주문서 암기 오버레이
+            function flashOrder() {
+                memorizing = true;
+                const flash = $('rOrderFlash');
+                const needTxt = order.toppings.length
+                    ? order.toppings.map(t => ingById[t].emoji + ' ' + ingById[t].name).join('  +  ')
+                    : '고명 없이 면+국물만!';
+                let n = 5;
+                const render = () => {
+                    flash.innerHTML =
+                        '<div class="of-badge">📋 손님 주문 — 외우세요!</div>' +
+                        '<div class="of-icon">' + order.icon + '</div>' +
+                        '<div class="of-name">' + order.name + '</div>' +
+                        '<div class="of-needs">' + needTxt + '</div>' +
+                        '<div class="of-count">' + n + '</div>' +
+                        '<div class="of-hint">잠시 후 사라져요. 못 외우면 🧾 주문서 보기(-5점)</div>';
+                };
+                flash.classList.add('show'); render();
+                const iv = gInterval(() => {
+                    n--;
+                    if (n <= 0) { clearInterval(iv); flash.classList.remove('show'); memorizing = false; }
+                    else render();
+                }, 1000);
+            }
+
+            function receiptHTML() {
+                const needTxt = order.toppings.length
+                    ? order.toppings.map(t => '<div class="r-line">' + ingById[t].emoji + ' ' + ingById[t].name + '</div>').join('')
+                    : '<div class="r-line">고명 없이 면+국물만</div>';
+                return '<h4>🧾 ' + order.name + '</h4>' + needTxt;
+            }
+            function showReceipt() {
+                if (memorizing || !order) return;
+                penalty += 5;
+                $('rReceiptPop').innerHTML = receiptHTML();
+                $('rReceiptPop').classList.add('show');
+                const fb = $('rFeedback');
+                fb.style.color = '#c0392b';
+                fb.textContent = '🧾 주문서 확인 (누적 -' + penalty + '점)';
+            }
+            function hideReceipt() { $('rReceiptPop').classList.remove('show'); }
 
             // 둥근 사각형 헬퍼
             function roundRect(x, y, w, h, r) {
@@ -2336,7 +2517,10 @@
             }
 
             function draw() {
-                ctx.clearRect(0,0,400,400);
+                ctx.clearRect(0,0,640,360);
+                ctx.save();
+                // 가로형(640x360) 중앙으로 이동 + 축소. 아래 좌표는 그릇 중심 200,205 기준.
+                ctx.translate(320, 180); ctx.scale(0.78, 0.78); ctx.translate(-200, -205);
 
                 // === 그릇 바깥 테두리 (흰 그릇 + 붉은 라인) ===
                 ctx.fillStyle='#f3efe7'; ctx.beginPath(); ctx.arc(200,205,185,0,Math.PI*2); ctx.fill();
@@ -2472,8 +2656,10 @@
                     ctx.bezierCurveTo(x-12,50, x+12,35, x-6,14);
                     ctx.stroke();
                 });
+                ctx.restore();
             }
 
+            // 고명 바: 버튼 클릭 → 손이 집어와 올리는 연출 + 토글
             function buildBtns() {
                 const root = $('rIngredients');
                 root.innerHTML = '';
@@ -2481,13 +2667,35 @@
                     const on = toppings.has(it.id);
                     const b = document.createElement('button');
                     b.className = 'ing-btn' + (on ? ' active' : '');
-                    b.innerHTML = '<span style="font-size:20px">'+it.emoji+'</span><span><b>'+it.name+'</b>'+(on?' ✓':'')+'</span>';
+                    b.innerHTML = '<span style="font-size:22px">'+it.emoji+'</span><span><b>'+it.name+'</b>'+(on?' ✓':'')+'</span>';
                     b.onclick = () => {
-                        if(toppings.has(it.id)) toppings.delete(it.id); else toppings.add(it.id);
+                        const adding = !toppings.has(it.id);
+                        if(adding) { toppings.add(it.id); handToss(b, it.emoji); }
+                        else toppings.delete(it.id);
                         buildBtns(); draw();
                     };
                     root.appendChild(b);
                 });
+            }
+
+            function handToss(btn, emoji) {
+                const wrap = $('rStageWrap');
+                if (!wrap) return;
+                const wrapRect = wrap.getBoundingClientRect();
+                const bRect = btn.getBoundingClientRect();
+                const hand = document.createElement('div');
+                hand.className = 'cook-hand';
+                hand.textContent = '🖐️' + emoji;
+                hand.style.left = (bRect.left - wrapRect.left + bRect.width/2 - 20) + 'px';
+                hand.style.top  = (bRect.top  - wrapRect.top) + 'px';
+                hand.style.opacity = '1';
+                wrap.appendChild(hand);
+                requestAnimationFrame(() => {
+                    hand.style.left = (wrap.clientWidth/2 - 20) + 'px';
+                    hand.style.top  = (wrap.clientHeight/2 - 30) + 'px';
+                });
+                gTimeout(() => { hand.style.opacity = '0'; }, 420);
+                gTimeout(() => { hand.remove(); }, 650);
             }
 
             function evaluate() {
@@ -2498,32 +2706,41 @@
                 return { missing, extra };
             }
 
+            $('rReceiptBtn').onclick = showReceipt;
             $('rClear').onclick = () => { toppings = new Set(); buildBtns(); draw(); };
 
+            function flashResult(ok, gained, detailLines) {
+                memorizing = true;
+                const flash = $('rOrderFlash');
+                flash.innerHTML =
+                    '<div class="of-badge">' + (ok ? '🎉 서빙 결과' : '😅 서빙 결과') + '</div>' +
+                    '<div class="of-icon">' + (ok ? '😍' : '😐') + '</div>' +
+                    '<div class="of-name">' + (ok ? '완벽해요!' : '아쉬워요') + '</div>' +
+                    '<div class="of-needs">+' + gained + '점' + (penalty ? '  (커닝 -' + penalty + ')' : '') + '</div>' +
+                    (detailLines ? '<div class="of-hint">' + detailLines + '</div>' : '') +
+                    '<div class="of-hint">잠시 후 다음 주문…</div>';
+                flash.classList.add('show');
+                gTimeout(() => { flash.classList.remove('show'); memorizing = false; newOrder(); }, 2200);
+            }
+
             $('rServe').onclick = () => {
-                if(!order) return;
+                if(!order || memorizing) return;
+                hideReceipt();
                 const { missing, extra } = evaluate();
-                const fb = $('rFeedback');
 
                 if(missing.length===0 && extra.length===0){
-                    const gained = 100;
+                    const gained = Math.max(0, 100 - penalty);
                     score += gained; served += 1;
                     $('rScore').textContent = score; $('rServed').textContent = served;
-                    fb.style.color = '#1e8449';
-                    fb.textContent = '✅ 완벽해요! 손님 만족 (+'+gained+'점)';
-                    $('rCustomer').textContent = '😍';
-                    gTimeout(newOrder, 1400);
+                    flashResult(true, gained, null);
                 } else {
-                    const gained = 30;
+                    const gained = Math.max(0, 30 - penalty);
                     score += gained; served += 1;
                     $('rScore').textContent = score; $('rServed').textContent = served;
-                    let msg = '😅 아쉬워요 (+'+gained+'점). ';
-                    if(missing.length) msg += '빠진 고명: '+missing.map(t=>ingById[t].name).join(',')+'. ';
-                    if(extra.length) msg += '추가된 고명: '+extra.map(t=>ingById[t].name).join(',')+'.';
-                    fb.style.color = '#b9770e';
-                    fb.textContent = msg;
-                    $('rCustomer').textContent = '😐';
-                    gTimeout(newOrder, 1800);
+                    let detail = '';
+                    if(missing.length) detail += '빠짐: '+missing.map(t=>ingById[t].name).join(', ')+' ';
+                    if(extra.length) detail += '추가됨: '+extra.map(t=>ingById[t].name).join(', ');
+                    flashResult(false, gained, detail);
                 }
             };
 
@@ -3508,13 +3725,53 @@
                 });
             }
 
+            // ── 투표 흐름: 게임 선택 → [투표하기] → 완료 → [재투표하기] ──
+            const submitBtn = document.getElementById('voteSubmit');
+            const againBtn = document.getElementById('voteAgain');
+            let pendingGame = null;   // 선택했지만 아직 투표 안 한 게임
+
+            function markPending(game) {
+                voteBtns.forEach(b => b.classList.toggle('pending-choice', b.dataset.game === game));
+            }
+
+            // 게임 버튼 클릭 → '선택'만 (저장은 투표하기 버튼에서)
             voteBtns.forEach(btn => {
-                btn.addEventListener('click', () => castVote(btn.dataset.game));
+                btn.addEventListener('click', () => {
+                    pendingGame = btn.dataset.game;
+                    markPending(pendingGame);
+                    if (submitBtn) submitBtn.disabled = false;
+                    setMessage('"' + btn.textContent.trim() + '" 선택됨 — 아래 투표하기를 누르세요.', false);
+                });
             });
 
-            // 이미 투표했으면 선택 표시
+            // [투표하기] → 실제 저장
+            if (submitBtn) submitBtn.addEventListener('click', async () => {
+                if (!pendingGame) return;
+                submitBtn.disabled = true;
+                await castVote(pendingGame);   // 성공 시 localStorage 저장 + 결과 갱신
+                pendingGame = null;
+                voteBtns.forEach(b => { b.classList.remove('pending-choice'); b.disabled = true; });
+                submitBtn.style.display = 'none';
+                if (againBtn) againBtn.style.display = 'inline-flex';
+            });
+
+            // [재투표하기] → 선택 초기화하고 다시 투표 가능
+            if (againBtn) againBtn.addEventListener('click', () => {
+                pendingGame = null;
+                voteBtns.forEach(b => { b.classList.remove('pending-choice','voted-choice'); b.disabled = false; });
+                againBtn.style.display = 'none';
+                if (submitBtn) { submitBtn.style.display = 'inline-flex'; submitBtn.disabled = true; }
+                setMessage('다시 투표할 게임을 선택하세요.', false);
+            });
+
+            // 이미 투표했으면: 선택 표시 + '재투표하기' 상태로 시작
             const already = localStorage.getItem(VOTED_KEY);
-            if (already) markVotedChoice(already);
+            if (already) {
+                markVotedChoice(already);
+                voteBtns.forEach(b => b.disabled = true);
+                if (submitBtn) submitBtn.style.display = 'none';
+                if (againBtn) againBtn.style.display = 'inline-flex';
+            }
 
             loadResults();
         })();
