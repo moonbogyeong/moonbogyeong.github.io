@@ -830,6 +830,20 @@
     }
     .close-btn:hover { background: var(--orange); color: #1a0a00; transform: rotate(90deg); }
 
+    /* 게임 조작 안내 띠 (모달 맨 위) */
+    .game-howto {
+        display: flex; align-items: center; gap: 10px;
+        background: var(--orange-soft); border: 1px solid var(--orange);
+        border-radius: 10px; padding: 9px 14px; margin: 0 40px 14px 0;
+        font-size: 13px; color: var(--text); line-height: 1.4;
+    }
+    .game-howto .gh-badge {
+        flex: 0 0 auto; font-family: var(--mono); font-size: 11px; font-weight: 800;
+        color: var(--orange); background: rgba(255,138,61,0.15);
+        padding: 3px 8px; border-radius: 6px; letter-spacing: 1px;
+    }
+    body.light .game-howto { color: #3a2c1a; }
+
     /* ===== 미로 찾기 ===== */
     .maze-app { color: var(--text); }
     .maze-top { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
@@ -1349,16 +1363,6 @@
     }
     .quiz-opt { cursor: pointer; }
     .quiz-opt .q-emoji { font-size: 24px; }
-    .quiz-opt .q-key {
-        flex: 0 0 auto;
-        width: 40px; height: 40px;
-        display: grid; place-items: center;
-        border-radius: 10px;
-        background: var(--orange-soft);
-        color: var(--orange);
-        font-family: var(--mono);
-        font-size: 20px; font-weight: 800;
-    }
     .quiz-opt .q-main { display: flex; flex-direction: column; gap: 2px; }
     .quiz-opt .q-main b { font-size: 15px; font-weight: 700; }
     .quiz-opt .q-main small { font-size: 12px; color: var(--muted); font-weight: 500; }
@@ -1367,7 +1371,6 @@
         background: var(--orange-soft);
         transform: translateX(4px);
     }
-    .quiz-opt:hover .q-key { background: var(--orange); color: #2a1500; }
     .quiz-result { text-align: center; }
     .quiz-result .result-eyebrow {
         font-family: var(--mono);
@@ -1470,9 +1473,9 @@
         <!-- 게임 추천 퀴즈 -->
         <section id="quiz">
             <div class="section-head reveal">
-                <span class="label">MBTI GAME TEST</span>
-                <h2 class="section-title">내 MBTI에 맞는 <span>게임은?</span></h2>
-                <p class="section-sub">4개의 질문에 답하면 당신의 MBTI 유형과 딱 어울리는 게임을 추천해 드려요.</p>
+                <span class="label">GAME MATCH TEST</span>
+                <h2 class="section-title">나에게 맞는 <span>게임은?</span></h2>
+                <p class="section-sub">4개의 질문에 답하면 당신에게 딱 어울리는 게임을 추천해 드려요.</p>
             </div>
             <div class="quiz-box reveal" id="quizBox"></div>
         </section>
@@ -2141,6 +2144,28 @@
                     </div>
                 `;
                 initDragonflyGame();
+            }
+
+            // 게임별 간단 조작 설명 — 모달 맨 위에 안내 띠로 표시
+            const GAME_HOWTO = {
+                star:      '🎮 방향키(←→)로 움직여 떨어지는 별을 받고 운석은 피하세요.',
+                arena:     '🎮 방향키로 이동, 몰려오는 적을 피하고 물리치며 웨이브를 버티세요.',
+                pacman:    '🎮 방향키로 미로를 돌며 점을 먹고 유령을 피하세요.',
+                pizza:     '🍕 5초간 주문을 외운 뒤, 위 재료 버튼을 눌러 토핑을 올리고 서빙하세요. 모르면 🧾(-5점).',
+                ramen:     '🍜 5초간 주문을 외운 뒤, 위 고명 버튼을 눌러 올리고 서빙하세요. 모르면 🧾(-5점).',
+                potion:    '🧪 물약 3개를 골라 휘저으면 어떤 캐릭터가 나올지! 도감을 채워 보세요.',
+                sudoku:    '🔢 빈 칸을 누르고 숫자키(1~9)를 입력. 틀리면 목숨이 줄어요(❤️×3).',
+                quizface:  '🎬 이모지가 가리키는 영화를 보기 중에서 골라 맞혀 보세요.',
+                maze:      '🧭 방향키 또는 화면 버튼으로 🦊를 🚩 출구까지 데려가세요.',
+                spot:      '🔍 왼쪽·오른쪽 그림을 비교해 다른 곳을 오른쪽에서 클릭하세요(시간제한).',
+                dragonfly: '🧚 [다가가기]로 살금살금 접근하고, 가까워지면 [잡기]! 경계심이 100이면 도망가요.'
+            };
+            const howto = GAME_HOWTO[type];
+            if (howto) {
+                const tip = document.createElement('div');
+                tip.className = 'game-howto';
+                tip.innerHTML = '<span class="gh-badge">조작법</span><span>' + howto + '</span>';
+                container.insertBefore(tip, container.firstChild);
             }
         }
 
@@ -3192,10 +3217,10 @@
                 mbti = ['', '', '', ''];
                 box.innerHTML =
                     '<div class="quiz-result">' +
-                    '<div class="result-eyebrow">MBTI GAME TEST</div>' +
+                    '<div class="result-eyebrow">GAME MATCH TEST</div>' +
                     '<span class="result-icon">🎮</span>' +
-                    '<div class="result-name">내 <span>MBTI</span>에 맞는 게임은?</div>' +
-                    '<p class="result-desc">4개의 질문에 답하면 당신의 MBTI 유형과 딱 어울리는 게임을 추천해 드려요.</p>' +
+                    '<div class="result-name">나에게 <span>맞는 게임은?</span></div>' +
+                    '<p class="result-desc">4개의 질문에 답하면 당신에게 딱 어울리는 게임을 추천해 드려요.</p>' +
                     '<div class="quiz-result-actions"><button class="btn-primary" id="quizStart">테스트 시작 ▸</button></div>' +
                     '</div>';
                 document.getElementById('quizStart').onclick = renderQuestion;
@@ -3208,7 +3233,6 @@
                 html += '<div class="quiz-options">';
                 item.options.forEach(function (opt, i) {
                     html += '<button class="quiz-opt" data-i="' + i + '">' +
-                        '<span class="q-key">' + opt.key + '</span>' +
                         '<span class="q-main"><b>' + opt.title + '</b><small>' + opt.desc + '</small></span>' +
                         '</button>';
                 });
@@ -3233,7 +3257,7 @@
                     '<div class="quiz-result">' +
                     '<div class="result-eyebrow">' + type + ' · ' + t.nick + '</div>' +
                     '<span class="result-icon">' + g.icon + '</span>' +
-                    '<div class="result-name">' + type + ' 에게 어울리는 게임은<br><span>' + g.name + '</span></div>' +
+                    '<div class="result-name"><span>' + type + '</span> 에게 어울리는 게임은<br><span>' + g.name + '</span></div>' +
                     '<p class="result-desc">' + t.desc + '</p>' +
                     '<div class="quiz-result-actions">' +
                     '<button class="btn-primary" id="quizPlay">지금 플레이 ▸</button>' +
